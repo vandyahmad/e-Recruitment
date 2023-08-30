@@ -1,16 +1,18 @@
 <footer class="main-footer">
-    <strong>Copyright &copy; <script>document.write(new Date().getFullYear());</script> </strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.0.1
-    </div>
-  </footer>
+  <strong>Copyright &copy; <script>
+      document.write(new Date().getFullYear());
+    </script> </strong>
+  All rights reserved.
+  <div class="float-right d-none d-sm-inline-block">
+    <b>Version</b> 3.0.1
+  </div>
+</footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+<!-- Control Sidebar -->
+<aside class="control-sidebar control-sidebar-dark">
+  <!-- Control sidebar content goes here -->
+</aside>
+<!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 
@@ -42,6 +44,7 @@
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
@@ -49,18 +52,30 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
 <script>
-      $('#job_description').summernote({
-        placeholder: 'Input job description',
-        tabsize: 2,
-        height: 100
-      });
-    </script>
-<script>
-      $('#job_requirement').summernote({
-        placeholder: 'Input job requirement',
-        tabsize: 2,
-        height: 100
-      });
-    </script>
+  $('#job_description').summernote({
+    placeholder: 'Input job description',
+    tabsize: 2,
+    height: 100
+  });
+
+  $('#job_requirement').summernote({
+    placeholder: 'Input job requirement',
+    tabsize: 2,
+    height: 100
+  });
+
+  // $(document).ready(function() {
+    // $('.selectpicker').selectpicker();
+  // });
+
+  $(document).ready(function() {
+    $('.js-example-tags').select2({
+      tags: true
+    });
+  });
+
+
+</script>
 </body>
+
 </html>

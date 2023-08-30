@@ -7,7 +7,7 @@
 <div class="row">
   <div class="col-12">
     <div class="card">
-      <div class="card-body table-responsive p-0">
+      <div class="card-body table-responsive p-3">
         <h4>Open Job Vacancies</h4>
         @if (session('success'))
         <div class="alert alert-success">
@@ -45,7 +45,7 @@
           <tbody>
             @foreach ($jobvacancies as $result)
 
-            <tr class="clickable-row">
+            <tr class="table-sm">
             <!-- <td>{{ $result->id }}</td> -->
               <td>{{ $result->job_title }}</td>
               <!-- <td>{!! $result->job_description !!}</td>
@@ -56,10 +56,13 @@
               <td>
 
                 <div class="btn-action">
-                  <a href="{{ route("vacancies.show", ['vacancies' => $result->id] ) }}" class="btn btn-primary d-inline-block"><i class="fa fa-file"></i>
+                  <a href="{{ route("vacancies.show", ['vacancies' => $result->id] ) }}" class="btn btn-info d-inline-block btn-sm"><i class="fa fa-file"></i>
                     Details
                   </a>
-                  <button class="btn btn-danger btn-hapus" data-id="{{ $result->id }}" data-toggle="modal" data-target="#DeleteModal-{{ $result->id}}"><i class="fa fa-user-times"></i>
+                  <a href="{{ route("vacancies.edit", ['vacancies' => $result->id] ) }}" class="btn btn-success d-inline-block btn-sm"><i class="fa fa-file"></i>
+                    Edit
+                  </a>
+                  <button class="btn btn-danger btn-hapus btn-sm" data-id="{{ $result->id }}" data-toggle="modal" data-target="#DeleteModal-{{ $result->id}}"><i class="fa fa-user-times"></i>
                     Delete
                   </button>
                 </div>

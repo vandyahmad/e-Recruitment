@@ -8,9 +8,9 @@
   <div class="col-12">
     <div class="card">
       <div class="card-body table-responsive p-0">
-        <table class="table table-hover">
+        <table class="table table-hover table-sm">
           <thead>
-          
+
             <tr>
               <th>NIK</th>
               <th>Nama Lengkap</th>
@@ -30,10 +30,10 @@
               <td>
 
                 <div class="btn-action">
-                  <a href="{{ route("admin.show", ['pelamar' => $result->id] ) }}" class="btn btn-primary d-inline-block"><i class="fa fa-file"></i>
+                  <a href="{{ route("admin.show", ['pelamar' => $result->id] ) }}" class="btn btn-primary btn-sm d-inline-block"><i class="fa fa-file"></i>
                     Detail
                   </a>
-                  <button class="btn btn-danger btn-hapus" data-id="{{ $result->id }}" data-toggle="modal" data-target="#DeleteModal-{{ $result->id}}"><i class="fa fa-user-times"></i>
+                  <button class="btn btn-danger btn-hapus btn-sm" data-id="{{ $result->id }}" data-toggle="modal" data-target="#DeleteModal-{{ $result->id}}"><i class="fa fa-user-times"></i>
                     Hapus
                   </button>
                 </div>

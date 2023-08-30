@@ -32,14 +32,14 @@
                   <div class="form-group row">
                     <label  class=" col-sm-2">Job Description :</label>
                     <div class="col-sm-10">
-                      <label>:</label>
+                      <!-- <label>:</label> -->
                       <label>{!!$vacancies->job_description!!}</label>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label  class=" col-sm-2">Job Requirement :</label>
                     <div class="col-sm-10">
-                      <label>:</label>
+                      <!-- <label>:</label> -->
                       <label>{!!$vacancies->job_requirement!!}</label>
                     </div>
                   </div>

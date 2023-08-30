@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-  <h1>Add Job Vacancy</h1>
+  <h4>Add Job Vacancy</h4>
 
   @if ($errors->any())
   <div class="alert alert-danger">
@@ -28,28 +28,35 @@
       <label>Job Requirement</label>
       <textarea name="job_requirement" id="job_requirement" class="form-control"></textarea>
     </div>
+
     <div class="form-group">
       <label>Job Location</label>
-      <input type="text" name="job_location" class="form-control">
+    <select name="job_location[]" class="form-control js-example-tags" multiple="multiple" data-placeholder="Choose Location">
+      <option value="Jakarta">Jakarta</option>
+      <option value="Bandung">Bandung</option>
+      <option value="Surabaya">Surabaya</option>
+    </select>
     </div>
-    <!-- <div class="form-group">
-      <label>Job Company</label>
-      <input type="text" name="job_company" class="form-control">
-    </div> -->
+
+    <div class="form-group">
+      <label>Job Branch</label>
+    <select name="job_branch[]" class="form-control js-example-tags" multiple="multiple" data-placeholder="Choose Branch">
+      <option value="Jakarta 1">Jakarta 1</option>
+      <option value="Jakarta 2">Jakarta 2</option>
+      <option value="Jakarta 3">Jakarta 3</option>
+    </select>
+    </div>
+
     <div class="form-group">
       <label>Job Company</label>
       <select name="job_company" class="form-control">
-        <option value="" disabled selected>Pilih Company</option>
+        <option value="" disabled selected>Choose Company</option>
         <option value="ecoCare">ecoCare</option>
         <option value="TBI">TBI</option>
         <option value="pestCare">pestCare</option>
       </select>
     </div>
 
-    <div class="form-group">
-      <label>Job Branch</label>
-      <input type="text" name="job_branch" class="form-control">
-    </div>
     <div class="form-group text-right pb-5">
       <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Add Job</button>
     </div>

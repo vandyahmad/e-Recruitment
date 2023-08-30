@@ -78,6 +78,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/vacancies/store', 'JobVacanciesController@store')->name('vacancies.store');
 
+    Route::get('/vacancies/{vacancies}/edit', 'JobVacanciesController@edit')->name('vacancies.edit');
+
+    Route::post('/vacancies/{vacancies}', 'JobVacanciesController@update')->name('vacancies.update');
+
     Route::get('/vacancies/show/{vacancies}', 'JobVacanciesController@show')->name('vacancies.show');
 
     Route::delete('/vacancies/delete/{vacancies}', 'JobVacanciesController@destroy')->name('vacancies.destroy');
