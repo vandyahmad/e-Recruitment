@@ -154,7 +154,7 @@
                         <label for="upload_file">Upload File</label>
                             <div class="custom-file">
                                 <input type="file" id="upload_file" name="upload_file" class="custom-file-input @error('upload_file') is-invalid @enderror">
-                                <label class="custom-file-label col-md-12" for="upload_file" onchange="$   ('upload_file').val($this).val());">
+                                <label class="custom-file-label col-md-12" for="upload_file" onchange="$   ('upload_file').val($this).val();">
                                 {{ $user->upload_file ?? 'Upload File Anda'}}
                                 </label>
                                 <small>*  Upload File ini diperuntukan untuk Identitas Diri berupa Data Scan (KTP, Ijazah, Sertifikat yang dilegalisir, SKCK, Surat Keterangan Sehat) yang dijadikan Satu File dengan Format PDF.</small>
