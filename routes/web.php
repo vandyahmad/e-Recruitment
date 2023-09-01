@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-Auth::routes();
+// Auth::routes();
+Auth::routes(['register' => false]);
+Route::get('/auth/register', 'RegisterController@index')->name('register.index');
+Route::post('/auth/register/store', 'RegisterController@store')->name('register.store');
 
 // Home
 // Route::get('/', function () {
@@ -91,6 +94,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
