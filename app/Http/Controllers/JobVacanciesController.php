@@ -53,7 +53,7 @@ class JobVacanciesController extends Controller
             Alert::error('Failed', 'Job vacancy failed !');
         }
 
-        return redirect('/vacancies');
+        return redirect()->route('vacancies.index');
     }
 
 
@@ -120,7 +120,7 @@ class JobVacanciesController extends Controller
             Alert::error('Failed', 'Job vacancy update failed !');
         }
 
-        return redirect('/vacancies');
+        return redirect()->route('vacancies.index');
     }
 
     public function destroy($vacancies)
@@ -128,7 +128,7 @@ class JobVacanciesController extends Controller
         $vacancies = JobVacancies::where('id', $vacancies);
         $vacancies->delete();
         Alert::success('Sukses', 'Data berhasil di hapus');
-        return redirect('/vacancies');
+        return redirect()->route('vacancies.index');
         // return redirect()->back()->with('sukses', 'data berhasil di hapus');
 
 

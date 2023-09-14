@@ -55,6 +55,26 @@
             <li class="nav-item">
               <a class="nav-link active" href="/">Home</a>
             </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link active" href="/login">Login</a>
+            </li> -->
+            <li class="nav-item">
+              @guest
+              <a class="nav-link active" href="{{ route('login') }}">Login</a>
+              @else
+              <a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>
+                  {{ __('Logout') }}
+                </p>
+              </a>
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                @csrf
+              </form>
+              @endguest
+            </li>
+
             <li class="nav-item dropdown"> <!-- Tambahkan class "dropdown" pada li ini -->
               <a class="nav-link dropdown-toggle" href="#" id="formDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Formulir
