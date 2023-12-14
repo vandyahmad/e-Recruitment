@@ -21,7 +21,7 @@ class CreatePelamarsTable extends Migration
             $table->date('tanggal_lahir');
             $table->char('jenis_kelamin', 1);
             $table->text('alamat');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('no_hp');
             $table->string('pendidikan_terakhir');
             $table->string('minat_karir');

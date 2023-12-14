@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html>
+<style>
+  #grad1 {
+    background-color: #9C27B0;
+    background-image: linear-gradient(100deg, #90EE90, #81D4FA);
+    border-radius: 5px;
+    /* overflow: hidden; */
+    box-shadow: 0 0 10px 5px #fff;
+    /* Ensure the gradient doesn't overflow #FF4081*/
+  }
+</style>
 
 <head>
   <meta charset="utf-8">
@@ -32,7 +42,14 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Bootstap select -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-  
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-GLhlTQ8iKIIbT6StStE3S/tOtnF5g4BduQyRXNI+T21ntsz9vI01u6B5Q5SIIpZ" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+
+
 
 </head>
 
@@ -75,6 +92,13 @@
           <div class="row mb-2">
             <div class="col-sm-6">
               <h1 class="m-0 text-dark">@yield('sub-judul')</h1>
+            </div>
+            <div class="col-sm-6">
+              <div class="btn-action d-flex justify-content-end mb-3">
+                <a href="@yield('btn_url_add')" class="btn btn-primary btn-cool-add d-inline-block">
+                  <i class="fa fa-plus-circle"></i> @yield('btn_add_label')
+                </a>
+              </div>
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->
@@ -90,5 +114,5 @@
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
+    @include('sweetalert::alert')
     @include('template_admin.footer')

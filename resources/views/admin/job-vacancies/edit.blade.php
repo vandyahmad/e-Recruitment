@@ -63,9 +63,34 @@
       </select>
     </div>
 
+    <div class="row">
+      <div class="col-md-5">
+        <div class="form-group">
+          <label for="job_start_date">Job Start Date</label>
+          <input type="date" class="form-control @error('job_start_date') is-invalid @enderror" id="job_start_date" name="job_start_date" value="{{ old('job_start_date', $vacancies->job_start_date) }}" placeholder="Job start date">
+          @error('job_start_date')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div class="form-group">
+          <label for="job_end_date">Job End Date</label>
+          <input type="date" class="form-control @error('job_end_date') is-invalid @enderror" id="job_end_date" name="job_end_date" value="{{ old('job_end_date', $vacancies->job_end_date) }}" placeholder="Job end date">
+          @error('job_end_date')
+          <span class="invalid-feedback" role="alert">
+            <strong>{{ $message }}</strong>
+          </span>
+          @enderror
+        </div>
+      </div>
+    </div>
 
-    <div class="form-group text-right pb-5">
-      <button type="submit" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Update Job</button>
+
+    <div class="form-group text-right pb-5 mt-2">
+      <button type="submit" class="btn btn-primary">Next <i class="fa fa-arrow-circle-right"></i></button>
     </div>
   </form>
 </div>

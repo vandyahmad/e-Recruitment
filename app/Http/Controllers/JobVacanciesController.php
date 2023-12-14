@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityStep;
 use App\Models\JobVacancies;
+use App\Models\JobVacanciesActivity;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use PDF;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -14,7 +17,7 @@ class JobVacanciesController extends Controller
     {
         // Retrieve all job vacancies
         $result = JobVacancies::all();
-        return view('admin.job-vacancies.index', ['jobvacancies' => $result]);
+        return view('admin.job-vacancies.index', ['jobvacancies' => $result, 'vacancies' => []]);
     }
 
 
@@ -33,8 +36,9 @@ class JobVacanciesController extends Controller
             'job_requirement' => 'required',
             'job_location' => 'required|min:1|array',
             'job_branch' => 'required|min:1|array',
-            'job_company' => 'required|max:50'
-
+            'job_company' => 'required|max:50',
+            'job_start_date' => 'required',
+            'job_end_date' => 'required',
         ]);
 
         // JobVacancies::create($validatedData);
@@ -46,17 +50,72 @@ class JobVacanciesController extends Controller
         $vacancy->job_company = $request->job_company;
         $vacancy->job_location = implode(",", $request->job_location);
         $vacancy->job_branch = implode(",", $request->job_branch);
+        $vacancy->job_start_date = $request->job_start_date;
+        $vacancy->job_end_date = $request->job_end_date;
 
         if ($vacancy->save()) {
-            Alert::success('success', 'Job vacancy added successfully!');
+            return redirect()->route('vacancies.step', $vacancy->id);
         } else {
             Alert::error('Failed', 'Job vacancy failed !');
+            return redirect()->route('vacancies.create');
         }
-
-        return redirect()->route('vacancies.index');
     }
 
 
+    public function step($id)
+    {
+        $job_vacancies = JobVacancies::find($id);
+        $activity_steps = ActivityStep::all();
+        // dd($activity_steps);
+        // Validate the input
+        // $request->validate([
+        //     'job_title' => 'required|max:255',
+        //     'job_description' => 'required',
+        //     'job_requirement' => 'required',
+        //     'job_location' => 'required|array|min:1',
+        //     'job_branch' => 'required|array|min:1',
+        //     'job_company' => 'required|max:50',
+        //     'job_start_date' => 'required',
+        //     'job_end_date' => 'required',
+        // ]);
+
+        // return view('admin.job-vacancies.step', ['vacancies' => $result]);
+        return view('admin.job-vacancies.step', compact('job_vacancies', 'activity_steps', 'id'));
+    }
+
+    public function step_store(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'application_step_no' => 'required|array',
+            'application_step' => 'required|array',
+            // Add more validation rules for your step data
+        ]);
+
+        // Process and save the step data to your database
+        $stepData = $request->only('application_step_no', 'application_step', 'job_vacancy_id');
+
+        foreach ($stepData['application_step_no'] as $key => $stepNo) {
+            JobVacanciesActivity::create([
+                'sequence' => $stepData['application_step_no'][$key],
+                'activity_step_id' => $stepData['application_step'][$key],
+                'job_vacancy_id' => $stepData['job_vacancy_id'],
+                // Add more columns if you have additional fields
+            ]);
+        }
+
+        // JobVacancies::create($validatedData);
+
+
+
+        // if ($vacancy->save()) {
+        Alert::success('success', 'Job vacancy added successfully!');
+        // } else {
+        //     Alert::error('Failed', 'Job vacancy failed !');
+        // }
+
+        return redirect()->route('vacancies.index');
+    }
 
 
     public function show($vacancies)
@@ -72,26 +131,20 @@ class JobVacanciesController extends Controller
         return view('admin.job-vacancies.edit', ['vacancies' => $result]);
     }
 
-
-    // public function update(Request $request, $vacancies)
-    // {
-    //     dd($request->all());
-    //     $request->validate([
-    //         'job_title' => 'required',
-    //         'job_title' => 'required|max:255',
-    //         'job_description' => 'required',
-    //         'job_requirement' => 'required',
-    //         'job_location' => 'required|min:1|array',
-    //         'job_branch' => 'required|min:1|array',
-    //         'job_company' => 'required|max:50'
-    //         // Add validation rules for other fields
-    //     ]);
-
-    //     $vacancy = JobVacancies::findOrFail($vacancies);
-    //     $vacancy->update($request->all());
-
-    //     return redirect()->route('vacancies.index')->with('success', 'Job Vacancy updated successfully');
-    // }
+    public function step_edit($vacancies)
+    {
+        // $result = JobVacanciesActivity::where('job_vacancy_id', $vacancies)->get();
+        
+        $activity_steps = ActivityStep::all();
+        $result = JobVacanciesActivity::where('job_vacancy_id', $vacancies)
+            ->leftJoin('activity_steps as ac', 'ac.id', '=', 'job_vacancies_activity.activity_step_id')
+            ->leftJoin('job_vacancies as jv', 'jv.id', '=', 'job_vacancies_activity.job_vacancy_id')
+            ->select('job_vacancies_activity.sequence', 'job_vacancies_activity.activity_step_id', 'ac.name', 'jv.job_title')
+            ->get();
+        // dd($result);
+        return view('admin.job-vacancies.step-edit', ['vacancies' => $result, 'id' => $vacancies, 'activity_steps' => $activity_steps]);
+        // return redirect()->route('vacancies.step_edit');
+    }
 
     public function update(Request $request, $vacancies)
     {
@@ -103,6 +156,8 @@ class JobVacanciesController extends Controller
             'job_location' => 'required|min:1|array',
             'job_branch' => 'required|min:1|array',
             'job_company' => 'required|max:50',
+            'job_start_date' => 'required',
+            'job_end_date' => 'required',
 
         ]);
 
@@ -113,14 +168,84 @@ class JobVacanciesController extends Controller
         $vacancy->job_company = $request->job_company;
         $vacancy->job_location = implode(",", $request->job_location);
         $vacancy->job_branch = implode(",", $request->job_branch);
+        $vacancy->job_start_date = $request->job_start_date;
+        $vacancy->job_end_date = $request->job_end_date;
+
 
         if ($vacancy->save()) {
-            Alert::success('success', 'Job vacancy updated successfully!');
+            return redirect()->route('vacancies.step_edit', $vacancy->id);
+            // $this->step_edit($vacancy->id);
         } else {
-            Alert::error('Failed', 'Job vacancy update failed !');
+            Alert::error('Failed', 'Job vacancy failed !');
+            return redirect()->route('vacancies.index');
         }
 
-        return redirect()->route('vacancies.index');
+        // return redirect()->route('vacancies.index');
+    }
+
+
+    public function step_update(Request $request, $id)
+    {
+        // dd($request->all());
+        try {
+            $request->validate([
+                'application_step_no' => 'required|array',
+                'application_step' => 'required|array',
+                // Add more validation rules for your step data
+            ]);
+
+            // Process and update the step data in your database
+            $stepData = $request->only('application_step_no', 'application_step');
+
+            $countData = JobVacanciesActivity::where('job_vacancy_id', $id)->count();
+
+            // Start a database transaction
+            DB::beginTransaction();
+
+            if ($countData > 0) {
+                // Delete existing data
+                $delete = JobVacanciesActivity::where('job_vacancy_id', $id)->delete();
+
+                if ($delete) {
+                    foreach ($stepData['application_step_no'] as $key => $stepNo) {
+                        JobVacanciesActivity::create([
+                            'sequence' => $stepData['application_step_no'][$key],
+                            'activity_step_id' => $stepData['application_step'][$key],
+                            'job_vacancy_id' => $id,
+                            // Add more columns if you have additional fields
+                        ]);
+                    }
+
+                    // Commit the transaction
+                    DB::commit();
+
+                    Alert::success('Success', 'Data Updated!');
+                    return redirect()->route('vacancies.index');
+                }
+            } else {
+                foreach ($stepData['application_step_no'] as $key => $stepNo) {
+                    JobVacanciesActivity::create([
+                        'sequence' => $stepData['application_step_no'][$key],
+                        'activity_step_id' => $stepData['application_step'][$key],
+                        'job_vacancy_id' => $id,
+                        // Add more columns if you have additional fields
+                    ]);
+                }
+
+                // Commit the transaction
+                DB::commit();
+
+                Alert::success('Success', 'Data Updated!');
+                return redirect()->route('vacancies.index');
+            }
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            // Rollback the transaction in case of an error
+            DB::rollback();
+
+            Alert::error('Error', $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function destroy($vacancies)

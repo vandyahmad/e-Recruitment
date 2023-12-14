@@ -45,13 +45,24 @@
 <!-- overlayScrollbars -->
 <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
+
 <!-- AdminLTE App -->
 <script src="{{ asset('assets/dist/js/adminlte.js') }}"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
+
+
 <script>
+  $('#datatablePelamar').DataTable();
+  
+  $('#datatableJobVacancy').DataTable();
+
   $('#job_description').summernote({
     placeholder: 'Input job description',
     tabsize: 2,
@@ -65,17 +76,67 @@
   });
 
   // $(document).ready(function() {
-    // $('.selectpicker').selectpicker();
+  // $('.selectpicker').selectpicker();
   // });
 
-  $(document).ready(function() {
-    $('.js-example-tags').select2({
-      tags: true
-    });
+  // $(document).ready(function() {
+  $('.js-example-tags').select2({
+    tags: true
+  });
+
+  // });
+
+
+  // $(document).ready(function() {
+  // Initialize the step count
+
+
+
+
+  let stepCount = 1;
+  // alert(stepCount)
+
+  // Add Step button click event
+  $("#btn_add_step").click(function() {
+    stepCount++; // Increment the step count
+
+    // alert("add" + stepCount);
+
+    // Clone the template
+    const newStep = $(".step_activity:first").clone();
+
+    // console.log(newStep)
+
+    // Update the "Urutan" value
+    newStep.find("input[type='number']").val(stepCount);
+
+    // newStep.find("select[type='number']").val(stepCount);
+
+    // Append the new step to the step container
+    $("#area_activity").append(newStep);
   });
 
 
+
+  $(document).on("click", ".btn_delete_step", function() {
+    if ($(".step_activity").length > 1) {
+      stepCount--;
+      $(this).closest(".step_activity").remove();
+      updateStepNumbers();
+    }
+  });
+
+
+
+  function updateStepNumbers() {
+    $(".step_activity").each(function(index) {
+      $(this).find("input[name='application_step_no[]']").val(index + 1);
+    });
+  }
+  // });
 </script>
+
+@stack('scripts')
 </body>
 
 </html>

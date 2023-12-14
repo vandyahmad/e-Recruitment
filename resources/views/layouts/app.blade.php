@@ -15,6 +15,7 @@
 
   <link rel="stylesheet" href="{{ asset('assets/fonts/ionicons/css/ionicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/fonts/fontawesome/css/font-awesome.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/plugins/fontawesome-free/css/all.min.css') }}">
 
   <!-- Theme Style -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -64,7 +65,7 @@
               @else
               <a href="{{ route('logout') }}" onclick="event.preventDefault();
             document.getElementById('logout-form').submit();" class="nav-link">
-                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <!-- <i class="nav-icon fas fa-sign-out-alt"></i> -->
                 <p>
                   {{ __('Logout') }}
                 </p>
@@ -75,15 +76,21 @@
               @endguest
             </li>
 
-            <li class="nav-item dropdown"> <!-- Tambahkan class "dropdown" pada li ini -->
+            <li class="nav-item">
+              <a class="nav-link active" href="{{ route('pelamar.detail-login-user') }}">Profile</a>
+            </li>
+
+            <!-- Tambahkan class "dropdown" pada li ini -->
+            <!-- <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="formDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Formulir
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="formDropdown"> <!-- Buat dropdown menu -->
-                <a class="dropdown-item" href="form-pendaftaran-pelamar">Form Pendaftaran Pelamar</a>
+              </a> -->
+              <!-- Buat dropdown menu -->
+              <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="formDropdown">  -->
+                <!-- <a class="dropdown-item" href="form-pendaftaran-pelamar">Form Pendaftaran Pelamar</a>
                 <a class="dropdown-item" href="form-pendaftaran">Form Detail Candidate</a>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
 

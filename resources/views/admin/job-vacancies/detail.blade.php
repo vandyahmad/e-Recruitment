@@ -8,7 +8,7 @@
     <div class="row">
       <!-- <div class="col-md-3"></div> -->
 
-       
+
       <!-- Kolom Detail Vacancy -->
       <div class="col-md-12">
         <div class="card card-solid">
@@ -23,45 +23,59 @@
               <div class="card-body">
                 <form class="form-horizontal">
                   <div class="form-group row">
-                    <label  class=" col-sm-2">Job Title</label>
+                    <label class=" col-sm-2">Job Title</label>
                     <div class="col-sm-10">
                       <label>:</label>
                       <label>{{$vacancies->job_title}}</label>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label  class=" col-sm-2">Job Description :</label>
+                    <label class=" col-sm-2">Job Description :</label>
                     <div class="col-sm-10">
                       <!-- <label>:</label> -->
                       <label>{!!$vacancies->job_description!!}</label>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label  class=" col-sm-2">Job Requirement :</label>
+                    <label class=" col-sm-2">Job Requirement :</label>
                     <div class="col-sm-10">
                       <!-- <label>:</label> -->
                       <label>{!!$vacancies->job_requirement!!}</label>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label  class=" col-sm-2">Job Location</label>
+                    <label class=" col-sm-2">Job Location</label>
                     <div class="col-sm-10">
                       <label>:</label>
                       <label>{{$vacancies->job_location}}</label>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label  class=" col-sm-2">Job Company</label>
+                    <label class=" col-sm-2">Job Company</label>
                     <div class="col-sm-10">
                       <label>:</label>
                       <label>{{$vacancies->job_company}}</label>
                     </div>
                   </div>
                   <div class="form-group row">
-                    <label  class=" col-sm-2">Job Branch</label>
+                    <label class=" col-sm-2">Job Branch</label>
                     <div class="col-sm-10">
                       <label>:</label>
                       <label>{{$vacancies->job_branch}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class=" col-sm-2">Job Start Date</label>
+                    <div class="col-sm-10">
+                      <label>:</label>
+                      <label>{{$vacancies->job_start_date}}</label>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class=" col-sm-2">Job Exp Date</label>
+                    <div class="col-sm-10">
+                      <label>:</label>
+                      <label>{{$vacancies->job_end_date}}</label>
                     </div>
                   </div>
                 </form>
@@ -75,4 +89,3 @@
 </section>
 
 @endsection
-

@@ -13,28 +13,28 @@
         <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch">
           <div class="card bg-light">
             <div class="card-header text-muted border-bottom-0">
-            NIK. {{$result->nik}}
+            NIK. {{$result->userData->nik}}
             </div>
             <div class="card-body pt-0">
               <div class="row">
                 <div class="col-7">
-                  <h2 class="lead"><b>{{$result->nama_lengkap}}</b></h2>
+                  <h2 class="lead"><b>{{$result->userData->nama_lengkap}}</b></h2>
                   <hr>
                   <ul class="ml-4 mb-0 fa-ul text-muted">
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-address-card"></i></span><b>{{$result->minat_karir}}</b></li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-graduation-cap"></i></span><b>{{$result->pendidikan_terakhir}}</b></li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>{{$result->no_hp}}</b></li>
-                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>{{$result->email}}</b></li>
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-address-card"></i></span><b>{{$result->job_vacancy->job_title}}</b></li>
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-graduation-cap"></i></span><b>{{$result->userData->pendidikan_terakhir}}</b></li>
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span><b>{{$result->userData->no_hp}}</b></li>
+                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-envelope"></i></span><b>{{$result->userData->email}}</b></li>
                   </ul>
                 </div>
                 <div class="col-5 text-center">
-                  <img src="{{ asset('storage/uploads/images/'.$result->upload_foto)}}" alt="" class="img-circle img-fluid">
+                  <img src="{{ asset('storage/uploads/images/'.$result->userData->upload_foto)}}" alt="" class="img-circle img-fluid">
                 </div>
               </div>
             </div>
             <div class="card-footer">
               <div class="text-right">
-                <a href="{{route('admin.show', ['pelamar'=>$result->id])}}" class="btn btn-sm btn-primary">
+                <a href="{{route('admin.show_pelamar', ['pelamar'=>$result->id])}}" class="btn btn-sm btn-primary">
                   <i class="fas fa-user"></i> Lihat Biodata
                 </a>
               </div>

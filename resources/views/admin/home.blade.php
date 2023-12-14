@@ -20,7 +20,7 @@
                 <div class="icon">
                   <i class="ion ion-person"></i>
                 </div>
-                <a href="{{ route('admin.index') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.index_pelamar') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->
@@ -36,7 +36,7 @@
                 <div class="icon">
                   <i class="ion ion-monitor"></i>
                 </div>
-                <a href="{{ route('admin.contact') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                <a href="{{ route('admin.contact_pelamar') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
               </div>
             </div>
             <!-- ./col -->

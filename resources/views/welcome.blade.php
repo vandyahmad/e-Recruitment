@@ -3,25 +3,44 @@
 
 @section('content')
 
+<style>
+  /*Background color*/
+  #grad1 {
+    background-color: #9C27B0;
+    background-image: linear-gradient(100deg, #90EE90, #81D4FA);
+    border-radius: 50px;
+    overflow: hidden;
+    box-shadow: 0 0 10px 10px #fff;
+    /* Ensure the gradient doesn't overflow #FF4081*/
+  }
+
+  .card-header {
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: rgb(237 255 239 / 30%);
+    /* border-bottom: 1px solid rgba(0, 0, 0, .125); */
+  }
+</style>
+
 <!-- SLIDE 1 -->
 <section class="home-slider owl-carousel">
-  <div class="slider-item" style="background-image: url('assets/images/slider_1.jpg');">
+  <div class="slider-item" style="background-image: url('assets/images/eco1.jpg');">
     <div class="container">
       <div class="row slider-text align-items-center justify-content-center">
         <div class="col-lg-7 text-center col-sm-12 element-animate">
           <div class="btn-play-wrap mx-auto">
             <p class="mb-4"><a href="https://www.youtube.com/watch?v=9j5f00-qiF8" data-fancybox data-ratio="2" class="btn-play"><span class="ion ion-ios-play"></span></a></p>
           </div>
-          <h2>SELAMAT DATANG </h2>
+          <h2 class="text-white">SELAMAT DATANG</h2>
           <h1><strong>E - R E C R U I T M E N T</strong></h1>
-          <h2>PT . ECOCARE INDO PASIFIK</h2>
+          <!-- <h2 class="text-white">PT . ECOCARE INDO PASIFIK</h2> -->
         </div>
       </div>
     </div>
   </div>
 
   <!-- SLIDE 2 -->
-  <div class="slider-item" style="background-image: url('assets/images/slider_2.jpg');">
+  <div class="slider-item" style="background-image: url('assets/images/eco2.jpg');">
     <div class="container">
       <div class="row slider-text align-items-center justify-content-center">
         <div class="col-lg-7 text-center col-sm-12 element-animate">
@@ -30,7 +49,7 @@
     </div>
   </div>
   <!-- SLIDE 3 -->
-  <div class="slider-item" style="background-image: url('assets/images/slider_3.jpg');">
+  <div class="slider-item" style="background-image: url('assets/images/eco3.jpg');">
     <div class="container">
       <div class="row slider-text align-items-center justify-content-center">
         <div class="col-lg-7 text-center col-sm-12 element-animate">
@@ -44,6 +63,95 @@
 <!-- END slider -->
 </div>
 
+<section>
+  <!-- <div class="d-flex justify-content-center"> -->
+  <!-- <div class="row col-md-12 "> -->
+  <!-- <div class="container-fluid"> -->
+  <!-- <div class="card user-details-card"> -->
+  <!-- <div class="card-body"> -->
+  <div class="row justify-content-center mt-5 mb-5">
+    <h2>Lowongan Yang Kami Buka Untuk Anda</h2>
+  </div>
+  <!-- </div> -->
+
+  @foreach ($jobvacancies as $jobvacancy)
+  @if (strtotime($jobvacancy->job_end_date) >= strtotime(now()))
+  <div id="accordion" class="d-flex justify-content-center">
+    <div class="card mb-1 col-md-10 border-success">
+      <div class="card-header mb-2" id="headingOne">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne{{ $jobvacancy->id }}" aria-expanded="true" aria-controls="collapseOne">
+            <h6>{{ $jobvacancy->job_title }} <i class="fas fa-angle-down"></i></h6>
+          </button>
+        </h5>
+      </div>
+      <div class="container-fluid" id="grad1">
+        <div id="collapseOne{{ $jobvacancy->id }}" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion{{ $jobvacancy->id }}">
+          <div class="card user-details-card">
+            <div class="card-body">
+              <h7><strong>Job Description :</strong></h7>
+              <p>{!! $jobvacancy->job_description !!}</p>
+              <h7><strong>Requirements:</strong></h7>
+              <p>{!! $jobvacancy->job_requirement !!}</p>
+              <p><strong>Location:</strong> {{ $jobvacancy->job_location }}</p>
+              <p><strong>Date Opened:</strong> {{ $jobvacancy->job_start_date }}</p>
+              <p><strong>Date Closed:</strong> {{ $jobvacancy->job_end_date }}</p>
+              <div class="text-center">
+                <button class="btn btn-primary" data-id="{{ $jobvacancy->id }}" data-toggle="modal" data-target="#ConfirmModal-{{ $jobvacancy->id }}">
+                  <i class="fa fa-bolt"></i> Apply This
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  @endif
+
+  <div id="ConfirmModal-{{ $jobvacancy->id}}" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+      {{-- Content / Isi Modal --}}
+      <form id='applyForm{{ $jobvacancy->id}}' action="{{ route('pelamars.store') }}" method="POST">
+        @csrf
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title justify-content-center">Konfirmasi</h4>
+            <input type="hidden" name="minat_karir" id="minat_karir" value="{{ $jobvacancy->id }}">
+            <button type="button" class="close" data-dismiss="modal">
+              &times;</button>
+          </div>
+          <div class="modal-body">
+            <p class="text-center"> Apakah anda yakin sudah memenuhi kriteria yang tertera dan ingin submit lamaran untuk posisi <b>{{ $jobvacancy->job_title}}</b> ? </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success btn-sm" onclick="confirmApply('{{$jobvacancy->id}}')">
+              Ya, Submit
+            </button>
+            <button type="button" class="btn btn-danger btn-sm" data-dismiss="modal">
+              Batal</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  @endforeach
+
+  <script>
+    function confirmApply(JobVacancyID) {
+      // If the user clicks "OK", submit the form
+      document.getElementById("applyForm" + JobVacancyID).submit();
+    }
+  </script>
+  <br>
+  <br>
+  <!-- </div> -->
+  <br>
+  <!-- </div>
+    </div>
+  </div> -->
+</section>
 <section class="section bg-light">
   <div class="container">
     <div class="row">
@@ -82,94 +190,6 @@
 </section>
 <!-- END section -->
 
-<section class="section">
-  <div class="container">
-    <div class="row mb-5">
-      <div class="col-12 text-center">
-        <h2>Lowongan Yang Kami Buka Untuk Anda</h2>
-      </div>
-    </div>
-
-
-    <!-- <div class="row align-items-stretch">
-      <div class="col-lg-4 order-lg-1">
-        <div class="h-100">
-          <div class="frame h-100">
-            <div class="feature-img-bg h-100" style="background-image: url('assets/images/image3.jpg');"></div>
-          </div>
-        </div>
-      </div> -->
-
-    <!-- <div class="col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1"> -->
-    @foreach ($jobvacancies as $jobvacancy)
-    <div id="accordion">
-      <div class="card">
-        <div class="card-header" id="headingOne">
-          <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne<?= $jobvacancy->id ?>" aria-expanded="true" aria-controls="collapseOne">
-              <h6>{{ $jobvacancy->job_title }}</h6>
-            </button>
-          </h5>
-        </div>
-
-        <div id="collapseOne<?= $jobvacancy->id ?>" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion<?= $jobvacancy->id ?>">
-          <div class="card-body">
-            <h7><strong>Job Description :</strong></h7>
-            <p>{!! $jobvacancy->job_description !!}</p>
-            <h7><strong>Requirements:</strong></h7>
-            <p>{!! $jobvacancy->job_requirement !!}</p>
-            <p><strong>Location:</strong> {{ $jobvacancy->job_location }}</p>
-          </div>
-        </div>
-      </div>
-      @endforeach
-      <!-- @foreach ($jobvacancies as $jobvacancy)
-      <div class="feature-1 d-md-flex">
-        <div class="align-self-center">
-          <span class="ion ion-ios-contact-outline display-4 text-primary"></span>
-          <h3>{{ $jobvacancy->job_title }}</h3>
-          <h3>Job Description :</h3>
-          <p>{{ $jobvacancy->job_description }}</p>
-          <h3>Requirements:</h3>
-          <p>{{ $jobvacancy->job_requirement }}</p>
-          <p><strong>Location:</strong> {{ $jobvacancy->job_location }}</p>
-        </div>
-      </div>
-      @endforeach -->
-      <!-- <div class="feature-1 d-md-flex">
-          <div class="align-self-center">
-            <span class="ion ion-ios-contact-outline display-4 text-primary"></span>
-            <h3>Finance & Administration</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="col-md-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3">
-
-        <div class="feature-1 d-md-flex">
-          <div class="align-self-center">
-            <span class="ion ion-ios-contact-outline display-4 text-primary"></span>
-            <h3>Programmer</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-        </div>
-
-        <div class="feature-1 d-md-flex">
-          <div class="align-self-center">
-            <span class="ion ion-ios-contact-outline display-4 text-primary"></span>
-            <h3>Web Designer</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts.</p>
-          </div>
-        </div> -->
-
-      <!-- </div> -->
-      <!-- </div> -->
-    </div>
-</section>
-
-
 
 <section class="section element-animate">
   <div class="container">
@@ -194,5 +214,5 @@
     </div>
   </div>
 </section>
-
+@include('sweetalert::alert')
 @endsection

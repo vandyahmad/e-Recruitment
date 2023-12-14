@@ -1,7 +1,7 @@
 // TEXT 
 $('input[type="file"]' ).on('change' , function () {
 	let filenames = [];
-		let files = document.getElementById('upload_foto').files;
+		let files = document.getElementById('upload_file').files;
 
 		for (let i in files) {
 			if (files.hasOwnProperty(i)) {
