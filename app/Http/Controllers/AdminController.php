@@ -60,19 +60,29 @@ class AdminController extends Controller
         return view('admin.detail', ['pelamar' => $result]);
     }
 
+    public function cetak_pelamar($pelamar)
+    {
+        $result = pelamars::with('userData', 'job_vacancy')->where('id',$pelamar)->first();
+        // dd($result);
+        $pdf = PDF::loadView('admin.cetak', ['result' => $result]);
+        return $pdf->stream();
+    }
+
     public function contact_pelamar()
     {
         $result = pelamars::with('userData', 'job_vacancy')->get();
         return view('admin.contact', ['pelamar' => $result]);
     }
 
-    public function cetak_pelamar($pelamar)
-    {
-        $pelamar = pelamars::where('nik', $pelamar)->first();
+    // public function cetak_pelamar($pelamar)
+    // {
+    //     $pelamar = pelamars::with('userData', 'job_vacancy')->whereHas('userData', function ($query) use ($pelamar) {
+    //         $query->where('nik', $pelamar);
+    //     })->first();
 
-        $pdf = PDF::loadView('admin.cetak', ['result' => $pelamar]);
-        return $pdf->stream();
-    }
+    //     $pdf = PDF::loadView('admin.cetak', ['result' => $pelamar]);
+    //     return $pdf->stream();
+    // }
 
 
     public function destroy_pelamar($pelamar)

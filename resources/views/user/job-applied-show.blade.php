@@ -127,7 +127,7 @@
                         @elseif($minat_karir->status == 'Declined')
                         <ul id="progressbar">
                             @foreach($activities as $index => $activity)
-                            
+
                             <li id="{{strtolower($activity->activity)}}" class="<?= $activity->activity == 'Declined' ? 'declined' : 'account' ?>">
                                 <strong>{{ $activity->activity }}</strong>
                                 <!-- <i class="fas fa-check"></i> -->
@@ -154,7 +154,49 @@
 
                         @foreach($activities as $index => $activity)
 
+                        @if($activity->activity == 'Accepted')
+                        <fieldset id="fieldset{{ $index + 1 }}">
+                            <div class="form-card">
+                                <h2 class="fs-title">Selamat !</h2>
+                                <div style="text-align: justify;">
+                                    <p>
+                                        Kami dengan senang hati ingin memberitahu bahwa Anda telah berhasil lolos dalam proses seleksi penerimaan pekerjaan di ecoCare Group. Selamat atas pencapaian ini!
+                                    </p>
+                                    <p>
+                                        Setelah melalui evaluasi yang cermat, kami yakin bahwa Anda memiliki kualifikasi, keterampilan, dan dedikasi yang kami cari untuk posisi <strong>{{ $minat_karir->job_vacancy->job_title }}</strong>. Kami percaya bahwa kontribusi Anda akan membawa nilai tambah bagi tim kami.
+                                    </p>
+                                    <p>
+                                        Terima kasih atas komitmen dan dedikasi Anda selama proses seleksi ini. Kami berharap dapat bekerja sama dengan Anda di ecoCare Group.
+                                    </p>
+                                    <p>
+                                        Selamat kembali dan selamat bergabung dengan tim kami!
+                                    </p>
 
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        @elseif($activity->activity == 'Declined')
+                        <fieldset id="fieldset{{ $index + 1 }}">
+                            <div class="form-card">
+                                <h2 class="fs-title">Terimakasih !</h2>
+                                <div style="text-align: justify;">
+                                    <p>
+                                        Kami ingin menyampaikan terima kasih atas partisipasi Anda dalam proses seleksi lamaran pekerjaan di ecoCare Group. Kami menghargai waktu dan usaha yang Anda investasikan dalam mengajukan lamaran.
+                                    </p>
+
+                                    <p>
+                                        Setelah melalui proses evaluasi yang cermat, kami ingin memberitahukan bahwa saat ini kami telah menyelesaikan proses seleksi, dan sayangnya, lamaran Anda <strong>belum memenuhi kriteria</strong> yang kami cari untuk posisi <strong>{{ $minat_karir->job_vacancy->job_title }}</strong>.
+                                    </p>
+
+                                    <p>
+                                        Meskipun Anda tidak lolos pada tahap ini, kami tetap menghargai minat dan dedikasi Anda untuk bergabung dengan ecoCare Group. Terima kasih sekali lagi atas partisipasi Anda. Kami senang Anda tertarik untuk bergabung dengan tim kami dan berharap Anda dapat mencapai sukses besar di masa mendatang.
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        @else
                         <fieldset id="fieldset{{ $index + 1 }}">
                             <div class="form-card">
                                 <h2 class="fs-title">Selamat !</h2>
@@ -177,7 +219,7 @@
                                 </div>
                             </div>
                         </fieldset>
-
+                        @endif
                         @endforeach
 
                         @else

@@ -33,66 +33,65 @@
 
             <tbody>
 
-                {{-- {{ dd($result) }} --}}
 
                 <tr>
                     <td width="25%" valign="top" class="text">NIK</td>
                     <td width="2%">:</td>
-                    <td style="color: rgb(118, 157, 29); font-weight:bold">{{$result->nik}} </td>
+                    <td style="color: rgb(118, 157, 29); font-weight:bold">{{$result->userData->nik}} </td>
                 </tr>
 
                 <tr>
                     <td class="text">Nama Lengkap</td>
                     <td>:</td>
-                    <td>{{$result->nama_lengkap}} </td>
+                    <td>{{$result->userData->nama_lengkap}} </td>
                 </tr>
 
                 <tr>
                     <td class="text">Jenis Kelamin</td>
                     <td>:</td>
-                    <td>{{$result->jenis_kelamin =='P' ? 'Perempuan' : 'Laki-laki' }} </td>
+                    <td>{{$result->userData->jenis_kelamin =='P' ? 'Perempuan' : 'Laki-laki' }} </td>
                 </tr>
 
                 <tr>
                     <td class="text">Tempat Lahir</td>
                     <td>:</td>
-                    <td>{{$result->tempat_lahir}} </td>
+                    <td>{{$result->userData->tempat_lahir}} </td>
                 </tr>
 
                 <tr>
                     <td class="text">Tanggal Lahir</td>
                     <td>:</td>
-                    <td>{{$result->tanggal_lahir}} </td>
+                    <td>{{$result->userData->tanggal_lahir}} </td>
                 </tr>
 
                 <tr>
                     <td class="text">Alamat</td>
                     <td>:</td>
-                    <td>{{$result->alamat}}</td>
+                    <td>{{$result->userData->alamat}}</td>
                 </tr>
 
                 <tr>
                     <td class="text">Email</td>
                     <td>:</td>
-                    <td>{{$result->email}}</td>
+                    <td>{{$result->userData->email}}</td>
                 </tr>
 
                 <tr>
                     <td class="text">No. Telepon</td>
                     <td>:</td>
-                    <td>{{$result->no_hp}}</td>
+                    <td>{{$result->userData->no_hp}}</td>
                 </tr>
 
                 <tr>
                     <td class="text">Pendidikan Terakhir</td>
                     <td>:</td>
-                    <td>{{$result->pendidikan_terakhir}}</td>
+                    <td>{{$result->userData->pendidikan_terakhir}} {{$result->userData->jurusan}}, {{$result->userData->institusi}}</td>
                 </tr>
 
                 <tr>
                     <td class="text">Minat Karir</td>
                     <td>:</td>
-                    <td>{{$result->minat_karir}}</td>
+                    <td>{{$result->job_vacancy->job_title}}</td>
                 </tr>
 
             </tbody>

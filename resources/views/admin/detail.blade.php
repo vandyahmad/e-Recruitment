@@ -7,7 +7,6 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
-
         <!-- Profile Image -->
         <div class="card card-danger card-outline">
           <div class="card-body box-profile">
@@ -23,11 +22,11 @@
 
             <ul class="list-group list-group-unbordered mb-3">
               <li class="list-group-item">
-                <a href="{{ asset('uploads/files/'.$pelamar->upload_file)}}" class="btn btn-danger btn-block"><b>Data Identitas Diri</b></a>
+                <a href="{{ asset('uploads/files/'.$pelamar->userData->upload_file)}}" class="btn btn-danger btn-block"><b>Data Identitas Diri</b></a>
               </li>
             </ul>
 
-            <a href="{{route('admin.cetak_pelamar', ['pelamar'=>$pelamar->userData->nik])}}" class="btn btn-danger btn-block"><b>Export to PDF</b></a>
+            <a href="{{route('admin.cetak_pelamar', ['pelamar'=>$pelamar->id])}}" class="btn btn-danger btn-block"><b>Export to PDF</b></a>
           </div>
         </div>
       </div>

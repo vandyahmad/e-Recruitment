@@ -33,8 +33,13 @@ class PelamarsController extends Controller
     protected function store(Request $request)
     {
         $user = auth()->user();
-
         if ($user) {
+            $user_data = pelamars::with('userData')->where('user_id', auth()->user()->id)->first();
+            if (!$user_data) {
+                Alert::error('Anda belum melengkapi data', ' Silahkan isi terlebih dahulu.');
+                return redirect()->route('pelamar.detail-login-user');
+            }
+
             $validateData = $request->validate([
                 'minat_karir'   =>  'required',
             ]);
@@ -56,6 +61,7 @@ class PelamarsController extends Controller
             }
         } else {
             // Handle the case when no user is authenticated
+            Alert::error('Anda belum login', 'Silahkan login terlebih dahulu')->persistent(true);
             return redirect()->route('login'); // Redirect to the login page or any other desired route
         }
     }
@@ -133,7 +139,7 @@ class PelamarsController extends Controller
     {
         // // Retrieve the applied job details along with its related pelamar
         // // Assuming you want the first result of pelamars based on the given $id
-        $minat_karir = pelamars::with('job_vacancy')->select('minat_karir','status')->where('id', $id)->first();
+        $minat_karir = pelamars::with('job_vacancy')->select('minat_karir', 'status')->where('id', $id)->first();
         // $pelamar_activity = PelamarActivity::select('activity')->where('id_pelamar', $id)->get();
         // dd($minat_karir);
 
@@ -145,7 +151,7 @@ class PelamarsController extends Controller
             //     $jobActivities = JobVacanciesActivity::select('activity_step_id')
             //         ->where('job_vacancy_id', $minat_karir_value)
             //         ->get();
-        
+
             $jobActivities = DB::select(DB::raw("
         SELECT
             jva.`sequence`

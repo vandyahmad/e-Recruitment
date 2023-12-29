@@ -80,7 +80,7 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/pelamar/contact', 'AdminController@contact_pelamar')->name('admin.contact_pelamar');
 
-            Route::get('/pelamar/cetak/{pelamar}/cetak', 'AdminController@cetak_pelamar')->name('admin.cetak_pelamar');
+            Route::get('/pelamar/cetak/{pelamar}', 'AdminController@cetak_pelamar')->name('admin.cetak_pelamar');
 
             Route::post('/process/pelamar', 'AdminController@process')->name('admin.process_pelamar');
 

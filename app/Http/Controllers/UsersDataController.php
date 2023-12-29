@@ -189,13 +189,13 @@ class UsersDataController extends Controller
             $slug = str::slug($request['nama_lengkap']);
 
             // Mengambil extensi file asli
-            $extFile = $request->upload_foto->getClientOriginalExtension();
+            $extFile = $request->upload_file->getClientOriginalExtension();
 
             // Generate nama_gambar, gabungan dari slug "nama" + time() + extensi file
             $namaFile = $slug . '-' . time() . "." . $extFile;
 
             // Proses Upload, simpan ke dalam folder "uploads"
-            $request->file('upload_file')->move('uploads/images', $namaImage);
+            $request->file('upload_file')->move('uploads/files', $namaFile);
         }
 
         // proses Upload File

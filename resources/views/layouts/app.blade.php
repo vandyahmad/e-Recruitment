@@ -119,7 +119,7 @@
           <a>
             <img src="{{ asset('assets/images/Ecocare 1.png') }}" style="height:60px;">
           </a>
-          <p> Lorem ipsum dolor sit amet consectetur adipisicing elit.Aperiam cumque, esse modi maxime veniam nulla delectus dolorem
+          <!-- <p> Lorem ipsum dolor sit amet consectetur adipisicing elit.Aperiam cumque, esse modi maxime veniam nulla delectus dolorem -->
           </p>
         </div>
         <div class="col-md-3 text-center text-md-left">

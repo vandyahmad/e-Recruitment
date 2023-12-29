@@ -31,7 +31,6 @@
               </thead>
               <tbody>
                 @foreach ($pelamar as $result)
-
                 <tr class="clickable-row">
                   <td>
                     <div class="btn-group d-inline">
@@ -53,7 +52,7 @@
                   <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->job_vacancy['job_title'] }}</a></td>
                   <td><a href="{{ route('admin.activity_pelamar', $result->id) }}">{{ $result->status }}</a></td>
                   <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->created_at }}</a></td>
-                  
+
                 </tr>
 
                 {{-- modal untuk konfirmasi --}}
