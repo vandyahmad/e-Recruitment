@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-  <title>ecoCare Group</title>
+  <title>ecoCare Group Company</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -26,6 +26,10 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
+
+
 </head>
 <!-- NAVBAR -->
 
@@ -34,7 +38,7 @@
   <header role="banner">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="container-fluid">
-        <a class="navbar-brand " href="/"><strong>ecoCare Group</strong></a>
+        <a class="navbar-brand " href="/"><strong>ecoCare Group Company</strong></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -85,9 +89,9 @@
               <a class="nav-link dropdown-toggle" href="#" id="formDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Formulir
               </a> -->
-              <!-- Buat dropdown menu -->
-              <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="formDropdown">  -->
-                <!-- <a class="dropdown-item" href="form-pendaftaran-pelamar">Form Pendaftaran Pelamar</a>
+            <!-- Buat dropdown menu -->
+            <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="formDropdown">  -->
+            <!-- <a class="dropdown-item" href="form-pendaftaran-pelamar">Form Pendaftaran Pelamar</a>
                 <a class="dropdown-item" href="form-pendaftaran">Form Detail Candidate</a>
               </div>
             </li> -->
@@ -141,8 +145,8 @@
           <div><a class="text-white" href="/">
               <span class="fa fa-caret-right fa-fw mr-2"></span>Home</a>
           </div>
-          <div><a class="text-white" href="/form-pendaftaran">
-              <span class="fa fa-caret-right fa-fw mr-2"></span>Form Lowongan Pekerjaan</a>
+          <div><a class="text-white" href="/auth/register">
+              <span class="fa fa-caret-right fa-fw mr-2"></span>Form Registrasi</a>
           </div>
         </div>
 
@@ -187,8 +191,7 @@
   <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.waypoints.min.js') }}"></script>
   <script src="{{ asset('assets/js/jquery.fancybox.min.js') }}"></script>
-  <script src="{{ asset('assets/js/main.js') }}"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   <script src="{{ asset('assets/js/main.js') }}"></script>
 
   <script>

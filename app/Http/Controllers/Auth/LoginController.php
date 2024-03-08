@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\UsersData;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -41,13 +42,15 @@ class LoginController extends Controller
 
     protected function authenticated(Request $request, $user)
     {
-        if ( $user->role_id == 1 ) {// do your magic here
+        if ($user->role_id == 1) { // do your magic here
             return redirect()->route('admin.home');
         }
-
+        $user_data = UsersData::where('user_id', $user->id)->first();
+        // dd($user_data);
+        if (!$user_data) {
+            alert('Lengkapi Data Profile', 'Untuk dapat melamar pekerjaan yang tersedia');
+            return redirect('/');
+        }
         return redirect()->route('welcome.index');
-   
-        
     }
-    
 }

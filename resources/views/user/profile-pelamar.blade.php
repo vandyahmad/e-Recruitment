@@ -301,6 +301,9 @@
 </style>
 @section('content')
 
+
+<!-- <script src="{{ asset('assets/js/main.js') }}"></script> -->
+
 <div class="top-shadow"></div>
 <div class="inner-page">
     <div class="slider-item" style="background-image: url('assets/images/slider_3.jpg');">

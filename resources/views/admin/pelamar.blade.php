@@ -25,6 +25,7 @@
                   <th>Nama Lengkap</th>
                   <th>Pendidikan Terakhir</th>
                   <th>Minat Karir</th>
+                  <th>Preferensi Lokasi</th>
                   <th>Status</th>
                   <th>Tanggal Apply</th>
                 </tr>
@@ -50,6 +51,7 @@
                   <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->UserData->nama_lengkap }}</a></td>
                   <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->UserData->pendidikan_terakhir }} {{ $result->UserData->jurusan }}, {{ $result->UserData->institusi }}</a></td>
                   <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->job_vacancy['job_title'] }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->minat_lokasi }}</a></td>
                   <td><a href="{{ route('admin.activity_pelamar', $result->id) }}">{{ $result->status }}</a></td>
                   <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $result->id]) }}">{{ $result->created_at }}</a></td>
 
@@ -146,7 +148,7 @@
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
-                        <button type="button" class="btn btn-primary" id="submitForm-{{ $result->id }}">Submit</button>
+                        <button type="button" class="btn btn-primary submit-button" id="submitForm-{{ $result->id }}">Submit</button>
 
                       </div>
                     </div>
@@ -164,6 +166,11 @@
                     $('#submitForm-{{ $result->id }}').on('click', function(event) {
                       event.preventDefault();
 
+                      // Disable the button and show loading text
+                      var submitButton = $(this);
+                      submitButton.prop('disabled', true);
+                      submitButton.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Submitting...');
+
                       var formData = $('#proceedForm-{{ $result->id }}').serialize();
                       $.ajax({
                         type: "POST",
@@ -174,11 +181,21 @@
                           if (response.success) {
                             location.reload();
                           }
+                          else {
+                            alert(response.message);
+                            location.reload();
+                          }
                           // $('#ProceedModal-{{ $result->id }}').modal('hide');
                           // toast(response,'success');
+                          // Enable the button and reset text on success or error
+                          submitButton.prop('disabled', false);
+                          submitButton.html('Submit');
                         },
                         error: function(error) {
                           console.log(error);
+                          // Enable the button and reset text on error
+                          submitButton.prop('disabled', false);
+                          submitButton.html('Submit');
                         }
                       });
                     });

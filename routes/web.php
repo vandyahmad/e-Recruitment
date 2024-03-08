@@ -19,6 +19,7 @@ Route::post('/auth/register/store', 'RegisterController@store')->name('register.
 // });
 
 Route::get('/', 'WelcomeController@index')->name('welcome.index');
+Route::get('/filter/jobvacancies', 'WelcomeController@filter')->name('welcome.filter');
 
 
 // Route Data Pelamar
@@ -133,7 +134,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/vacancies/step/{id}', 'JobVacanciesController@step_update')->name('vacancies.step_update');
 
             Route::get('/vacancies/show/{vacancies}', 'JobVacanciesController@show')->name('vacancies.show');
-
+            
+            Route::get('/vacancies/{vacancies}/pelamar', 'JobVacanciesController@pelamar')->name('vacancies.pelamar');
+            
             Route::delete('/vacancies/delete/{vacancies}', 'JobVacanciesController@destroy')->name('vacancies.destroy');
         });
     });

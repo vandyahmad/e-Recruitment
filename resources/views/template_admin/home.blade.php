@@ -9,6 +9,15 @@
     box-shadow: 0 0 10px 5px #fff;
     /* Ensure the gradient doesn't overflow #FF4081*/
   }
+
+  .select2-selection__choice__display {
+    color: black
+  }
+
+  .select2-selection__choice {
+    background-color: lightyellow !important;
+  }
+
 </style>
 
 <head>

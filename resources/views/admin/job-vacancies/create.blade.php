@@ -21,7 +21,7 @@
       <input type="text" name="job_title" class="form-control">
     </div>
     <div class="form-group">
-      <label>Job Description</label>
+      <label>Responsibilities</label>
       <textarea name="job_description" id="job_description" class="form-control"></textarea>
     </div>
     <div class="form-group">
@@ -32,20 +32,20 @@
     <div class="form-group">
       <label>Job Location</label>
       <select name="job_location[]" class="form-control js-example-tags" multiple="multiple" data-placeholder="Choose Location">
-        <option value="Jakarta">Jakarta</option>
-        <option value="Bandung">Bandung</option>
-        <option value="Surabaya">Surabaya</option>
+        @foreach($cities as $city)
+        <option value="{{ $city->name }}">{{ $city->name }}</option>
+        @endforeach
       </select>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Job Branch</label>
       <select name="job_branch[]" class="form-control js-example-tags" multiple="multiple" data-placeholder="Choose Branch">
         <option value="Jakarta 1">Jakarta 1</option>
         <option value="Jakarta 2">Jakarta 2</option>
         <option value="Jakarta 3">Jakarta 3</option>
       </select>
-    </div>
+    </div> -->
 
     <div class="form-group">
       <label>Job Company</label>
@@ -54,6 +54,29 @@
         <option value="ecoCare">ecoCare</option>
         <option value="TBI">TBI</option>
         <option value="pestCare">pestCare</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Job Functional</label>
+      <select name="job_functional" class="form-control">
+        <option value="" disabled selected>Choose Functional</option>
+        <option value="Sales">Sales</option>
+        <option value="Administrative">Administrative</option>
+        <option value="Operation">Operation</option>
+        <option value="Human Resources & General Affair">Human Resources & General Affair</option>
+        <option value="Finance & Accounting">Finance & Accounting</option>
+        <option value="Marketing Communication">Marketing Communication</option>
+        <option value="Information Technology">Information Technology</option>
+        <option value="Business Development">Business Development</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Job Type</label>
+      <select name="job_type" class="form-control">
+        <option value="" disabled selected>Choose Type</option>
+        <option value="Permanent">Permanent</option>
+        <option value="Contract">Contract</option>
+        <option value="Internship">Internship</option>
       </select>
     </div>
     <div class="row">

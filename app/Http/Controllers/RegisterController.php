@@ -38,9 +38,9 @@ class RegisterController extends Controller
 
 
         if ($save) {
-            Alert::success('success', 'Akun sudah terdaftar !');
+            Alert::success('Registrasi Sukses !', 'Silahkan login dengan akun anda');
         } else {
-            Alert::error('Failed', 'Registrasi gagal !');
+            Alert::error('Registrasi Gagal !', 'Silahkan coba lagi');
         }
 
         return redirect('/');

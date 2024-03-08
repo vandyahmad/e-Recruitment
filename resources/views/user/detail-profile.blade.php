@@ -110,7 +110,15 @@
                                     <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="agama">Agama</label>
-                                            <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" value="{{ $profile->agama }}" placeholder="Masukkan agama anda">
+                                            <select class="form-control" id="agama" name="agama">
+                                                <option value="" disabled selected>Pilih Agama</option>
+                                                <option value="Islam" {{ $profile->agama == 'Islam' ? 'selected' : '' }}>Islam</option>
+                                                <option value="Kristen" {{ $profile->agama == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                                                <option value="Katolik" {{ $profile->agama == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                                                <option value="Hindu" {{ $profile->agama == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                                                <option value="Budha" {{ $profile->agama == 'Budha' ? 'selected' : '' }}>Budha</option>
+                                                <option value="Khonghucu" {{ $profile->agama == 'Khonghucu' ? 'selected' : '' }}>Khonghucu</option>
+                                            </select>
                                             @error('agama')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -244,7 +252,7 @@
                                             <div class="custom-file">
                                                 <input type="file" id="upload_file" name="upload_file" class="custom-file-input @error('upload_file') is-invalid @enderror" onchange="updateFileName()">
                                                 <label class="custom-label col-md-12" for="upload_file" id="fileLabel">
-                                                {{ $profile->upload_file ?? 'Upload File'}}
+                                                    {{ $profile->upload_file ?? 'Upload File'}}
                                                 </label>
                                                 <small>* Upload File ini diperuntukan untuk Identitas Diri berupa Data Scan (KTP, Ijazah, Sertifikat yang dilegalisir, SKCK, Surat Keterangan Sehat) yang dijadikan Satu File dengan Format PDF.</small>
                                                 @error('upload_file')

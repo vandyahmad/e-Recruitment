@@ -36,9 +36,10 @@
               <th>Job Requirement</th> -->
               <th>Job Location</th>
               <th>Job Company</th>
-              <th>Job Branch</th>
+              <!-- <th>Job Branch</th> -->
               <th>Job Start Date</th>
               <th>Job End Date</th>
+              <th>Applicants</th>
             </tr>
           </thead>
           <tbody>
@@ -46,15 +47,17 @@
 
             <tr class="table-sm">
               <!-- <td>{{ $result->id }}</td> -->
+
               <td>
                 <div class="btn-group d-inline">
                   <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Tools
                   </button>
-                  <div class="dropdown-menu dropdown-menu-open position-static">
+                  <div class="dropdown-menu dropdown-menu-open position-absolute">
 
+                    <a href="{{ route("vacancies.pelamar", ['vacancies' => $result->id] ) }}" class="dropdown-item"><i class="fa fa-user"></i> Applicant</a>
                     <a href="{{ route("vacancies.show", ['vacancies' => $result->id] ) }}" class="dropdown-item"><i class="fa fa-file"></i> Details</a>
-                    <a href="{{ route("vacancies.edit", ['vacancies' => $result->id] ) }}" class="dropdown-item"><i class="fa fa-file"></i> Edit</a>
+                    <a href="{{ route("vacancies.edit", ['vacancies' => $result->id] ) }}" class="dropdown-item"><i class="fa fa-edit"></i> Edit</a>
                     <button class="btn btn-danger btn-hapus btn-sm dropdown-item" data-id="{{ $result->id }}" data-toggle="modal" data-target="#DeleteModal-{{ $result->id }}"><i class="fa fa-user-times"></i> Hapus</button>
                   </div>
                 </div>
@@ -64,9 +67,9 @@
               <td>{!! $result->job_requirement !!}</td> -->
               <td>{{ $result->job_location }}</td>
               <td>{{ $result->job_company }}</td>
-              <td>{{ $result->job_branch }}</td>
-              <td>{{ $result->job_start_date }}</td>
-              <td>
+              <!-- <td>{{ $result->job_branch }}</td> -->
+              <td class="text-center">{{ $result->job_start_date }}</td>
+              <td class="text-center">
                 @if (strtotime($result->job_end_date) < strtotime(now())) <strong style="color: red;">{{ $result->job_end_date }}</strong>
                   @elseif (strtotime($result->job_end_date) == strtotime(now()))
                   <strong>{{ $result->job_end_date }}</strong>
@@ -75,6 +78,13 @@
                   @endif
 
               </td>
+
+              <td class="text-center">
+                <a href="{{ route("vacancies.pelamar", ['vacancies' => $result->id]) }}">
+                  {{ count($result->pelamar) }}
+                  </a>
+              </td>
+
               <!-- <td>
 
                 <div class="btn-action">

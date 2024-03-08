@@ -8,7 +8,7 @@ class pelamars extends Model
 {
     // protected $primaryKey = "nik";
 
-    protected $fillable = ['id', 'user_id', 'minat_karir', 'name', 'status'];
+    protected $fillable = ['id', 'user_id', 'minat_karir','minat_lokasi', 'name', 'status'];
 
     protected $guarded = [];
 

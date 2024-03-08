@@ -23,7 +23,7 @@
 
     </div>
     <div class="form-group">
-      <label>Job Description</label>
+      <label>Responsibilities</label>
       <textarea name="job_description" id="job_description" class="form-control">{{ $vacancies->job_description }}</textarea>
     </div>
     <div class="form-group">
@@ -35,22 +35,24 @@
       <label>Job Location</label>
       <?php $selectedLocations = explode(',', $vacancies->job_location); ?>
       <select name="job_location[]" class="form-control js-example-tags" multiple="multiple" data-placeholder="Choose Location">
-        <option value="Jakarta" {{ in_array('Jakarta', $selectedLocations) ? 'selected' : '' }}>Jakarta</option>
-        <option value="Bandung" {{ in_array('Bandung', $selectedLocations) ? 'selected' : '' }}>Bandung</option>
-        <option value="Surabaya" {{ in_array('Surabaya', $selectedLocations) ? 'selected' : '' }}>Surabaya</option>
+        <!-- <option value="Bandung" {{ in_array('Bandung', $selectedLocations) ? 'selected' : '' }}>Bandung</option> -->
+        @foreach($cities as $city)
+        <option value="{{$city->name}}" {{ in_array($city->name, $selectedLocations) ? 'selected' : '' }}>{{$city->name}}</option>
+        <!-- <option value="{{ $city->name }}" {{ in_array($city->name, $selectedLocations) ? 'selected' : '' }}>{{ $city->name }}</option> -->
+        @endforeach
       </select>
     </div>
 
 
-    <div class="form-group">
+    <!-- <div class="form-group">
       <label>Job Branch</label>
-      <?php $selectedBranches = explode(',', $vacancies->job_branch); ?>
+      {{-- <?php $selectedBranches = explode(',', $vacancies->job_branch); ?> --}}
       <select name="job_branch[]" class="form-control js-example-tags" multiple="multiple" data-placeholder="Choose Branch">
         <option value="Jakarta 1" {{ in_array('Jakarta 1', $selectedBranches) ? 'selected' : '' }}>Jakarta 1</option>
         <option value="Jakarta 2" {{ in_array('Jakarta 2', $selectedBranches) ? 'selected' : '' }}>Jakarta 2</option>
         <option value="Jakarta 3" {{ in_array('Jakarta 3', $selectedBranches) ? 'selected' : '' }}>Jakarta 3</option>
       </select>
-    </div>
+    </div> -->
 
 
     <div class="form-group">
@@ -60,6 +62,31 @@
         <option value="ecoCare" {{ $vacancies->job_company === 'ecoCare' ? 'selected' : '' }}>ecoCare</option>
         <option value="TBI" {{ $vacancies->job_company === 'TBI' ? 'selected' : '' }}>TBI</option>
         <option value="pestCare" {{ $vacancies->job_company === 'pestCare' ? 'selected' : '' }}>pestCare</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Job Functional</label>
+      <select name="job_functional" class="form-control">
+        <option value="" disabled>Choose Functional</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Sales' ? 'selected' : '' }}>Sales</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Administrative' ? 'selected' : '' }}>Administrative</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Operation' ? 'selected' : '' }}>Operation</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Human Resources & General Affair' ? 'selected' : '' }}>Human Resources & General Affair</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Finance & Accounting' ? 'selected' : '' }}>Finance & Accounting</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Marketing Communication' ? 'selected' : '' }}>Marketing Communication</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Information Technology' ? 'selected' : '' }}>Information Technology</option>
+        <option value="ecoCare" {{ $vacancies->job_functional === 'Business Development' ? 'selected' : '' }}>Business Development</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Job Type</label>
+      <select name="job_type" class="form-control">
+        <option value="" disabled>Choose Type</option>
+        <option value="ecoCare" {{ $vacancies->job_type === 'Permanent' ? 'selected' : '' }}>Permanent</option>
+        <option value="TBI" {{ $vacancies->job_type === 'Contract' ? 'selected' : '' }}>Contract</option>
+        <option value="pestCare" {{ $vacancies->job_type === 'Internship' ? 'selected' : '' }}>Internship</option>
       </select>
     </div>
 

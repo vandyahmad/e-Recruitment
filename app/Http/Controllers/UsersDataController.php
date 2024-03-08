@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\JobVacancies;
 use App\Models\JobVacanciesActivity;
 use App\Models\pelamars;
 use App\Models\PelamarActivity;
 use App\Models\User;
-use App\Models\usersData;
+use App\Models\UsersData;
 use App\Models\UsersData as ModelsUsersData;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -27,7 +28,8 @@ class UsersDataController extends Controller
 
     public function create()
     {
-        return view('form-data-pelamar');
+        $cities = City::all();
+        return view('form-data-pelamar', compact('cities'));
     }
 
     protected function store(Request $request)
@@ -40,6 +42,7 @@ class UsersDataController extends Controller
             'tanggal_lahir' =>  'required|date',
             'agama'         =>  'required|string|',
             'alamat'        =>  'required|string',
+            'pref_location' =>  'required|string',
             'email'         =>  'required|string|email|max:255',
             'no_hp'         =>  'required',
             'pendidikan_terakhir'   => 'required',
@@ -47,12 +50,13 @@ class UsersDataController extends Controller
             'institusi'       =>  'required',
             'nilai'       =>  'required',
             'upload_foto'    => 'required|file|image|max:6000',
-            // 'upload_file'   =>  'required|file|max:6000',
+            'upload_file'   =>  'required|file|max:6000',
         ]);
 
 
         //Mengambil request object untuk proses upload file
         $request = request();
+
 
         //Proses Upload file gambar profil
         if ($request->hasFile('upload_foto')) {
@@ -60,10 +64,10 @@ class UsersDataController extends Controller
             $slug = str::slug($request['nama_lengkap']);
 
             // Mengambil extensi file asli
-            $extFile = $request->upload_foto->getClientOriginalExtension();
+            $extImage = $request->upload_foto->getClientOriginalExtension();
 
             // Generate nama_gambar, gabungan dari slug "nama" + time() + extensi file
-            $namaImage = $slug . '-' . time() . "." . $extFile;
+            $namaImage = $slug . '-' . time() . "." . $extImage;
 
             // Proses Upload, simpan ke dalam folder "uploads"
             $request->file('upload_foto')->move('uploads/images', $namaImage);
@@ -73,13 +77,14 @@ class UsersDataController extends Controller
         }
 
         //proses Upload File
+        $namaFile = '';
         if ($request->hasFile('upload_file')) {
             //Slug
             $slug = Str::slug($request['nama_lengkap']);
             //Extensi
             $extFile = $request->upload_file->getClientOriginalExtension();
             //generate
-            $namaFile = $slug . '.' . time() . "." . $extFile;
+            $namaFile = $slug . '-' . time() . "." . $extFile;
             //Proses Upload
             $request->file('upload_file')->move('uploads/files', $namaFile);
         }
@@ -97,6 +102,7 @@ class UsersDataController extends Controller
         $profiles->tanggal_lahir = $validateData['tanggal_lahir'];
         $profiles->agama = $validateData['agama'];
         $profiles->alamat = $validateData['alamat'];
+        $profiles->pref_location = $validateData['pref_location'];
         $profiles->email = $validateData['email'];
         $profiles->no_hp = $validateData['no_hp'];
         $profiles->pendidikan_terakhir = $validateData['pendidikan_terakhir'];
@@ -147,6 +153,7 @@ class UsersDataController extends Controller
             'tanggal_lahir' =>  'required|date',
             'agama'         =>  'required|string|',
             'alamat'        =>  'required|string',
+            'pref_location' =>  'required|string',
             'email'         =>  'required|string|email|max:255',
             'no_hp'         =>  'required',
             'pendidikan_terakhir'   => 'required',
@@ -223,6 +230,7 @@ class UsersDataController extends Controller
         $profiles->tanggal_lahir = $validateData['tanggal_lahir'];
         $profiles->agama = $validateData['agama'];
         $profiles->alamat = $validateData['alamat'];
+        $profiles->pref_location = $validateData['pref_location'];
         $profiles->email = $validateData['email'];
         $profiles->no_hp = $validateData['no_hp'];
         $profiles->pendidikan_terakhir = $validateData['pendidikan_terakhir'];

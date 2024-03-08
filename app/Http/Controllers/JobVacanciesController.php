@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\ActivityStep;
 use App\Models\JobVacancies;
 use App\Models\JobVacanciesActivity;
+use App\Models\pelamars;
+use App\Models\City;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use PDF;
@@ -16,14 +18,17 @@ class JobVacanciesController extends Controller
     public function index()
     {
         // Retrieve all job vacancies
-        $result = JobVacancies::all();
-        return view('admin.job-vacancies.index', ['jobvacancies' => $result, 'vacancies' => []]);
+        $results = JobVacancies::with('pelamar')->get();
+
+
+        return view('admin.job-vacancies.index', ['jobvacancies' => $results, 'vacancies' => []]);
     }
 
 
     public function create()
     {
-        return view('admin.job-vacancies.create');
+        $cities = City::all();
+        return view('admin.job-vacancies.create', compact('cities'));
     }
 
 
@@ -35,8 +40,10 @@ class JobVacanciesController extends Controller
             'job_description' => 'required',
             'job_requirement' => 'required',
             'job_location' => 'required|min:1|array',
-            'job_branch' => 'required|min:1|array',
-            'job_company' => 'required|max:50',
+            // 'job_branch' => 'required|min:1|array',
+            'job_company' => 'required',
+            'job_functional' => 'required',
+            'job_type' => 'required',
             'job_start_date' => 'required',
             'job_end_date' => 'required',
         ]);
@@ -48,8 +55,10 @@ class JobVacanciesController extends Controller
         $vacancy->job_description = $request->job_description;
         $vacancy->job_requirement = $request->job_requirement;
         $vacancy->job_company = $request->job_company;
+        $vacancy->job_functional = $request->job_functional;
+        $vacancy->job_type = $request->job_type;
         $vacancy->job_location = implode(",", $request->job_location);
-        $vacancy->job_branch = implode(",", $request->job_branch);
+        // $vacancy->job_branch = implode(",", $request->job_branch);
         $vacancy->job_start_date = $request->job_start_date;
         $vacancy->job_end_date = $request->job_end_date;
 
@@ -125,16 +134,32 @@ class JobVacanciesController extends Controller
     }
 
 
+    public function pelamar($vacancies)
+    {
+        $applicants = Pelamars::with('activities', 'job_vacancy', 'userData')->where('minat_karir', $vacancies)->get();
+        // dd($applicants);
+
+        // if ($applicants->isEmpty()) {
+        //     // Handle the case when no applicants are found, you might want to redirect or display a message
+        //     Alert::error('Empty', 'No Applicant Yet');
+        //     return redirect()->back()->with('error', 'No applicants found for this job vacancy.');
+        // }
+
+        return view('admin.job-vacancies.job-pelamar', ['applicants' => $applicants]);
+    }
+
+
     public function edit($vacancies)
     {
         $result = JobVacancies::find($vacancies);
-        return view('admin.job-vacancies.edit', ['vacancies' => $result]);
+        $cities = City::all();
+        return view('admin.job-vacancies.edit', ['vacancies' => $result, 'cities' => $cities]);
     }
 
     public function step_edit($vacancies)
     {
         // $result = JobVacanciesActivity::where('job_vacancy_id', $vacancies)->get();
-        
+
         $activity_steps = ActivityStep::all();
         $result = JobVacanciesActivity::where('job_vacancy_id', $vacancies)
             ->leftJoin('activity_steps as ac', 'ac.id', '=', 'job_vacancies_activity.activity_step_id')
@@ -154,8 +179,10 @@ class JobVacanciesController extends Controller
             'job_description' => 'required',
             'job_requirement' => 'required',
             'job_location' => 'required|min:1|array',
-            'job_branch' => 'required|min:1|array',
-            'job_company' => 'required|max:50',
+            // 'job_branch' => 'required|min:1|array',
+            'job_company' => 'required',
+            'job_functional' => 'required',
+            'job_type' => 'required',
             'job_start_date' => 'required',
             'job_end_date' => 'required',
 
@@ -166,8 +193,10 @@ class JobVacanciesController extends Controller
         $vacancy->job_description = $request->job_description;
         $vacancy->job_requirement = $request->job_requirement;
         $vacancy->job_company = $request->job_company;
+        $vacancy->job_functional = $request->job_functional;
+        $vacancy->job_type = $request->job_type;
         $vacancy->job_location = implode(",", $request->job_location);
-        $vacancy->job_branch = implode(",", $request->job_branch);
+        // $vacancy->job_branch = implode(",", $request->job_branch);
         $vacancy->job_start_date = $request->job_start_date;
         $vacancy->job_end_date = $request->job_end_date;
 

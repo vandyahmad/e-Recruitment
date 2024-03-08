@@ -62,7 +62,7 @@ class AdminController extends Controller
 
     public function cetak_pelamar($pelamar)
     {
-        $result = pelamars::with('userData', 'job_vacancy')->where('id',$pelamar)->first();
+        $result = pelamars::with('userData', 'job_vacancy')->where('id', $pelamar)->first();
         // dd($result);
         $pdf = PDF::loadView('admin.cetak', ['result' => $result]);
         return $pdf->stream();
@@ -116,37 +116,41 @@ class AdminController extends Controller
         ]);
 
         // Simpan data ke database (gantilah dengan model Anda)
-        $data = new PelamarActivity(); // Gantilah dengan model Anda
-        $data->id_pelamar = $request->input('pelamarID');
-        $data->activity = $request->input('activity');
-        $data->jadwal_activity = $request->input('jadwal_activity');
-        $data->lokasi_activity = $request->input('lokasi_activity');
-        $data->keterangan = $request->input('keterangan');
-        $data->save();
-
-        $update = pelamars::find($request->input('pelamarID'));
-        $update->status = $request->input('activity');
-        $update->save();
 
 
-        $pelamar = pelamars::with('activities', 'job_vacancy', 'userData')->leftJoin('job_vacancies as jv', 'jv.id', '=', 'pelamars.minat_karir')->find($request->input('pelamarID'));
-        $nama = $pelamar->userData->nama_lengkap;
-        $status = $pelamar->status;
-        $minat = $pelamar->job_title;
 
-        $pelamar_activity = PelamarActivity::find($data->id);
-        $this_activity = $pelamar_activity->activity;
-        $lokasi = $pelamar_activity->lokasi_activity;
-        $jadwal = $pelamar_activity->jadwal_activity;
-        $keterangan = $pelamar_activity->keterangan;
+
+        // $pelamar_activity = PelamarActivity::find($data->id);
+        // $this_activity = $pelamar_activity->activity;
+        // $lokasi = $pelamar_activity->lokasi_activity;
+        // $jadwal = $pelamar_activity->jadwal_activity;
+        // $keterangan = $pelamar_activity->keterangan;
 
         try {
-            Mail::to($pelamar->userData->email)->send(new PelamarNotification($nama, $status, $minat, $this_activity, $lokasi, $jadwal, $keterangan, $request->input('pelamarID')));
+            $pelamar = pelamars::with('activities', 'job_vacancy', 'userData')->leftJoin('job_vacancies as jv', 'jv.id', '=', 'pelamars.minat_karir')->find($request->input('pelamarID'));
+            $nama = $pelamar->userData->nama_lengkap;
+            $status = $pelamar->status;
+            $minat = $pelamar->job_title;
+
+            Mail::to($pelamar->userData->email)->send(new PelamarNotification($nama, $status, $minat, $request->input('activity'), $request->input('lokasi_activity'), $request->input('jadwal_activity'), $request->input('keterangan'), $request->input('pelamarID')));
+
+            $data = new PelamarActivity(); // Gantilah dengan model Anda
+            $data->id_pelamar = $request->input('pelamarID');
+            $data->activity = $request->input('activity');
+            $data->jadwal_activity = $request->input('jadwal_activity');
+            $data->lokasi_activity = $request->input('lokasi_activity');
+            $data->keterangan = $request->input('keterangan');
+            $data->email_sent_at = now();
+            $data->save();
+
+            $update = pelamars::find($request->input('pelamarID'));
+            $update->status = $request->input('activity');
+            $update->save();
 
             // Update email_sent_at only if the email was sent successfully
-            $update_email = PelamarActivity::find($data->id);
-            $update_email->email_sent_at = now();
-            $update_email->save();
+            // $update_email = PelamarActivity::find($data->id);
+            // $update_email->email_sent_at = now();
+            // $update_email->save();
 
             Alert::success('Sukses', 'Data berhasil di proses, email sent');
 

@@ -9,7 +9,7 @@ class UsersData extends Model
     // protected $primaryKey = "nik";
     protected  $table = 'users_data';
 
-    protected $fillable = ['id', 'user_id', 'nik', 'nama_lengkap', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir','agama', 'alamat', 'email', 'no_hp', 'pendidikan_terakhir', 'jurusan', 'institusi', 'nilai', 'upload_foto','upload_file', 'name'];
+    protected $fillable = ['id', 'user_id', 'nik', 'nama_lengkap', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir','agama', 'alamat','pref_location', 'email', 'no_hp', 'pendidikan_terakhir', 'jurusan', 'institusi', 'nilai', 'upload_foto','upload_file', 'name'];
 
     protected $guarded = [];
 

@@ -34,7 +34,8 @@ class PelamarsController extends Controller
     {
         $user = auth()->user();
         if ($user) {
-            $user_data = pelamars::with('userData')->where('user_id', auth()->user()->id)->first();
+            $user_data = UsersData::where('user_id', $user->id)->first();
+            // dd($user_data);
             if (!$user_data) {
                 Alert::error('Anda belum melengkapi data', ' Silahkan isi terlebih dahulu.');
                 return redirect()->route('pelamar.detail-login-user');
@@ -42,12 +43,14 @@ class PelamarsController extends Controller
 
             $validateData = $request->validate([
                 'minat_karir'   =>  'required',
+                'minat_lokasi'  =>  'required',
             ]);
 
             //Input Database
             $pelamars = new pelamars();
             $pelamars->user_id = auth()->user()->id;
             $pelamars->minat_karir = $validateData['minat_karir'];
+            $pelamars->minat_lokasi = $validateData['minat_lokasi'];
             $pelamars->save();
 
             if ($pelamars) {

@@ -1,5 +1,4 @@
 @extends('user.profile-pelamar')
-
 @section('content')
 
 <div class="top-shadow"></div>
@@ -99,7 +98,15 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="agama">Agama</label>
-                                        <input type="text" class="form-control @error('agama') is-invalid @enderror" id="agama" name="agama" placeholder="Masukkan agama anda">
+                                        <select class="form-control" id="agama" name="agama">
+                                            <option value="" disabled selected>Pilih Agama</option>
+                                            <option value="Islam" {{ old('agama') == 'Islam' ? 'selected' : '' }}>Islam</option>
+                                            <option value="Kristen" {{ old('agama') == 'Kristen' ? 'selected' : '' }}>Kristen</option>
+                                            <option value="Katolik" {{ old('agama') == 'Katolik' ? 'selected' : '' }}>Katolik</option>
+                                            <option value="Hindu" {{ old('agama') == 'Hindu' ? 'selected' : '' }}>Hindu</option>
+                                            <option value="Budha" {{ old('agama') == 'Budha' ? 'selected' : '' }}>Budha</option>
+                                            <option value="Khonghucu" {{ old('agama') == 'Khonghucu' ? 'selected' : '' }}>Khonghucu</option>
+                                        </select>
                                         @error('agama')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -107,8 +114,22 @@
                                         @enderror
                                     </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Preferensi Lokasi</label>
+                                        <select name="pref_location" class="form-control pref-location" data-placeholder="Pilih Lokasi" style="width: 100% ;">
+                                            @foreach($cities as $city)
+                                            <option value="{{ $city->name }}">{{ $city->name }}</option>
+                                            @endforeach
+                                        </select>
+                                        @error('pref_location')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
+                                </div>
                             </div>
-
 
                             <div class="form-group">
                                 <label for="alamat">Alamat </label>
@@ -119,6 +140,8 @@
                                 </span>
                                 @enderror
                             </div>
+
+
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -146,13 +169,13 @@
                             </div>
 
                             <!-- <div class="form-group">
-                        <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
-                        <input type="text" class="form-control @error('pendidikan_terakhir') is-invalid @enderror" id="pendidikan_terakhir" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir')}}" placeholder="Masukkan Pendidikan Terakhir">
-                        <small>* Mohon Sertakan Nama Sekolah </small>
-                        @error('pendidikan_terakhir')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{$message}}</strong>
-                        </span>
+                            <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
+                            <input type="text" class="form-control @error('pendidikan_terakhir') is-invalid @enderror" id="pendidikan_terakhir" name="pendidikan_terakhir" value="{{ old('pendidikan_terakhir')}}" placeholder="Masukkan Pendidikan Terakhir">
+                            <small>* Mohon Sertakan Nama Sekolah </small>
+                            @error('pendidikan_terakhir')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{$message}}</strong>
+                            </span>
                         @enderror
                     </div> -->
 
@@ -193,7 +216,7 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="institusi">Institusi</label>
-                                        <input type="text" class="form-control @error('institusi') is-invalid @enderror" id="institusi" name="institusi" placeholder="Masukkan institusi pendidikan anda">
+                                        <input type="text" class="form-control @error('institusi') is-invalid @enderror" id="institusi" name="institusi" placeholder="Masukkan nama sekolah/universitas">
                                         @error('institusi')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -204,8 +227,8 @@
 
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="nilai">Nilai Akhir</label>
-                                        <input type="text" class="form-control @error('nilai') is-invalid @enderror" id="nilai" name="nilai" placeholder="Masukkan nilai akhir anda">
+                                        <label for="nilai">IPK/Nilai Akhir</label>
+                                        <input type="text" class="form-control @error('nilai') is-invalid @enderror" id="nilai" name="nilai" placeholder="Masukkan IPK/nilai akhir anda">
                                         @error('nilai')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -238,10 +261,8 @@
                             <div class="form-group">
                                 <label for="upload_file">Upload File</label>
                                 <div class="custom-file">
-                                    <input type="file" id="upload_file" name="upload_file" class="custom-file-input @error('upload_file') is-invalid @enderror">
-                                    <label class="custom-file-label col-md-12" for="upload_file" onchange="$   ('upload_file').val($this).val();">
-                                        {{ $user->upload_file ?? 'Upload File Anda'}}
-                                    </label>
+                                    <input type="file" id="upload_file" name="upload_file" class="custom-file-input @error('upload_file') is-invalid @enderror" onchange="FileName()">
+                                    <label id='upload_file_name' class="custom-label col-md-12" for="upload_file">Upload File</label>
                                     <small>* Upload File ini diperuntukan untuk Identitas Diri berupa Data Scan (KTP, Ijazah, Sertifikat yang dilegalisir, SKCK, Surat Keterangan Sehat) yang dijadikan Satu File dengan Format PDF.</small>
                                     @error('upload_file')
                                     <span class="invalid-feedback" role="alert">
@@ -250,7 +271,7 @@
                                     @enderror
                                 </div>
                             </div>
-                            
+
                             <br>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

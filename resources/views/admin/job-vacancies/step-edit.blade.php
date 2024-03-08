@@ -3,7 +3,11 @@
 @section('content')
 <div class="container">
   <h3 class='text-center mb-5'>Edit Job Vacancy Steps</h3>
-  <h5>Job Vacancy : <b><i>{{$vacancies->first()->job_title}}</i></b></h5>
+  @if ($vacancies->isNotEmpty() && $vacancies->first())
+  <h5>Job Vacancy: <b><i>{{ $vacancies->first()->job_title }}</i></b></h5>
+  @else
+  <h5>Silahkan isi Job Vacancy Step</h5>
+  @endif
   <hr class="mb-5">
   @if ($errors->any())
   <div class="alert alert-danger">
@@ -125,7 +129,7 @@
     $("#area_activity").append(newStep);
   }
 
-  
+
   function btn_delete_step_edit(button) {
 
     var stepContainer = $(button).closest(".step_activity_edit");
