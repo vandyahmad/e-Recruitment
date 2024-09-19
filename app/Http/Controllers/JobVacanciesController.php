@@ -43,6 +43,7 @@ class JobVacanciesController extends Controller
             // 'job_branch' => 'required|min:1|array',
             'job_company' => 'required',
             'job_functional' => 'required',
+            'job_level' => 'required',
             'job_type' => 'required',
             'job_start_date' => 'required',
             'job_end_date' => 'required',
@@ -56,6 +57,7 @@ class JobVacanciesController extends Controller
         $vacancy->job_requirement = $request->job_requirement;
         $vacancy->job_company = $request->job_company;
         $vacancy->job_functional = $request->job_functional;
+        $vacancy->job_level = $request->job_level;
         $vacancy->job_type = $request->job_type;
         $vacancy->job_location = implode(",", $request->job_location);
         // $vacancy->job_branch = implode(",", $request->job_branch);
@@ -182,6 +184,7 @@ class JobVacanciesController extends Controller
             // 'job_branch' => 'required|min:1|array',
             'job_company' => 'required',
             'job_functional' => 'required',
+            'job_level' => 'required',
             'job_type' => 'required',
             'job_start_date' => 'required',
             'job_end_date' => 'required',
@@ -194,6 +197,7 @@ class JobVacanciesController extends Controller
         $vacancy->job_requirement = $request->job_requirement;
         $vacancy->job_company = $request->job_company;
         $vacancy->job_functional = $request->job_functional;
+        $vacancy->job_level = $request->job_level;
         $vacancy->job_type = $request->job_type;
         $vacancy->job_location = implode(",", $request->job_location);
         // $vacancy->job_branch = implode(",", $request->job_branch);

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
+use App\Models\Employee;
+use App\Models\EmployeeDocument;
+use App\Models\EmployeeFamily;
 use App\Models\JobVacancies;
 use App\Models\JobVacanciesActivity;
 use App\Models\pelamars;
@@ -27,7 +31,16 @@ class PelamarsController extends Controller
 
     public function create()
     {
-        return view('form-pendaftaran-pelamar');
+        $user = auth()->user();
+        $interviewActivity = PelamarActivity::select('activity')->join('pelamars', 'pelamars.id', '=', 'pelamars_activity.id_pelamar')
+            ->where('pelamars.user_id', $user->id)
+            ->where('activity', 'LIKE', '%interview%')
+            ->exists();
+        // dd($interviewActivity);
+
+        $incompletedFormInterview = UsersData::where('user_id', $user->id)->where('form_interview', '!=', 'completed')->exists(); 
+
+        return view('form-pendaftaran-pelamar', compact('interviewActivity'));
     }
 
     protected function store(Request $request)
@@ -53,9 +66,11 @@ class PelamarsController extends Controller
             $pelamars->minat_lokasi = $validateData['minat_lokasi'];
             $pelamars->save();
 
+            $pelamars_id = $pelamars->id; // Retrieve the pelamars_id after saving
+
             if ($pelamars) {
                 Alert::success('Pendaftaran Berhasil', 'Untuk Selanjutnya Admin Akan Menghubungi Lewat Email/Whatsapp.');
-                return redirect('/job-applied');
+                return redirect()->route('job-applied.status', ['id' => $pelamars_id]);
             }
             if ($validateData->fails()) {
                 return redirect('/')
@@ -94,7 +109,15 @@ class PelamarsController extends Controller
         $user = auth()->user();
 
         if ($user) {
-            return view('user.profile-pelamar', compact('user'));
+            $interviewActivity = PelamarActivity::select('activity')->join('pelamars', 'pelamars.id', '=', 'pelamars_activity.id_pelamar')
+                ->where('pelamars.user_id', $user->id)
+                ->where('activity', 'LIKE', '%interview%')
+                ->exists();
+            // dd($interviewActivity);
+
+            $incompletedFormInterview = UsersData::where('user_id', $user->id)->where('form_interview', '!=', 'completed')->exists(); 
+            
+            return view('user.profile-pelamar', compact('user', 'interviewActivity', 'incompletedFormInterview'));
         } else {
             // Handle the case when no user is authenticated
             return redirect()->route('login'); // Redirect to the login page or any other desired route
@@ -106,16 +129,75 @@ class PelamarsController extends Controller
     {
         // Get the currently authenticated user
         $user = auth()->user();
+        $cities = City::all();
 
         if ($user = Auth::user()) {
-            $profile = UsersData::where('user_id', $user->id)->first();
-            // dd($profile);
-            return view('user.detail-profile', compact('profile'));
+
+
+            $profile = UsersData::with('employee')->where('user_id', $user->id)->first();
+            // $pelamars = pelamars::where('user_id', $user->id)->first();
+            $interviewActivity = PelamarActivity::select('activity')->join('pelamars', 'pelamars.id', '=', 'pelamars_activity.id_pelamar')
+                ->where('pelamars.user_id', $user->id)
+                ->where('activity', 'LIKE', '%interview%')
+                ->exists();
+            // dd($interviewActivity);
+            $incompletedFormInterview = $profile->form_interview != 'completed' ? true : false;
+            // dd($incompletedFormInterview);
+            $acceptedPelamarExists = Pelamars::where('user_id', $user->id)
+                ->where('status', 'Accepted')
+                ->exists();
+
+
+            if ($acceptedPelamarExists == true) {
+                $acceptedPelamarExists = Pelamars::where('user_id', $user->id)
+                    ->where('status', 'Accepted')
+                    ->exists();
+                $interviewActivity = PelamarActivity::select('activity')
+                    // ->where('id_pelamar', $pelamars->id)
+                    ->where('activity', 'LIKE', '%interview%')
+                    ->exists();
+                $profile = UsersData::with('employee')->where('user_id', $user->id)->first();
+                $incompletedFormInterview = $profile->form_interview != 'completed' ? true : false;
+                $employee = Employee::where('id', $profile->employee->id)->first();
+                $employee_families = EmployeeFamily::where('employee_id', $employee->id)->get(); // Use get() to retrieve all records
+                $employee_documents = EmployeeDocument::where('employee_id', $employee->id)->get();
+                if ($employee_documents->isEmpty()) {
+                    $employee_documents = collect([new EmployeeDocument()]);
+                }
+
+                return view('user.detail-profile', compact('profile', 'acceptedPelamarExists', 'employee', 'employee_families', 'employee_documents', 'cities', 'interviewActivity', 'incompletedFormInterview'));
+            }
+
+            return view('user.detail-profile', compact('profile', 'acceptedPelamarExists', 'cities', 'interviewActivity', 'incompletedFormInterview'));
         } else {
             // Handle the case when no user is authenticated
             return redirect()->route('login'); // Redirect to the login page or any other desired route
         }
     }
+
+
+
+    // public function detailProfileData()
+    // {
+    //     // Get the currently authenticated user
+    //     $user = auth()->user();
+    //     $cities = City::all();
+
+
+
+    //     if ($user = Auth::user()) {
+    //         $profile = UsersData::where('user_id', $user->id)->first();
+    //         // dd($profile);
+    //         $acceptedPelamarExists = Pelamars::where('user_id', $user->id)
+    //             ->where('status', 'Accepted')
+    //             ->exists();
+    //         // dd($acceptedPelamarExists);
+    //         return view('user.detail-profile-data', compact('profile', 'acceptedPelamarExists', 'cities'));
+    //     } else {
+    //         // Handle the case when no user is authenticated
+    //         return redirect()->route('login'); // Redirect to the login page or any other desired route
+    //     }
+    // }
 
     public function jobApplied()
     {
@@ -123,14 +205,26 @@ class PelamarsController extends Controller
         $user = auth()->user();
 
         if ($user) {
+            $user = auth()->user();
+            $userID = $user->id;
+            $interviewActivity = PelamarActivity::select('activity')->join('pelamars', 'pelamars.id', '=', 'pelamars_activity.id_pelamar')
+                ->where('pelamars.user_id', $userID)
+                ->where('activity', 'LIKE', '%interview%')
+                ->exists();
+
+            $incompletedFormInterview = UsersData::where('user_id', $user->id)->where('form_interview', '!=', 'completed')->exists();
+            // dd($interviewActivity);
             // Fetch the jobs applied by the user from the 'pelamars' table
             $appliedJobs = $user->pelamars;
-
+            $acceptedPelamarExists = Pelamars::where('user_id', $user->id)
+                ->where('status', 'Accepted')
+                ->exists();
+            // dd($acceptedPelamarExists);
             if ($appliedJobs === null) {
                 $appliedJobs = collect(); // Assign an empty collection
             }
 
-            return view('user.job-applied', compact('appliedJobs'));
+            return view('user.job-applied', compact('appliedJobs', 'acceptedPelamarExists', 'interviewActivity', 'incompletedFormInterview'));
         } else {
             // Handle the case when no user is authenticated
             return redirect()->route('login'); // Redirect to the login page or any other desired route
@@ -140,7 +234,38 @@ class PelamarsController extends Controller
 
     public function jobAppliedStatus($id)
     {
-        // // Retrieve the applied job details along with its related pelamar
+
+        $interviewActivity = PelamarActivity::select('activity')
+            ->where('id_pelamar', $id)
+            ->where('activity', 'LIKE', '%interview%')
+            ->exists();
+
+        // dd($interviewActivity);
+
+        // Execute the query to get the first interview activity
+        $firstInterviewActivity = DB::select('
+            SELECT pa.*
+            FROM pelamars_activity pa
+            JOIN (
+                SELECT id_pelamar, MIN(created_at) AS first_interview_date
+                FROM pelamars_activity
+                WHERE activity LIKE ?
+                GROUP BY id_pelamar
+            ) first_interviews
+            ON pa.id_pelamar = first_interviews.id_pelamar
+            AND pa.created_at = first_interviews.first_interview_date
+            LEFT OUTER JOIN pelamars p ON p.id = pa.id_pelamar
+            WHERE pa.activity LIKE ?
+            AND pa.created_at = p.updated_at and pa.id_pelamar = ?
+        ', ['%interview%', '%interview%', $id]);
+
+        $isFirstInterview = count($firstInterviewActivity) > 0;
+
+        // dd($isFirstInterview);
+
+
+        // dd($firstInterviewActivity);
+
         // // Assuming you want the first result of pelamars based on the given $id
         $minat_karir = pelamars::with('job_vacancy')->select('minat_karir', 'status')->where('id', $id)->first();
         // $pelamar_activity = PelamarActivity::select('activity')->where('id_pelamar', $id)->get();
@@ -175,8 +300,15 @@ class PelamarsController extends Controller
         }
 
 
-
+        $user = auth()->user();
         $activities = PelamarActivity::where('id_pelamar', $id)->get();
+        // dd($activities);
+        $acceptedPelamarExists = Pelamars::where('user_id', $user->id)
+            ->where('status', 'Accepted')
+            ->exists();
+
+        $incompletedFormInterview = UsersData::where('user_id', $user->id)->where('form_interview', '!=', 'completed')->exists();
+
         // $job_vacancy_id = pelamars::select('minat_karir')->where('id', $id)->get();
         // $jobActivities = JobVacanciesActivity::select('activity_step_id')->where('job_vacancy_id', $job_vacancy_id)->get();
         // dd($activities);
@@ -185,8 +317,9 @@ class PelamarsController extends Controller
             return view('user.job-applied-show')->with('activities', null);
         }
 
-        return view('user.job-applied-show', compact('activities', 'jobActivities', 'minat_karir'));
+        return view('user.job-applied-show', compact('activities', 'jobActivities', 'minat_karir', 'acceptedPelamarExists', 'isFirstInterview', 'interviewActivity', 'incompletedFormInterview'));
     }
+
 
 
 

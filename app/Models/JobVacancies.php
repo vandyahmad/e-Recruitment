@@ -9,7 +9,7 @@ class JobVacancies extends Model
 
     protected  $table = 'job_vacancies';
 
-    protected $fillable = ['job_title', 'job_type', 'job_functional', 'job_description', 'job_requirement', 'job_location', 'job_company', 'job_branch', 'job_start_date', 'job_end_date'];
+    protected $fillable = ['job_title', 'job_type', 'job_functional','job_level', 'job_description', 'job_requirement', 'job_location', 'job_company', 'job_branch', 'job_start_date', 'job_end_date'];
 
     protected $guarded = [];
 

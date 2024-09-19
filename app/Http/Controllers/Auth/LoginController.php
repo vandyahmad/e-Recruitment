@@ -49,7 +49,7 @@ class LoginController extends Controller
         // dd($user_data);
         if (!$user_data) {
             alert('Lengkapi Data Profile', 'Untuk dapat melamar pekerjaan yang tersedia');
-            return redirect('/');
+            return redirect('/form-data-pelamar');
         }
         return redirect()->route('welcome.index');
     }

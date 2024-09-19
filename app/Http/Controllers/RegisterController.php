@@ -43,6 +43,6 @@ class RegisterController extends Controller
             Alert::error('Registrasi Gagal !', 'Silahkan coba lagi');
         }
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

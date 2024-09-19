@@ -2,7 +2,7 @@
 @section('title', 'Job Vacancies')
 @section('sub-judul', 'Job Vacancies')
 @section('btn_url_add', route('vacancies.create'))
-@section('btn_add_label', 'Create new data')
+@section('btn_add_label', 'Add New')
 
 @section('content')
 

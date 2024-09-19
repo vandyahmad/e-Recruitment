@@ -1,13 +1,15 @@
-@extends('user.profile-pelamar')
-
+@extends('layouts.home')
 @section('content')
+
 <div class="d-flex justify-content-center">
     <div class="row col-md-6 ">
         <div class="container-fluid" id="grad1">
             <div class="card user-details-card">
                 <div class="card-body">
-                    <div class="row justify-content-center mt-3 mb-3">
-                        <h2><strong>Register</strong></h2>
+                    <div class="text-center mt-3 mb-3">
+                        <img src="{{ asset('assets/images/ecocare-group-logo.jpg') }}" alt="Logo" class="logo" style="height: 30%; width: 30%;">
+                        <br>
+                        <h2>Register e-Recruitment</h2>
                     </div>
                     <div class="card">
                         <!-- <div class="card-header">{{ __('Register') }}</div> -->

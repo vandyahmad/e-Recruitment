@@ -1,5 +1,181 @@
 @extends('layouts.home')
 <style>
+    html {
+        height: 100%
+    }
+
+    #form {
+        /* text-align: center; */
+        position: relative;
+        margin-top: 20px
+    }
+
+    #form fieldset {
+        background: white;
+        border: 0 none;
+        border-radius: 0.5rem;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 0;
+        padding-bottom: 20px;
+        position: relative
+    }
+
+    .finish {
+        text-align: center
+    }
+
+    #form fieldset:not(:first-of-type) {
+        display: none
+    }
+
+    #form .pre-step {
+        width: 100px;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px 10px 0px;
+        float: left
+    }
+
+    .next-step {
+        width: 100px;
+        font-weight: bold;
+        color: white;
+        border: 0 none;
+        border-radius: 5px;
+        cursor: pointer;
+        padding: 10px 5px;
+        margin: 10px 5px 10px 0px;
+        float: right
+    }
+
+    .form,
+    .pre-step {
+        background: #616161;
+    }
+
+    .form,
+    .next-step {
+        background: blue;
+    }
+
+    #form .pre-step:hover {
+        background-color: #000000;
+
+    }
+
+    #form .pre-step:focus {
+        background-color: #000000
+    }
+
+    #form .next-step:hover {
+        background-color: #2F8D46
+    }
+
+    #form .next-step:focus {
+        background-color: #2F8D46
+    }
+
+    .text {
+        color: red;
+        font-weight: normal
+    }
+
+    #progressbar {
+        margin-bottom: 30px;
+        overflow: hidden;
+        color: lightgrey
+    }
+
+    #progressbar .active {
+        color: #2F8D46
+    }
+
+    #progressbar li {
+        list-style-type: none;
+        font-size: 15px;
+        width: 25%;
+        float: left;
+        position: relative;
+        font-weight: 400
+    }
+
+    #progressbar #step1:before {
+        content: "1"
+    }
+
+    #progressbar #step2:before {
+        content: "2"
+    }
+
+    #progressbar #step3:before {
+        content: "3"
+    }
+
+    #progressbar #step4:before {
+        content: "4"
+    }
+
+    #progressbar #step5:before {
+        content: "5"
+    }
+
+    #progressbar li:before {
+        width: 50px;
+        height: 50px;
+        line-height: 45px;
+        display: block;
+        font-size: 20px;
+        color: #ffffff;
+        background: lightgray;
+        border-radius: 50%;
+        margin: 0 auto 10px auto;
+        padding: 2px
+    }
+
+    #progressbar li:after {
+        content: '';
+        width: 100%;
+        height: 2px;
+        background: lightgray;
+        position: absolute;
+        left: 0;
+        top: 25px;
+        z-index: -1
+    }
+
+    #progressbar li.active:before {
+        background: #2F8D46
+    }
+
+    #progressbar li.active:after {
+        background: #2F8D46
+    }
+
+    #progressbar li.active:after {
+        background: #2F8D46
+    }
+
+    h2 {
+        text-transform: capitalize;
+        font-weight: normal;
+        text-align: center;
+        margin: 10;
+        padding: 10 color: red;
+    }
+
+    .progress {
+        height: 20px
+    }
+
+    .pbar {
+        background-color: #2F8D46
+    }
+
     /*Background color*/
     #grad1 {
         background-color: #9C27B0;
@@ -298,6 +474,8 @@
         width: 100%;
         object-fit: cover;
     }
+
+
 </style>
 @section('content')
 
@@ -322,7 +500,6 @@
 
 
 
-@include('sweetalert::alert')
 
 </body>
 @endsection

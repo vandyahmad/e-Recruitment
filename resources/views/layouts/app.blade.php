@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700|Oxygen:400,700" rel="stylesheet">
+  <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
 
   <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
@@ -29,6 +30,9 @@
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital@0;1&display=swap" rel="stylesheet">
 
 </head>
 <!-- NAVBAR -->
@@ -42,66 +46,32 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <!-- <div class="collapse navbar-collapse" id="navbarsExample05">
-          <ul class="navbar-nav pl-md-5 ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="/">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="form-pendaftaran-pelamar"> Form Pendaftaran Pelamar</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="form-pendaftaran"> Form Detail Candidate</a>
-            </li> -->
-
         <div class="collapse navbar-collapse" id="navbarsExample05">
-          <ul class="navbar-nav pl-md-3 ml-auto">
+          <ul class="navbar-nav ml-auto">
             <li class="nav-item">
               <a class="nav-link active" href="/">Home</a>
             </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link active" href="/login">Login</a>
-            </li> -->
             <li class="nav-item">
               @guest
-              <a class="nav-link active" href="{{ route('login') }}">Login</a>
+              <a class="nav-link active" href="{{ route('login') }}">Login/Register</a>
               @else
-              <a href="{{ route('logout') }}" onclick="event.preventDefault();
-            document.getElementById('logout-form').submit();" class="nav-link">
-                <!-- <i class="nav-icon fas fa-sign-out-alt"></i> -->
-                <p>
-                  {{ __('Logout') }}
-                </p>
-              </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                @csrf
-              </form>
-              @endguest
-            </li>
-
             <li class="nav-item">
               <a class="nav-link active" href="{{ route('pelamar.detail-login-user') }}">Profile</a>
             </li>
-
-            <!-- Tambahkan class "dropdown" pada li ini -->
-            <!-- <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="formDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Formulir
-              </a> -->
-            <!-- Buat dropdown menu -->
-            <!-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="formDropdown">  -->
-            <!-- <a class="dropdown-item" href="form-pendaftaran-pelamar">Form Pendaftaran Pelamar</a>
-                <a class="dropdown-item" href="form-pendaftaran">Form Detail Candidate</a>
-              </div>
-            </li> -->
+            <a href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();" class="nav-link">
+              <!-- <i class="nav-icon fas fa-sign-out-alt"></i> -->
+              <p>
+                {{ __('Logout') }}
+              </p>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+              @csrf
+            </form>
+            @endguest
+            </li>
           </ul>
         </div>
-
-
-        <!-- END NAVBAR -->
-
-      </div>
       </div>
     </nav>
   </header>
@@ -121,7 +91,7 @@
       <div class="row">
         <div class="col-md-3 text-center text-md-left">
           <a>
-            <img src="{{ asset('assets/images/Ecocare 1.png') }}" style="height:60px;">
+            <img src="{{ asset('assets/images/ecocare-group-logo.png') }}" style="height:60px;">
           </a>
           <!-- <p> Lorem ipsum dolor sit amet consectetur adipisicing elit.Aperiam cumque, esse modi maxime veniam nulla delectus dolorem -->
           </p>
@@ -132,7 +102,7 @@
             Grand Slipi Tower Suite F-I 37th floor Jl. S. Parman Kav. 22-24 Jakarta 11480
           </div>
           <div class="text-nowrap text-white"><i class="ion-ios-email text-primary mr-2"></i>
-            info@ecocare.co.id
+            hr@ecocare.id
           </div>
           <div class="text-nowrap text-white"><i class="ion-ios-telephone text-primary mr-2"></i>
             (021) 290 222 66
@@ -145,9 +115,15 @@
           <div><a class="text-white" href="/">
               <span class="fa fa-caret-right fa-fw mr-2"></span>Home</a>
           </div>
-          <div><a class="text-white" href="/auth/register">
-              <span class="fa fa-caret-right fa-fw mr-2"></span>Form Registrasi</a>
+          @if(auth()->check())
+          <div><a class="text-white" href="/">
+              <span class="fa fa-caret-right fa-fw mr-2"></span>Register Here</a>
           </div>
+          @else
+          <div><a class="text-white" href="/auth/register">
+              <span class="fa fa-caret-right fa-fw mr-2"></span>Register Here</a>
+          </div>
+          @endif
         </div>
 
         <div class="col-md-3 text-center text-md-left">

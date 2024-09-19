@@ -19,6 +19,7 @@ Route::post('/auth/register/store', 'RegisterController@store')->name('register.
 // });
 
 Route::get('/', 'WelcomeController@index')->name('welcome.index');
+Route::get('/job-filter', 'WelcomeController@index_filter')->name('filter.index');
 Route::get('/filter/jobvacancies', 'WelcomeController@filter')->name('welcome.filter');
 
 
@@ -28,6 +29,32 @@ Route::get('/form-data-pelamar', 'UsersDataController@create')->name('UsersData.
 Route::post('/form-data-pelamar', 'UsersDataController@store')->name('UsersData.store');
 
 Route::put('/update-data-pelamar/{id}', 'UsersDataController@update')->name('UsersData.update');
+
+Route::get('/form-interview', 'UsersDataController@createFormInterview')->name('UsersData.create-form-interview');
+
+Route::post('/form-interview/{id}', 'UsersDataController@updateIdentity')->name('UserIdentity.update');
+
+Route::post('/form-interview/{id}/family', 'UsersDataController@updateFamily')->name('UserFamily.update');
+
+Route::post('/form-interview/{id}/family/delete', 'UsersDataController@deleteFamily')->name('UserFamily.delete');
+
+Route::post('/form-interview/{id}/employment-history', 'UsersDataController@updateEmploymentHistory')->name('UserEmploymentHistory.update');
+
+Route::post('/form-interview/{id}/employment-history/delete', 'UsersDataController@deleteEmploymentHistory')->name('UserEmploymentHistory.delete');
+
+Route::post('/form-interview/{id}/education', 'UsersDataController@updateEducation')->name('UserEducation.update');
+
+Route::post('/form-interview/{id}/answer', 'UsersDataController@updateAnswer')->name('UserAnswer.update');
+
+
+// Route Data Employee
+// Route::post('/form-data-pelamar', 'UsersDataController@store')->name('UsersData.store');
+
+Route::put('/update-data-employee/{id}', 'EmployeeController@update')->name('Employee.update');
+
+Route::put('/update-employee-family/{employeeId}', 'EmployeeController@updateFamily')->name('EmployeeFamily.update');
+
+Route::put('/update-employee-document/{employeeId}', 'EmployeeController@updateDocument')->name('EmployeeDocument.update');
 
 
 // Route Submit Lamaran
@@ -54,8 +81,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::middleware(['role_user'])->group(function () {
         Route::get('/apply', 'WelcomeController@apply')->name('welcome.apply');
         Route::get('/profile-pelamar', 'PelamarsController@index')->name('pelamar.index');
-        Route::get('/detail-login-user', 'PelamarsController@detailLoginUser')->name('pelamar.detail-login-user');
+        Route::get('/detail-profile', 'PelamarsController@detailLoginUser')->name('pelamar.detail-login-user');
+        Route::get('/detail-profile-data', 'PelamarsController@detailProfileData')->name('pelamar.detail-profile-data');
         Route::get('/job-applied', 'PelamarsController@jobApplied')->name('pelamar.job-applied');
+        // Route::get('/form-interview', 'PelamarsController@CreateFormInterview')->name('pelamar.create-form-interview');
+        // Route::post('/form-interview', 'PelamarsController@storeFormInterview')->name('pelamar.store-form-interview');
         Route::get('/job-applied-show/{id}', 'PelamarsController@jobAppliedStatus')->name('job-applied.status');
         // Route::get('/job-applied-activity', 'PelamarsController@jobAppliedActivity')->name('pelamar.job-applied-activity');
 
@@ -82,6 +112,8 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/pelamar/contact', 'AdminController@contact_pelamar')->name('admin.contact_pelamar');
 
             Route::get('/pelamar/cetak/{pelamar}', 'AdminController@cetak_pelamar')->name('admin.cetak_pelamar');
+           
+            Route::get('/form-interview/{pelamar}', 'AdminController@exportFormInterview')->name('admin.cetak_form_interview');
 
             Route::post('/process/pelamar', 'AdminController@process')->name('admin.process_pelamar');
 
@@ -134,9 +166,9 @@ Route::group(['middleware' => 'auth'], function () {
             Route::put('/vacancies/step/{id}', 'JobVacanciesController@step_update')->name('vacancies.step_update');
 
             Route::get('/vacancies/show/{vacancies}', 'JobVacanciesController@show')->name('vacancies.show');
-            
+
             Route::get('/vacancies/{vacancies}/pelamar', 'JobVacanciesController@pelamar')->name('vacancies.pelamar');
-            
+
             Route::delete('/vacancies/delete/{vacancies}', 'JobVacanciesController@destroy')->name('vacancies.destroy');
         });
     });

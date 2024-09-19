@@ -2476,6 +2476,14 @@ textarea.form-control.is-valid {
   color: #e3342f;
 }
 
+.invalid-feedback2 {
+  display: block;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: #e3342f;
+}
+
 .invalid-tooltip {
   position: absolute;
   top: 100%;
@@ -2576,8 +2584,19 @@ textarea.form-control.is-invalid {
   border-color: #e3342f;
 }
 
+.was-validated .custom-file-input:invalid ~ .custom-label,
+.custom-file-input.is-invalid ~ .custom-label {
+  border-color: #e3342f;
+}
+
 .was-validated .custom-file-input:invalid:focus ~ .custom-file-label,
 .custom-file-input.is-invalid:focus ~ .custom-file-label {
+  border-color: #e3342f;
+  box-shadow: 0 0 0 0.2rem rgba(227, 52, 47, 0.25);
+}
+
+.was-validated .custom-file-input:invalid:focus ~ .custom-label,
+.custom-file-input.is-invalid:focus ~ .custom-label {
   border-color: #e3342f;
   box-shadow: 0 0 0 0.2rem rgba(227, 52, 47, 0.25);
 }
@@ -5785,6 +5804,10 @@ a.badge-dark.focus {
   padding: 0.75rem 1.25rem;
   background-color: #fff;
   border: 1px solid rgba(0, 0, 0, 0.125);
+  border-top-left-radius: 1.25rem;
+  border-top-right-radius: 1.25rem;
+  border-bottom-right-radius: 1.25rem;
+  border-bottom-left-radius: 1.25rem;
 }
 
 .list-group-item:first-child {
@@ -5807,8 +5830,8 @@ a.badge-dark.focus {
 .list-group-item.active {
   z-index: 2;
   color: #fff;
-  background-color: #3490dc;
-  border-color: #3490dc;
+  background-color: #02ae00;
+  border-color: #ffffff;
 }
 
 .list-group-item + .list-group-item {

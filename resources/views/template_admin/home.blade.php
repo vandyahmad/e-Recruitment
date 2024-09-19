@@ -15,9 +15,23 @@
   }
 
   .select2-selection__choice {
-    background-color: lightyellow !important;
+    background-color: turquoise !important;
   }
 
+  #alamat_activity_placeholder {
+    max-width: 100%;
+    /* Adjust as needed */
+    overflow-wrap: break-word;
+    height: auto;
+  }
+
+  table tbody tr td {
+    font-size: 12px;
+  }
+
+  thead {
+    font-size: 12px;
+  }
 </style>
 
 <head>
@@ -51,12 +65,19 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <!-- Bootstap select -->
   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ttskch/select2-bootstrap4-theme@x.x.x/dist/select2-bootstrap4.min.css">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-GLhlTQ8iKIIbT6StStE3S/tOtnF5g4BduQyRXNI+T21ntsz9vI01u6B5Q5SIIpZ" crossorigin="anonymous">
 
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
 
   <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap4.min.css">
+
+  <!-- Datepicker -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet"> -->
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css" integrity="sha512-3JRrEUwaCkFUBLK1N8HehwQgu8e23jTH4np5NHOmQOobuC4ROQxFwFgBLTnhcnQRMs84muMh0PnnwXlPq5MGjg==" crossorigin="anonymous" />
 
 
 
@@ -103,11 +124,13 @@
               <h1 class="m-0 text-dark">@yield('sub-judul')</h1>
             </div>
             <div class="col-sm-6">
+              @if (!empty(trim($__env->yieldContent('btn_add_label'))))
               <div class="btn-action d-flex justify-content-end mb-3">
                 <a href="@yield('btn_url_add')" class="btn btn-primary btn-cool-add d-inline-block">
                   <i class="fa fa-plus-circle"></i> @yield('btn_add_label')
                 </a>
               </div>
+              @endif
             </div><!-- /.col -->
           </div><!-- /.row -->
         </div><!-- /.container-fluid -->

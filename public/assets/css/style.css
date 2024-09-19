@@ -7642,7 +7642,7 @@ header {
   .slider-item .slider-text {
     color: #fff;
     height: calc(100vh);
-    min-height: 700px; }
+    min-height: 500px; }
     .slider-item .slider-text .child-name {
       font-size: 40px;
       color: #fff; }

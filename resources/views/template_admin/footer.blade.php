@@ -4,7 +4,7 @@
     </script> </strong>
   All rights reserved.
   <div class="float-right d-none d-sm-inline-block">
-    <b>Version</b> 3.0.1
+    <b>Version</b> 1.0.0
   </div>
 </footer>
 
@@ -44,10 +44,11 @@
 <script src="{{ asset('assets/plugins/summernote/summernote-bs4.min.js') }}"></script>
 <!-- overlayScrollbars -->
 <script src="{{ asset('assets/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-
+<script src="https://cdn.datatables.net/2.0.5/css/dataTables.dataTables.css"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<!-- <script src="https://cdn.datatables.net/2.0.5/js/dataTables.js"></script> -->
 <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap4.min.js"></script>
 
 <!-- AdminLTE App -->
@@ -56,39 +57,44 @@
 <script src="{{ asset('assets/dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('assets/dist/js/demo.js') }}"></script>
-
+<!-- datepicker -->
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-  $('#datatablePelamar').DataTable();
-  
+
+ 
   $('#datatableJobVacancy').DataTable();
 
   $('#job_description').summernote({
-    placeholder: 'Input job description',
+    placeholder: 'Input job responsibilities',
     tabsize: 2,
-    height: 100
+    onChange: function(contents, $editable) {
+      // Set the height of the Summernote editor to auto
+      $(this).summernote('option', 'height', 'auto');
+      // Set the height of the Summernote editor based on its scroll height
+      $(this).height($(this).prop('scrollHeight'));
+    }
   });
+
 
   $('#job_requirement').summernote({
-    placeholder: 'Input job requirement',
+    placeholder: 'Input job requirements',
     tabsize: 2,
-    height: 100
+    onChange: function(contents, $editable) {
+      // Set the height of the Summernote editor to auto
+      $(this).summernote('option', 'height', 'auto');
+      // Set the height of the Summernote editor based on its scroll height
+      $(this).height($(this).prop('scrollHeight'));
+    }
   });
 
-  // $(document).ready(function() {
-  // $('.selectpicker').selectpicker();
-  // });
 
-  // $(document).ready(function() {
-  $('.js-example-tags').select2({
-    tags: true
+  $('.select2-tags').select2({
+    tags: true,
+    // theme: 'bootstrap4',
   });
-
-  // });
-
-
-  // $(document).ready(function() {
-  // Initialize the step count
 
 
 
@@ -135,6 +141,12 @@
   }
   // });
 </script>
+
+<!-- <script type="text/javascript">
+    $('.date').datepicker({  
+       format: 'dd-mm-yyyy'
+     });  
+</script> -->
 
 @stack('scripts')
 </body>

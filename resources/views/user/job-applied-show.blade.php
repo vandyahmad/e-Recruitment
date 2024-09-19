@@ -4,41 +4,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        // Function to set progress bar based on activity status
-        // function setProgressBar() {
-        //     $("#progressbar li").removeClass("active");
-        //     @foreach($activities as $activity)
-        //     @if($activity->activity == 'Interview User HR')
-        //     $("#account").addClass("active");
-        //     @elseif($activity->activity == 'Interview User')
-        //     $("#personal").addClass("active");
-        //     @elseif($activity->activity == 'test')
-        //     $("#payment").addClass("active");
-        //     @elseif($activity->activity == 'sign')
-        //     $("#confirm").addClass("active");
-        //     @endif
-        //     @endforeach
-        // }
-
-        // Initial setup of progress bar
-        // setProgressBar();
-
-        // Additional script to show/hide fieldsets if needed
-        // @foreach($activities as $activity)
-        // $("fieldset").hide();
-        // @if($activity->activity == 'Interview User HR')
-        // $("#fieldset1").show();
-        // @elseif($activity->activity == 'Interview User')
-        // $("#fieldset2").show();
-        // @elseif($activity->activity == 'test')
-        // $("#fieldset3").show();
-        // @elseif($activity->activity == 'sign')
-        // $("#fieldset4").show();
-        // @endif
-        // @endforeach
-
-        // Hide all fieldsets initially
-
 
         @foreach($activities as $index => $activity)
         $("fieldset").hide();
@@ -53,6 +18,15 @@
         var progressBar = document.getElementById("progressbar");
         var steps = progressBar.getElementsByTagName("li");
         let datatemp = []
+
+        // Calculate and set the width of each progress bar item dynamically
+        var totalSteps = steps.length;
+        var stepWidth = 100 / totalSteps;
+        for (var i = 0; i < steps.length; i++) {
+            steps[i].style.width = stepWidth + "%";
+        }
+
+
         // Loop through the steps and update the class based on the activities
         for (var i = 0; i < steps.length; i++) {
             var step = steps[i];
@@ -96,6 +70,7 @@
                 step.classList.remove("active");
             }
         }
+
     });
 </script>
 <div class="container-fluid" id="grad1">
@@ -113,19 +88,27 @@
                     <div class="col-md-12 mx-0">
                         @if($minat_karir->status == 'Accepted')
                         <ul id="progressbar">
-                            @foreach($jobActivities as $index => $jobActivity)
-                            <li id="{{strtolower($jobActivity->name)}}" class="account">
-                                <strong>{{ $jobActivity->name }}</strong>
+                            <li id="Apply" class="accepted">
+                                <strong>Applied</strong>
+                                <!-- <i class="fas fa-check"></i> -->
+                            </li>
+                            @foreach($activities as $index => $activity)
+                            <li id="{{strtolower($activity->activity)}}" class="accepted">
+                                <strong>{{ $activity->activity }}</strong>
                                 <!-- <i class="fas fa-check"></i> -->
                             </li>
                             @endforeach
-                            <li id="Accepted" class="accepted">
-                                <strong>Accepted</strong>
+                            <!-- <li id="Accepted" class="accepted">
+                                <strong>Accepted</strong> -->
                                 <!-- <i class="fas fa-check"></i> -->
-                            </li>
+                            <!-- </li> -->
                         </ul>
                         @elseif($minat_karir->status == 'Declined')
                         <ul id="progressbar">
+                            <li id="Apply" class="accepted">
+                                <strong>Applied</strong>
+                                <!-- <i class="fas fa-check"></i> -->
+                            </li>
                             @foreach($activities as $index => $activity)
 
                             <li id="{{strtolower($activity->activity)}}" class="<?= $activity->activity == 'Declined' ? 'declined' : 'account' ?>">
@@ -139,6 +122,10 @@
                         </ul>
                         @else
                         <ul id="progressbar">
+                            <li id="Apply" class="accepted">
+                                <strong>Applied</strong>
+                                <!-- <i class="fas fa-check"></i> -->
+                            </li>
                             @foreach($jobActivities as $index => $jobActivity)
                             <li id="{{strtolower($jobActivity->name)}}" class="account">
                                 <strong>{{ $jobActivity->name }}</strong>
@@ -196,6 +183,31 @@
                             </div>
                         </fieldset>
 
+
+                        @elseif($isFirstInterview)
+                        <fieldset id="fieldset{{ $index + 1 }}">
+                            <div class="form-card">
+                                <h2 class="fs-title">Selamat !</h2>
+                                <p>Anda lolos ke tahap selanjutnya. Mohon dapat melengkapi <a href="{{ url('form-interview') }}"><b>Form Interview</b></a> </p>
+                                <p>Selanjutnya anda dapat mengikuti proses <b>{{ $activity->activity }}</b> berdasarkan detail di bawah ini :</p>
+                                <div class="my-5">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-center"><u><b>{{ $activity->activity }} Details</b></u></h5>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Tahap:&emsp;<strong>{{ $activity->activity }}</strong></li>
+                                                <li class="list-group-item">Jadwal:&emsp; <strong>{{ $activity->jadwal_activity }}</strong></li>
+                                                <li class="list-group-item">Lokasi:&emsp; <strong>{!! nl2br($activity->lokasi_activity) !!}</strong></li>
+                                                <li class="list-group-item">Note:&emsp; <strong>{{ $activity->keterangan }}</strong></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
                         @else
                         <fieldset id="fieldset{{ $index + 1 }}">
                             <div class="form-card">
@@ -206,12 +218,12 @@
 
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title text-center"><u><b>"{{ $activity->activity }} Details"</b></u></h5>
+                                            <h5 class="card-title text-center"><u><b>{{ $activity->activity }} Details</b></u></h5>
                                             <ul class="list-group list-group-flush">
-                                                <li class="list-group-item">Tahap: <strong>{{ $activity->activity }}</strong></li>
-                                                <li class="list-group-item">Jadwal: <strong>{{ $activity->jadwal_activity }}</strong></li>
-                                                <li class="list-group-item">Lokasi: <strong>{{ $activity->lokasi_activity }}</strong></li>
-                                                <li class="list-group-item">Note: <strong>{{ $activity->keterangan }}</strong></li>
+                                                <li class="list-group-item">Tahap:&emsp;<strong>{{ $activity->activity }}</strong></li>
+                                                <li class="list-group-item">Jadwal:&emsp; <strong>{{ $activity->jadwal_activity }}</strong></li>
+                                                <li class="list-group-item">Lokasi:&emsp; <strong>{!! nl2br($activity->lokasi_activity) !!}</strong></li>
+                                                <li class="list-group-item">Note:&emsp; <strong>{{ $activity->keterangan }}</strong></li>
                                             </ul>
                                         </div>
                                     </div>
@@ -242,5 +254,4 @@
         </div>
     </div>
 </div>
-</script>
 @endsection

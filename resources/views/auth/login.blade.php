@@ -47,7 +47,8 @@
         <div class="container-fluid" id="grad1">
             <div class="card user-details-card">
                 <div class="card-header text-center">
-                    <h2>Login e-Recruitment</h2>
+                    <img src="{{ asset('assets/images/ecocare-group-logo.jpg') }}" alt="Logo" class="logo" style="height: 30%; width: 30%">
+                    <h3>Login e-Recruitment</h3>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -70,15 +71,40 @@
                             <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
-
-                                @error('password')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                <div class="input-group">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text" onclick="togglePasswordVisibility()">
+                                            <i id="password-icon" class="fas fa-eye"></i>
+                                        </span>
+                                    </div>
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
                         </div>
+
+                        <!-- Include FontAwesome -->
+                        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+                        <script>
+                            function togglePasswordVisibility() {
+                                var passwordInput = document.getElementById('password');
+                                var passwordIcon = document.getElementById('password-icon');
+                                if (passwordInput.type === 'password') {
+                                    passwordInput.type = 'text';
+                                    passwordIcon.classList.remove('fa-eye');
+                                    passwordIcon.classList.add('fa-eye-slash');
+                                } else {
+                                    passwordInput.type = 'password';
+                                    passwordIcon.classList.remove('fa-eye-slash');
+                                    passwordIcon.classList.add('fa-eye');
+                                }
+                            }
+                        </script>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
