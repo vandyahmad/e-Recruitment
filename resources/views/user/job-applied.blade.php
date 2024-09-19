@@ -37,7 +37,7 @@
                                     </div>
                                     <div class="col-md-5 text-center">
                                         <a href="{{ route('job-applied.status', $appliedJob->id) }}">
-                                            <button type="button" class="btn {{ $appliedJob->status == 'Accepted' ? 'btn-outline-success btn-sm' : ($appliedJob->status == 'Declined' ? 'btn-outline-danger btn-sm' : 'btn-outline-primary btn-sm') }}"><b>{{ $appliedJob->status }}</b></button>
+                                            <button type="button" class="btn {{ $appliedJob->status == 'Accepted' ? 'btn-outline-success btn-sm' : ($appliedJob->status == 'Declined' ? 'btn-outline-danger btn-sm' : ($appliedJob->status == 'On Hold' ? 'btn-outline-warning btn-sm' : 'btn-outline-primary btn-sm')) }}"><b>{{ $appliedJob->status }}</b></button>
                                         </a>
                                     </div>
                                 </div>

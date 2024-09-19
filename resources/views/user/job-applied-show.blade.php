@@ -61,8 +61,8 @@
 
             // console.log(datatemp);
             // Update the class based on the activity existence
-            // console.log(activityExists)
-            if (activityExists) {
+            console.log(stepName)
+            if (activityExists && stepName !== 'on hold') {
                 // Update the class to indicate completion (you can customize this based on your styling)
                 step.classList.add("active");
             } else {
@@ -77,10 +77,10 @@
     <div class="card user-details-card">
         <div class="card-body">
             <div class="row justify-content-center mt-3">
-                <h3><b>"{{$minat_karir->job_vacancy->job_title}}"</b></h3>
+                <h3><b>{{$minat_karir->job_vacancy->job_title}}</b></h3>
             </div>
             <div class="row justify-content-center mb-4">
-                <h2><b>Application Status</b></h2>
+                <h4><b>Application Status</b></h4>
             </div>
             <div class="row justify-content-center mt-0">
 
@@ -100,7 +100,7 @@
                             @endforeach
                             <!-- <li id="Accepted" class="accepted">
                                 <strong>Accepted</strong> -->
-                                <!-- <i class="fas fa-check"></i> -->
+                            <!-- <i class="fas fa-check"></i> -->
                             <!-- </li> -->
                         </ul>
                         @elseif($minat_karir->status == 'Declined')
@@ -112,6 +112,23 @@
                             @foreach($activities as $index => $activity)
 
                             <li id="{{strtolower($activity->activity)}}" class="<?= $activity->activity == 'Declined' ? 'declined' : 'account' ?>">
+                                <strong>{{ $activity->activity }}</strong>
+                                <!-- <i class="fas fa-check"></i> -->
+                            </li>
+                            @endforeach
+                            <!-- <li id="Declined" class="declined">
+                                <strong>Declined</strong>
+                            </li> -->
+                        </ul>
+                        @elseif($minat_karir->status == 'On Hold')
+                        <ul id="progressbar">
+                            <li id="Apply" class="accepted">
+                                <strong>Applied</strong>
+                                <!-- <i class="fas fa-check"></i> -->
+                            </li>
+                            @foreach($activities as $index => $activity)
+
+                            <li id="{{strtolower($activity->activity)}}" class="<?= $activity->activity == 'On Hold' ? 'hold' : 'account' ?>">
                                 <strong>{{ $activity->activity }}</strong>
                                 <!-- <i class="fas fa-check"></i> -->
                             </li>
@@ -179,6 +196,37 @@
                                     <p>
                                         Meskipun Anda tidak lolos pada tahap ini, kami tetap menghargai minat dan dedikasi Anda untuk bergabung dengan ecoCare Group. Terima kasih sekali lagi atas partisipasi Anda. Kami senang Anda tertarik untuk bergabung dengan tim kami dan berharap Anda dapat mencapai sukses besar di masa mendatang.
                                     </p>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        @elseif($activity->activity == 'On Hold')
+                        <fieldset id="fieldset{{ $index + 1 }}">
+                            <div class="form-card">
+                                <h2 class="fs-title">Terimakasih !</h2>
+                                <div style="text-align: justify;">
+                                    <p>
+                                        Kami ingin menyampaikan terima kasih atas partisipasi Anda dalam proses seleksi lamaran pekerjaan di ecoCare Group. Kami menghargai waktu dan usaha yang Anda investasikan dalam mengajukan lamaran.
+                                    </p>
+
+                                    <p>
+                                        Kami ingin memberitahukan bahwa saat ini kami masih terus melakukan proses seleksi untuk posisi <strong>{{ $minat_karir->job_vacancy->job_title }}</strong>.
+                                    </p>
+
+                                    <p>
+                                        Kami akan tetap mempertahankan lamaran Anda dalam database kami dan akan menghubungi Anda jika terdapat lowongan pekerjaan yang sesuai di masa depan.
+                                    </p>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        @elseif($activity->activity == 'Screening')
+                        <fieldset id="fieldset{{ $index + 1 }}">
+                            <div class="form-card">
+                                <h2 class="fs-title">Terimakasih !</h2>
+
+                                <div style="text-align: justify;">
+                                    <p>Saat ini kami sedang melakukan proses <b>Screening</b> data dan dokumen Anda</p>
                                 </div>
                             </div>
                         </fieldset>

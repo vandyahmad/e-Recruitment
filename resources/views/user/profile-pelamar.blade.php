@@ -361,6 +361,12 @@
         background-color: red;
     }
 
+    #progressbar .hold:before {
+        font-family: FontAwesome;
+        content: "\f04c";
+        background-color: lightgray;
+    }
+
     #progressbar .accepted:before {
         font-family: FontAwesome;
         content: "\f00c";
@@ -419,6 +425,11 @@
         background: red;
     }
 
+    #progressbar li.hold:before,
+    #progressbar li.hold:after {
+        background: lightgray;
+    }
+
     #progressbar li.accepted:before,
     #progressbar li.accepted:after {
         background: lightgreen;
@@ -435,6 +446,12 @@
         /* background-color: #eee; */
         /* Green color or any color you prefer */
         color: red;
+    }
+
+    #progressbar li.hold {
+        /* background-color: #eee; */
+        /* Green color or any color you prefer */
+        color: lightgray;
     }
 
     #progressbar li.accepted {

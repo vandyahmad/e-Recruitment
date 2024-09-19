@@ -48,11 +48,13 @@
 
     // Initialize DataTable
     var table = $('#datatablePelamar').DataTable({
+      "pageLength": 25,
       "columnDefs": [{
           "orderable": false,
           "targets": 0
         } // Disable ordering for column 0
       ],
+      "searching": false,
       "order": [
         [1, 'desc'] // Default order by column 1 (second column) in ascending order
       ]
@@ -60,127 +62,149 @@
     });
 
     // Add event listeners for input fields
-    $('#name, #nik').on('keyup', function() {
-      // Filter the DataTable based on input values
-      table.columns($(this).attr('data-column')).search(this.value).draw();
+    // $('#name, #nik').on('keyup', function() {
+    // Filter the DataTable based on input values
+    //   table.columns($(this).attr('data-column')).search(this.value).draw();
+    // });
+
+
+    var params = getQueryParams();
+
+    if (params['pendidikan_terakhir']) {
+      $('#pendidikan_terakhir').val(params['pendidikan_terakhir']);
+    }
+    if (params['pref_location']) {
+      $('#pref_location').val(params['pref_location']);
+    }
+    if (params['minat_karir']) {
+      $('#minat_karir').val(params['minat_karir']);
+    }
+    if (params['status']) {
+      $('#status').val(params['status']);
+    }
+    if (params['limit']) {
+      $('#limit').val(params['limit']);
+    }
+    if (params['nama']) {
+      $('#nama').val(params['nama']);
+    }
+
+    // Function to apply filters by reloading the page with the selected filters as query string
+    function applyFilters() {
+      var pendidikan = $('#pendidikan_terakhir').val();
+      var location = $('#pref_location').val();
+      var karir = $('#minat_karir').val();
+      var status = $('#status').val();
+      var limit = $('#limit').val() || 25; // Default to 25 if no limit is set
+      var nama = $('#nama').val();
+
+      // Build query string based on selected filter values
+      var queryString = '?limit=' + limit +
+        '&pendidikan_terakhir=' + pendidikan +
+        '&pref_location=' + location +
+        '&minat_karir=' + karir +
+        '&status=' + status +
+        '&nama=' + nama;
+
+      // Reload the page with the new query string to apply filters
+      window.location.href = "{{ route('admin.index_pelamar') }}" + queryString;
+    }
+
+    // Event listener for the Search button
+    $('#searchButton').on('click', function() {
+      applyFilters();
     });
 
-    // Add event listener for status dropdown
-    $('#status').on('change', function() {
-      var status = $(this).val();
-      // Clear existing search queries before applying the new filter
-      table.columns().search('').draw();
-      // Apply filter based on selected status
-      if (status !== '') {
-        table.columns(7).search('^' + status + '$', true, false).draw();
+    // Function to get query parameters from the URL
+    function getQueryParams() {
+      var params = {};
+      var queryString = window.location.search.substring(1);
+      var queries = queryString.split('&');
+      for (var i = 0; i < queries.length; i++) {
+        var pair = queries[i].split('=');
+        params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || '');
       }
-    });
+      return params;
+    }
 
-    // Add event listener for minat_karir dropdown
-    $('#minat_karir').on('change', function() {
-      var minat_karir = $(this).val();
-      // Clear existing search queries before applying the new filter
-      table.columns().search('').draw();
-      // Apply filter based on selected status
-      if (minat_karir !== '') {
-        table.columns(5).search('^' + minat_karir + '$', true, false).draw();
-      }
-    });
-
-    // Add event listener for pref_location dropdown
-    $('#pref_location').on('change', function() {
-      var pref_location = $(this).val();
-      // Clear existing search queries before applying the new filter
-      table.columns().search('').draw();
-      // Apply filter based on selected status
-      if (pref_location !== '') {
-        table.columns(6).search('^' + pref_location + '$', true, false).draw();
-      }
-    });
-
-    // Add event listener for pendidikan_terakhir dropdown
-    $('#pendidikan_terakhir').on('change', function() {
-      var pendidikan_terakhir = $(this).val();
-      // Clear existing search queries before applying the new filter
-      table.columns().search('').draw();
-      // Apply filter based on selected status
-      if (pendidikan_terakhir !== '') {
-        table.columns(4).search(pendidikan_terakhir).draw();
-      }
-    });
-
-
-    // Add event listener for status dropdown
-    $('#status').on('change', function() {
-      var status = $(this).val();
-      // Clear existing search queries before applying the new filter
-      table.columns().search('').draw();
-      // Apply filter based on selected status
-      if (status !== '') {
-        table.columns(8).search(status).draw();
-      }
-    });
   });
 </script>
 
 <!-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> -->
-<div class="row justify-content-center mb-3">
-  <h2><strong>Daftar Pelamar</strong></h2>
-</div>
+
 <div class="d-flex justify-content-center">
   <div class="row col-md-12 ">
+    <h5>Filter Data</h5>
+    <div class="card card-body">
+      <div class="row mb-3">
+        <div class="col-sm-2">
+          <label class="filter_label">Jumlah Data</label>
+          <select id="limit" class="form-control">
+            <option value="100">100</option>
+            <option value="200">200</option>
+            <option value="300">300</option>
+            <option value="500">500</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label class="filter_label">Pendidikan Terakhir</label>
+          <select id="pendidikan_terakhir" class="form-control">
+            <option value="">All</option>
+            <option value="SMA/sederajat">SMA/sederajat</option>
+            <option value="D3">D3</option>
+            <option value="S1">S1</option>
+            <option value="S2">S2</option>
+            <option value="S3">S3</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label class="filter_label">Lokasi Pekerjaan</label>
+          <select id="pref_location" class="form-control">
+            <option value="">All</option>
+            @foreach ($cities as $city)
+            <option value="{{ $city->name }}">{{ $city->name }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label class="filter_label">Job Vacancy</label>
+          <select id="minat_karir" class="form-control">
+            <option value="">All</option>
+            @foreach ($jobs as $minat)
+            <option value="{{ $minat->job_title }}">{{ $minat->job_title }}</option>
+            @endforeach
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label class="filter_label">Status</label>
+          <select id="status" class="form-control">
+            <option value="">All</option>
+            <option value="Apply">Apply</option>
+            @foreach ($statuses as $status)
+            <option value="{{ $status->name }}">{{ $status->name }}</option>
+            @endforeach
+            <option value="On Hold">On Hold</option>
+            <option value="Declined">Declined</option>
+            <option value="Accepted">Accepted</option>
+          </select>
+        </div>
+        <div class="col-sm-2">
+          <label class="filter_label">Nama</label>
+          <input type="text" id="nama" class="form-control" placeholder="Search...">
+        </div>
+        <div class="col-sm-2 offset-sm-10 mt-3 text-right">
+          <btn id="searchButton" class="btn btn-primary btn-xs">Search</btn>
+        </div>
+      </div>
+    </div>
     <div class="container-fluid" id="grad1">
-      <div class="card user-details-card">
+      <div class="card user-details-card mt-2">
         <div class="card-body">
-          <div class="card-body table-responsive-sm p-0 mt-5">
-            <div class="row mb-3">
-              <div class="col-sm-3">
-                <label class="filter_label">Filter Pendidikan</label>
-                <select id="pendidikan_terakhir" class="form-control">
-                  <!-- <option disabled selected>Select Minat Karir</option> -->
-                  <option value="">All</option>
-                  <option value="SMA/sederajat">SMA/sederajat</option>
-                  <option value="D3">D3</option>
-                  <option value="S1">S1</option>
-                  <option value="S2">S2</option>
-                  <option value="S3">S3</option>
-                </select>
-              </div>
-              <div class="col-sm-3">
-                <label class="filter_label">Filter Pref Lokasi</label>
-                <select id="pref_location" class="form-control">
-                  <!-- <option disabled selected>Select Minat Karir</option> -->
-                  <option value="">All</option>
-                  @foreach ($cities as $city)
-                  <option value="{{ $city->name }}">{{ $city->name }}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-sm-3">
-                <label class="filter_label">Filter Minat Karir</label>
-                <select id="minat_karir" class="form-control">
-                  <!-- <option disabled selected>Select Minat Karir</option> -->
-                  <option value="">All</option>
-                  @foreach ($jobs as $minat)
-                  <option value="{{ $minat->job_title }}">{{ $minat->job_title }}</option>
-                  @endforeach
-                </select>
-              </div>
-              <div class="col-sm-3">
-                <label class="filter_label">Filter Status</label>
-                <select id="status" class="form-control">
-                  <!-- <option disabled selected>Select Status</option> -->
-                  <option value="">All</option>
-                  <option value="Apply">Apply</option>
-                  @foreach ($statuses as $status)
-                  <option value="{{ $status->name }}">{{ $status->name }}</option>
-                  @endforeach
-                  <option value="Accepted">Accepted</option>
-                  <option value="Declined">Declined</option>
-                </select>
-              </div>
+          <div class="card-body table-responsive-sm p-0">
+            <div class="row justify-content-center">
+              <h2><strong>Daftar Pelamar</strong></h2>
             </div>
-            <table class="table table-bordered table-hover" id="datatablePelamar" style="width: 90% !important;">
+            <table class="table table-bordered table-hover" id="datatablePelamar" style="width: 100% !important;">
               <thead class="thead-light text-center">
                 <tr>
                   <th>Aksi</th>
@@ -290,8 +314,9 @@
                               <option value="{{ $step->name }}" {{ in_array($step->name, $disable) ? 'disabled' : '' }}>{{ $step->name }}</option>
                               @endif
                               @endforeach
-                              <option value="Accepted" {{ in_array('Accepted', $disable) ? 'disabled' : '' }}>Accepted</option>
-                              <option value="Declined" {{ in_array('Declined', $disable) ? 'disabled' : '' }}>Declined</option>
+                              <option value="On Hold" style="color: #F39C12;" {{ in_array('On Hold', $disable) ? 'disabled' : '' }}>On Hold</option>
+                              <option value="Declined" style="color: #E74C3C;" {{ in_array('Declined', $disable) ? 'disabled' : '' }}>Declined</option>
+                              <option value="Accepted" style="color: #2ECC71;" {{ in_array('Accepted', $disable) ? 'disabled' : '' }}>Accepted</option>
                             </select>
                           </div>
                           <!-- <div class="form-group">
@@ -326,6 +351,7 @@
                                 useCurrent: true,
                                 showTodayButton: true,
                                 showClear: true,
+                                minDate: moment(), // Limit the datetime cannot pick past datetime
                                 tooltips: {
                                   today: 'Go to today',
                                   clear: 'Clear selection',
@@ -341,7 +367,7 @@
                             <label for="lokasi_activity">Branch Activity</label>
                             <select class="lokasi_activity form-control" id="lokasi_activity{{$pelamar->id}}" name="lokasi_activity" required>
                               <option value="" disabled selected>Select Branch</option>
-                              <option value="ZOOM MEETING">ZOOM MEETING</option>
+                              <option value="VIRTUAL MEETING">VIRTUAL MEETING</option>
                               @foreach($branches as $branch)
                               <option value="{!! nl2br($branch->address) !!}">{{ $branch->name }}</option>
                               @endforeach
@@ -388,7 +414,7 @@
                   $(document).ready(function() {
                     $('#activity{{$pelamar->id}}').change(function() {
                       var selectedActivity = $(this).val();
-                      if (selectedActivity === 'Declined') {
+                      if (selectedActivity === 'Declined' || selectedActivity === 'Screening' || selectedActivity === 'On Hold') {
                         // Disable all form fields
                         $('#jadwal_activity{{$pelamar->id}}').prop('readonly', true);
                         $('#lokasi_activity{{$pelamar->id}}').prop('disabled', true);
@@ -419,14 +445,25 @@
                     $('#lokasi_activity{{$pelamar->id}}').change(function() {
                       // Get the selected option value
                       var selectedAddress = $(this).val();
-                      if (selectedAddress === 'ZOOM MEETING') {
-                        // Make the "Alamat Activity" field editable
-                        $('#alamat_activity_placeholder{{$pelamar->id}}').html('Link :').attr('contenteditable', 'true').focus();
+
+                      if (selectedAddress === 'VIRTUAL MEETING') {
+                        // Make the "Alamat Activity" field editable and create an input field for the link
+                        $('#alamat_activity_placeholder{{$pelamar->id}}').html('Link : <input id="link_activity{{$pelamar->id}}" type="text" class="form-control" placeholder="Masukkan link Virtual Meeting">').attr('contenteditable', 'false');
+
+                        // Listen to changes in the input field
+                        $('#link_activity{{$pelamar->id}}').on('input', function() {
+                          var linkValue = $(this).val();
+                          // Update the value of the 'VIRTUAL MEETING' option in the select dropdown
+                          $('#lokasi_activity{{$pelamar->id}} option[value="VIRTUAL MEETING"]').val('Virtual Meeting (link : ' + linkValue + ')');
+                          // Update the "Alamat Activity" field to show the link entered
+                          $('#alamat_activity_placeholder{{$pelamar->id}}').html('Link : ' + linkValue).attr('contenteditable', 'false');
+                        });
                       } else {
-                        // Update the "Alamat Activity" field with the selected address
+                        // Update the "Alamat Activity" field with the selected branch address
                         $('#alamat_activity_placeholder{{$pelamar->id}}').html(selectedAddress.replace(/<br>/, '<br>')).attr('contenteditable', 'false');
                       }
                     });
+
 
                     // Initialize Select2
                     $('#lokasi_activity{{ $pelamar->id }}').select2({
@@ -496,9 +533,5 @@
     });
   });
 </script>
-
-
-
-
 
 @endsection

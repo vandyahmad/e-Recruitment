@@ -28,24 +28,17 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use PDF;
 use RealRashid\SweetAlert\Facades\Alert;
-
+use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
 {
     //Pelamars
     public function index_pelamar(Request $request)
     {
-        // $page = $request->query('page');
-        // $search = $request->query('search');
-        // dd($search);
-
-
-
         $branches = Branch::all();
         $statuses = ActivityStep::all();
         $jobs = JobVacancies::all();
         $cities = City::all();
-        // $pelamars = pelamars::with('activities', 'job_vacancy', 'userData')->orderby('id', 'desc')->get();
 
         // Step 1: Fetch IDs of the pelamars to be included
         $pelamarIds = DB::table('pelamars as p')
@@ -60,44 +53,63 @@ class AdminController extends Controller
             ->orderBy('p.id', 'desc')
             ->pluck('id');
 
-        // Step 2: Use the IDs to fetch pelamars with their relationships
-        $pelamars = pelamars::with('activities', 'job_vacancy', 'userData')
+        // Step 2: Get the 'limit' and filter values from user input
+        $limit = $request->input('limit', 100);  // Default to 25 if no limit is provided
+        $pendidikanTerakhir = $request->input('pendidikan_terakhir');
+        $prefLocation = $request->input('pref_location');
+        $minatKarir = $request->input('minat_karir');
+        $status = $request->input('status');
+        $nama = $request->input('nama');
+
+        // Step 3: Use the IDs to fetch pelamars with their relationships and apply filters
+        $pelamarsQuery = pelamars::with('activities', 'job_vacancy', 'userData')
             ->whereIn('id', $pelamarIds)
-            ->orderBy('id', 'desc')
-            ->get();
+            ->orderBy('id', 'desc');
 
+        // Apply filters
+        if (!empty($pendidikanTerakhir)) {
+            $pelamarsQuery->whereHas('userData', function ($query) use ($pendidikanTerakhir) {
+                $query->where('pendidikan_terakhir', $pendidikanTerakhir);
+            });
+        }
+        if (!empty($prefLocation)) {
+            $pelamarsQuery->where('minat_lokasi', $prefLocation);
+        }
+        if (!empty($minatKarir)) {
+            $pelamarsQuery->whereHas('job_vacancy', function ($query) use ($minatKarir) {
+                $query->where('job_title', $minatKarir);
+            });
+        }
+        if (!empty($status)) {
+            $pelamarsQuery->where('status', $status);
+        }
+        if (!empty($nama)) {
+            $pelamarsQuery->whereHas('userData', function ($query) use ($nama) {
+                $query->where('nama_lengkap', 'like', '%' . $nama . '%');
+            });
+        }
 
-        // if($search) {
-        //     $pelamar = $pelamar->where('userData.nama_lengkap', 'LIKE' , '%' .$search. '%');
-        // }
+        // Step 4: Limit the number of results based on user input
+        $pelamars = $pelamarsQuery->take($limit)->get();
 
-        // dd($pelamar);
-
-        // dd($pelamar[0]->userData->nama_lengkap);
-        // $activitySteps = DB::table('activity_steps')->get();
-        $activitySteps = DB::select(DB::raw("
-        SELECT
-            jva.`sequence`
-            ,jva.job_vacancy_id
-            ,jva.activity_step_id
-            ,jv.id
-            ,ac.name
-        FROM job_vacancies_activity jva
-        LEFT OUTER JOIN job_vacancies jv ON jv.id = jva.job_vacancy_id
-        LEFT OUTER JOIN activity_steps ac ON ac.id = jva.activity_step_id
-        order by 1
-        "));
-        // dd($results);
+        // Return the view with the filtered data
         return view('admin.pelamar', [
             'pelamars' => $pelamars,
-            'activitySteps' => $activitySteps,
+            'activitySteps' => DB::select(DB::raw("
+            SELECT
+                jva.sequence, jva.job_vacancy_id, jva.activity_step_id, jv.id, ac.name
+            FROM job_vacancies_activity jva
+            LEFT OUTER JOIN job_vacancies jv ON jv.id = jva.job_vacancy_id
+            LEFT OUTER JOIN activity_steps ac ON ac.id = jva.activity_step_id
+            ORDER BY 1
+        ")),
             'branches' => $branches,
             'statuses' => $statuses,
             'jobs' => $jobs,
             'cities' => $cities,
-            // 'profile' => $profile,
         ]);
     }
+
 
     public function show_pelamar($pelamar)
     {
@@ -156,7 +168,7 @@ class AdminController extends Controller
     {
 
         // Validasi data input sesuai kebutuhan
-        if ($request->input('activity') != 'Declined') {
+        if ($request->input('activity') != 'Declined' && $request->input('activity') != 'Screening' && $request->input('activity') != 'On Hold') {
             $request->validate([
                 'activity' => 'required',
                 'jadwal_activity' => 'required',
@@ -291,8 +303,10 @@ class AdminController extends Controller
                 Alert::success('Sukses', 'Data pelamar berhasil di proses, email sent');
             }
 
-            // Send email
-            Mail::to($pelamar->userData->email)->send(new PelamarNotification($nama, $status, $minat, $minat_lokasi, $request->input('activity'), $request->input('lokasi_activity'), $formattedJadwalActivity, $request->input('keterangan'), $request->input('pelamarID'), $isFirstInterview));
+            if ($request->input('activity') != 'Screening' && $request->input('activity') != 'On Hold') {
+                // Send email
+                Mail::to($pelamar->userData->email)->send(new PelamarNotification($nama, $status, $minat, $minat_lokasi, $request->input('activity'), $request->input('lokasi_activity'), $formattedJadwalActivity, $request->input('keterangan'), $request->input('pelamarID'), $isFirstInterview));
+            }
 
 
             return response()->json([
