@@ -4,13 +4,13 @@
 @section('content')
 
 <style>
-  .dataTables_filter {
+  /* .dataTables_filter {
     margin-top: -8em;
   }
 
   .dataTables_length {
     margin-top: -8em;
-  }
+  } */
 
   .filter_label {
     font-size: small;
@@ -35,7 +35,7 @@
 
 <!-- Include jQuery and DataTables scripts -->
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
+<!-- <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script> -->
 
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.0/moment.min.js"></script>
@@ -57,7 +57,8 @@
       "searching": false,
       "order": [
         [1, 'desc'] // Default order by column 1 (second column) in ascending order
-      ]
+      ],
+      "dom": '<"top"lf>rt<"bottom"ip><"clear">' // Customize table controls layout
       // Other DataTables options...
     });
 
@@ -139,7 +140,7 @@
       <div class="row mb-3">
         <div class="col-sm-2">
           <label class="filter_label">Jumlah Data</label>
-          <select id="limit" class="form-control">
+          <select id="limit" class="form-control" style="border-color: green">
             <option value="100">100</option>
             <option value="200">200</option>
             <option value="300">300</option>
@@ -148,7 +149,7 @@
         </div>
         <div class="col-sm-2">
           <label class="filter_label">Pendidikan Terakhir</label>
-          <select id="pendidikan_terakhir" class="form-control">
+          <select id="pendidikan_terakhir" class="form-control" style="border-color: green">
             <option value="">All</option>
             <option value="SMA/sederajat">SMA/sederajat</option>
             <option value="D3">D3</option>
@@ -159,7 +160,7 @@
         </div>
         <div class="col-sm-2">
           <label class="filter_label">Lokasi Pekerjaan</label>
-          <select id="pref_location" class="form-control">
+          <select id="pref_location" class="form-control" style="border-color: green">
             <option value="">All</option>
             @foreach ($cities as $city)
             <option value="{{ $city->name }}">{{ $city->name }}</option>
@@ -168,7 +169,7 @@
         </div>
         <div class="col-sm-2">
           <label class="filter_label">Job Vacancy</label>
-          <select id="minat_karir" class="form-control">
+          <select id="minat_karir" class="form-control" style="border-color: green; ">
             <option value="">All</option>
             @foreach ($jobs as $minat)
             <option value="{{ $minat->job_title }}">{{ $minat->job_title }}</option>
@@ -177,7 +178,7 @@
         </div>
         <div class="col-sm-2">
           <label class="filter_label">Status</label>
-          <select id="status" class="form-control">
+          <select id="status" class="form-control" style="border-color: green">
             <option value="">All</option>
             <option value="Apply">Apply</option>
             @foreach ($statuses as $status)
@@ -190,7 +191,7 @@
         </div>
         <div class="col-sm-2">
           <label class="filter_label">Nama</label>
-          <input type="text" id="nama" class="form-control" placeholder="Search...">
+          <input type="text" id="nama" class="form-control" placeholder="Search..." style="border-color: green">
         </div>
         <div class="col-sm-2 offset-sm-10 mt-3 text-right">
           <btn id="searchButton" class="btn btn-primary btn-xs">Search</btn>

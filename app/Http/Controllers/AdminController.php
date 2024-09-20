@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Mail\PelamarNotification;
 use App\Models\ActivityStep;
 use App\Models\Branch;
-use App\Models\Candidates;
 use App\Models\City;
 use App\Models\Employee;
 use App\Models\EmployeeFamily;

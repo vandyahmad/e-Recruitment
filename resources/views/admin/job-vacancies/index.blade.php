@@ -1,6 +1,4 @@
 @extends('template_admin.home')
-@section('title', 'Job Vacancies')
-@section('sub-judul', 'Job Vacancies')
 @section('btn_url_add', route('vacancies.create'))
 @section('btn_add_label', 'Add New')
 
@@ -25,7 +23,7 @@
                 <a class="btn btn-primary btn-cool-add d-inline-block"><i class="fa fa-plus-circle"></i> Add </a>
               </div> -->
 
-
+        <h2 class="text-center mb-3">Job Vacancies</h2>
         <table class="table table-hover" id='datatableJobVacancy'>
           <thead>
             <tr>
@@ -82,7 +80,7 @@
               <td class="text-center">
                 <a href="{{ route("vacancies.pelamar", ['vacancies' => $result->id]) }}">
                   {{ count($result->pelamar) }}
-                  </a>
+                </a>
               </td>
 
               <!-- <td>

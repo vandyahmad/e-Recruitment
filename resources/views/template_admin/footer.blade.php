@@ -63,9 +63,13 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <script>
-
- 
-  $('#datatableJobVacancy').DataTable();
+  
+  $('#datatableJobVacancy').DataTable({
+    'pageLength': 25,
+    'order': [
+      [5, 'desc']
+    ]
+  });
 
   $('#job_description').summernote({
     placeholder: 'Input job responsibilities',
