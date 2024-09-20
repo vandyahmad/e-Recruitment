@@ -50,6 +50,7 @@ class UsersDataController extends Controller
     protected function store(Request $request)
     {
         $validateData = $request->validate([
+            'info_lowongan' => 'required',
             'nik'           =>  'required|min:14|max:16|unique:users_data',
             'nama_lengkap'  =>  'required|string|max:300',
             'jenis_kelamin' =>  'required|in:P,L',
@@ -116,7 +117,7 @@ class UsersDataController extends Controller
         $profiles->jenis_kelamin = $validateData['jenis_kelamin'];
         $profiles->tempat_lahir = $validateData['tempat_lahir'];
         $profiles->tanggal_lahir = $validateData['tanggal_lahir'];
-        // $profiles->tanggal_lahir = $tanggal_lahir;
+        $profiles->info_lowongan = $validateData['info_lowongan'];
         $profiles->agama = $validateData['agama'];
         // $profiles->alamat = $validateData['alamat'];
         $profiles->pref_location = $validateData['pref_location'];
@@ -163,6 +164,7 @@ class UsersDataController extends Controller
     public function update(Request $request, $id)
     {
         $validateData = $request->validate([
+            'info_lowongan' =>  'required|string|max:300',
             'nik'           =>  'required|min:14|max:16',
             'nama_lengkap'  =>  'required|string|max:300',
             'jenis_kelamin' =>  'required|in:P,L',
@@ -247,6 +249,7 @@ class UsersDataController extends Controller
         $profiles->tanggal_lahir = $validateData['tanggal_lahir'];
         $profiles->agama = $validateData['agama'];
         // $profiles->alamat = $validateData['alamat'];
+        $profiles->info_lowongan = $validateData['info_lowongan'];
         $profiles->pref_location = $validateData['pref_location'];
         $profiles->email = $validateData['email'];
         $profiles->no_hp = $validateData['no_hp'];
@@ -439,7 +442,7 @@ class UsersDataController extends Controller
     public function updateIdentity(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'info_lowongan' => 'required',
+            // 'info_lowongan' => 'required',
             'nama_panggilan' => 'required',
             'tinggi_badan' => 'required|numeric|min:50|max:250',
             'berat_badan' => 'required|numeric',
@@ -484,7 +487,7 @@ class UsersDataController extends Controller
 
             $userData->update($validatedData);
 
-            $userData->info_lowongan = $validatedData['info_lowongan'];
+            // $userData->info_lowongan = $validatedData['info_lowongan'];
             $userData->nama_panggilan = $validatedData['nama_panggilan'];
             $userData->tinggi_badan = $validatedData['tinggi_badan'];
             $userData->berat_badan = $validatedData['berat_badan'];

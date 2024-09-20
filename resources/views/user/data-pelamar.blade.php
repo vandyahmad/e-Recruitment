@@ -23,7 +23,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nama_lengkap">Nama Lengkap</label>
+                                            <label for="nama_lengkap" class="font-weight-bold">Nama Lengkap</label>
                                             <input type="text" class="form-control @error('nama_lengkap') is-invalid @enderror" id="nama_lengkap" name="nama_lengkap" value="{{ $profile->nama_lengkap }}" placeholder="Masukkan Nama Lengkap">
                                             @error('nama_lengkap')
                                             <span class="invalid-feedback" role="alert">
@@ -35,7 +35,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nik">Nomor Induk Kependudukan</label>
+                                            <label for="nik" class="font-weight-bold">Nomor Induk Kependudukan</label>
                                             <input type="text" class="form-control @error('nik') is-invalid @enderror" id="nik" name="nik" value="{{ $profile->nik }}" placeholder="Masukkan NIK anda">
                                             @error('nik')
                                             <span class="invalid-feedback" role="alert">
@@ -49,7 +49,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Jenis Kelamin</label><br>
+                                            <label class="font-weight-bold">Jenis Kelamin</label><br>
                                             <div class="custom-control-inline custom-radio ml-4">
                                                 <input type="radio" class="custom-control-input" name="jenis_kelamin" id="laki_laki" value="L" {{$profile->jenis_kelamin=='L'?'checked':''}}>
                                                 <label class="custom-control-label" for="laki_laki">Laki-laki</label>
@@ -70,7 +70,7 @@
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="tempat_lahir">Tempat Lahir</label>
+                                                    <label for="tempat_lahir" class="font-weight-bold">Tempat Lahir</label>
                                                     <input type="text" class="form-control @error('tempat_lahir') is-invalid @enderror" id="tempat_lahir" name="tempat_lahir" value="{{ $profile->tempat_lahir }}" placeholder="Masukkan tempat lahir">
                                                     @error('tempat_lahir')
                                                     <span class="invalid-feedback" role="alert">
@@ -81,7 +81,7 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
-                                                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                                                    <label for="tanggal_lahir" class="font-weight-bold">Tanggal Lahir</label>
                                                     <input type="date" class="form-control @error('tanggal_lahir') is-invalid @enderror " id="tanggal_lahir" name="tanggal_lahir" value="{{ $profile->tanggal_lahir }}" placeholder="Masukkan tanggal lahir">
                                                     @error('tanggal_lahir')
                                                     <span class="invalid-feedback" role="alert">
@@ -97,7 +97,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="agama">Agama</label>
+                                            <label for="agama" class="font-weight-bold">Agama</label>
                                             <select class="form-control" id="agama" name="agama">
                                                 <option value="" disabled selected>Pilih Agama</option>
                                                 <option value="Islam" {{ $profile->agama == 'Islam' ? 'selected' : '' }}>Islam</option>
@@ -116,7 +116,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label>Preferensi Lokasi</label>
+                                            <label for="pref_location" class="font-weight-bold">Preferensi Lokasi</label>
                                             <select name="pref_location" class="form-control pref-location" data-placeholder="Pilih Lokasi" style="width: 100%;">
                                                 @foreach($cities as $city)
                                                 <option value="{{ $city->name }}" {{ $profile->pref_location == $city->name ? 'selected' : '' }}>{{ $city->name }}</option>
@@ -145,7 +145,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="email">Email</label>
+                                            <label for="email" class="font-weight-bold">Email</label>
                                             <input type="email" class="form-control @error('email') is-invalid @enderror " id="email" name="email" value="{{ auth()->user()->email}}" readonly placeholder="Masukkan email ">
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
@@ -156,7 +156,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="no_hp">Nomor Handphone / WhatsApp</label>
+                                            <label for="no_hp" class="font-weight-bold">Nomor Handphone / WhatsApp</label>
                                             <input type="text" class="form-control @error('no_hp') is-invalid @enderror " id="no_hp" name="no_hp" value="{{ $profile->no_hp }}" placeholder="Masukkan nomor yang dapat dihubungi">
                                             @error('no_hp')
                                             <span class="invalid-feedback" role="alert">
@@ -170,7 +170,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="pendidikan_terakhir">Pendidikan Terakhir</label>
+                                            <label for="pendidikan_terakhir" class="font-weight-bold">Pendidikan Terakhir</label>
                                             <select class="form-control" id="pendidikan_terakhir" name="pendidikan_terakhir">
                                                 <option value="" disabled selected>Pilih Pendidikan</option>
                                                 <option value="SMA" {{ $profile->pendidikan_terakhir == 'SMA' ? 'selected' : '' }}>SMA/sederajat</option>
@@ -189,7 +189,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="jurusan">Jurusan</label>
+                                            <label for="jurusan" class="font-weight-bold">Jurusan</label>
                                             <input type="text" class="form-control @error('jurusan') is-invalid @enderror" id="jurusan" name="jurusan" value="{{ $profile->jurusan }}" placeholder="Masukkan jurusan pendidikan anda">
                                             @error('jurusan')
                                             <span class="invalid-feedback" role="alert">
@@ -203,7 +203,7 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="institusi">Institusi</label>
+                                            <label for="institusi" class="font-weight-bold">Institusi</label>
                                             <input type="text" class="form-control @error('institusi') is-invalid @enderror" id="institusi" name="institusi" value="{{ $profile->institusi }}" placeholder="Masukkan institusi pendidikan anda">
                                             @error('institusi')
                                             <span class="invalid-feedback" role="alert">
@@ -215,7 +215,7 @@
 
                                     <div class="col-md-6">
                                         <div class="form-group">
-                                            <label for="nilai">Nilai Akhir</label>
+                                            <label for="nilai" class="font-weight-bold">Nilai Akhir</label>
                                             <input type="text" class="form-control @error('nilai') is-invalid @enderror" id="nilai" name="nilai" value="{{ $profile->nilai }}" placeholder="Masukkan nilai akhir anda">
                                             @error('nilai')
                                             <span class="invalid-feedback" role="alert">
@@ -229,7 +229,7 @@
                                 <div class="row mb-3">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="upload_foto">Update Foto</label>
+                                            <label for="upload_foto" class="font-weight-bold">Update Foto</label>
                                             <div class="custom-file">
                                                 <input type="file" id="upload_foto" name="upload_foto" accept="image/*" class="custom-file-input @error('upload_foto') is-invalid @enderror">
 
@@ -251,7 +251,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            <label for="upload_file">Update CV</label>
+                                            <label for="upload_file" class="font-weight-bold">Update CV</label>
                                             <div class="custom-file">
                                                 <input type="file" id="upload_file" name="upload_file" class="custom-file-input @error('upload_file') is-invalid @enderror" onchange="updateFileName()">
                                                 <label class="custom-label col-md-12" for="upload_file" id="fileLabel">

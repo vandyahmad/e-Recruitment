@@ -135,7 +135,7 @@
 <div class="d-flex justify-content-center">
   <div class="row col-md-12 ">
     <h5>Filter Data</h5>
-    <div class="card card-body">
+    <div class="card card-body" style="width: 100% !important;">
       <div class="row mb-3">
         <div class="col-sm-2">
           <label class="filter_label">Jumlah Data</label>

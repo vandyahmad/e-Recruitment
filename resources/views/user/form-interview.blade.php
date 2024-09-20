@@ -42,7 +42,7 @@
                             <div class="card-body">
 
                                 <h5 class="card-header text-center mb-3"><strong>IDENTITAS DIRI</strong></h5>
-                                <div class="form-group">
+                                <!-- <div class="form-group">
                                     <label for="info_lowongan">Sumber info lowongan:</label>
                                     <select class="form-control" id="info_lowongan" name="info_lowongan" required>
                                         <option value="" disabled {{ old('info_lowongan', $userData->info_lowongan) == '' ? 'selected' : '' }}>-- Pilih --</option>
@@ -54,7 +54,7 @@
                                         <option value="Instagram" {{ old('info_lowongan', $userData->info_lowongan) == 'Instagram' ? 'selected' : '' }}>Instagram</option>
                                         <option value="Lainnya" {{ old('info_lowongan', $userData->info_lowongan) == 'Lainnya' ? 'selected' : '' }}>Lainnya</option>
                                     </select>
-                                </div>
+                                </div> -->
                                 <div class="form-group">
                                     <label for="nama_panggilan">Nama Panggilan:</label>
                                     <input type="text" class="form-control" id="nama_panggilan" name="nama_panggilan" value="{{ old('nama_panggilan', $userData->nama_panggilan) }}" required>
