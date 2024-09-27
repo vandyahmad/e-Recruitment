@@ -190,8 +190,8 @@
           </select>
         </div>
         <div class="col-sm-2">
-          <label class="filter_label">Nama</label>
-          <input type="text" id="nama" class="form-control" placeholder="Search..." style="border-color: green">
+          <label class="filter_label">Search</label>
+          <input type="text" id="nama" class="form-control" placeholder="Nama/Jurusan.." style="border-color: green">
         </div>
         <div class="col-sm-2 offset-sm-10 mt-3 text-right">
           <btn id="searchButton" class="btn btn-primary btn-xs">Search</btn>
@@ -203,9 +203,9 @@
         <div class="card-body">
           <div class="card-body table-responsive-sm p-0">
             <div class="row justify-content-center">
-              <h2><strong>Daftar Pelamar</strong></h2>
+              <h3><strong>Daftar Pelamar</strong></h3>
             </div>
-            <table class="table table-bordered table-hover" id="datatablePelamar" style="width: 100% !important;">
+            <table class="table table-bordered table-hover" id="datatablePelamar">
               <thead class="thead-light text-center">
                 <tr>
                   <th>Aksi</th>
@@ -235,21 +235,21 @@
                         @endif
                         <a href="https://wa.me/62{{$pelamar->UserData->no_hp}}" class="dropdown-item" target="_blank"><i class="fa fa-phone-alt"></i> Contact/WA</a>
                         <a href="{{ route('admin.activity_pelamar', $pelamar->id) }}" class="dropdown-item"><i class="fa fa-paper-plane"></i> Activity</a>
-                        <a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id] ) }}" class="dropdown-item"><i class="fa fa-file"></i> Detail</a>
+                        <a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id] ) }}" class="dropdown-item"><i class="fa fa-file" target="_blank"></i> Detail</a>
                         <button class="btn btn-danger btn-hapus btn-sm dropdown-item" data-id="{{ $pelamar->id }}" data-toggle="modal" data-target="#DeleteModal-{{ $pelamar->id }}"><i class="fa fa-user-times"></i> Hapus</button>
                       </div>
                     </div>
                   </td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->id }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->UserData->user_id }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->UserData->nama_lengkap }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->UserData->pendidikan_terakhir }} {{ $pelamar->UserData->jurusan }}, {{ $pelamar->UserData->institusi }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->job_vacancy['job_title'] }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->job_vacancy['job_company'] }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->minat_lokasi }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->id }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->UserData->user_id }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->UserData->nama_lengkap }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->UserData->pendidikan_terakhir }} {{ $pelamar->UserData->jurusan }}, {{ $pelamar->UserData->institusi }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->job_vacancy['job_title'] }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->job_vacancy['job_company'] }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->minat_lokasi }}</a></td>
                   <td><a href="{{ route('admin.activity_pelamar', $pelamar->id) }}">{{ $pelamar->status }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->UserData->form_interview }}</a></td>
-                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}">{{ $pelamar->created_at }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->UserData->form_interview }}</a></td>
+                  <td><a href="{{ route("admin.show_pelamar", ['pelamar' => $pelamar->id]) }}" target="_blank">{{ $pelamar->created_at }}</a></td>
                 </tr>
 
                 {{-- modal untuk konfirmasi --}}

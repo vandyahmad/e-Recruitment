@@ -34,6 +34,9 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital@0;1&display=swap" rel="stylesheet">
 
+  <!-- Add Favicon -->
+  <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
 </head>
 <!-- NAVBAR -->
 

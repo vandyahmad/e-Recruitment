@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\JobPositionsController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -108,21 +109,37 @@ Route::group(['middleware' => 'auth'], function () {
 
             Route::get('/pelamar/show/{pelamar}', 'AdminController@show_pelamar')->name('admin.show_pelamar');
 
+            Route::get('/user/show/{id}', 'AdminController@show_user_pelamar')->name('admin.show_user_pelamar');
+
             Route::delete('/pelamar/delete/{pelamar}', 'AdminController@destroy_pelamar')->name('admin.destroy_pelamar');
 
             Route::get('/pelamar/contact', 'AdminController@contact_pelamar')->name('admin.contact_pelamar');
 
             Route::get('/pelamar/cetak/{pelamar}', 'AdminController@cetak_pelamar')->name('admin.cetak_pelamar');
-           
+
             Route::get('/form-interview/{pelamar}', 'AdminController@exportFormInterview')->name('admin.cetak_form_interview');
 
             Route::post('/process/pelamar', 'AdminController@process')->name('admin.process_pelamar');
 
             Route::get('/pelamar/activity/{activity}', 'AdminController@activity')->name('admin.activity_pelamar');
 
+            Route::get('/user-pelamar', 'AdminController@index_user_pelamar')->name('admin.index_user_pelamar');
+
             // Route::get('/process/pelamar', 'AdminController@activity_step')->name('admin.activity_step');
 
             // Route::get('/admin/activity_step', 'AdminController@activity_step')->name('admin.activity_step');
+
+            Route::get('/job-positions', 'AdminController@index_job_positions')->name('admin.index_job_positions');
+
+            Route::get('/job-positions/create', 'AdminController@create_job_positions')->name('admin.create_job_positions');
+
+            Route::post('/job-positions/store', 'AdminController@store_job_positions')->name('admin.store_job_positions');
+
+            Route::get('/job-positions/edit/{id}', 'AdminController@edit_job_positions')->name('admin.edit_job_positions');
+            
+            Route::put('/job-positions/update/{id}', 'AdminController@update_job_positions')->name('admin.update_job_positions');
+
+            Route::delete('/job-positions/destroy/{id}', 'AdminController@destroy_job_positions')->name('admin.destroy_job_positions');
 
 
 

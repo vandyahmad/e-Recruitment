@@ -8,6 +8,7 @@ use App\Models\Branch;
 use App\Models\City;
 use App\Models\Employee;
 use App\Models\EmployeeFamily;
+use App\Models\JobPositions;
 use App\Models\JobVacancies;
 use Illuminate\Http\Request;
 use App\Models\pelamars;
@@ -84,7 +85,10 @@ class AdminController extends Controller
         }
         if (!empty($nama)) {
             $pelamarsQuery->whereHas('userData', function ($query) use ($nama) {
-                $query->where('nama_lengkap', 'like', '%' . $nama . '%');
+                $query->where(function ($query) use ($nama) {
+                    $query->where('nama_lengkap', 'like', '%' . $nama . '%')
+                        ->orWhere('jurusan', 'like', '%' . $nama . '%');   //awalnya hanya untuk search box nama, tapi ada tambahan mau search box jurusan
+                });
             });
         }
 
@@ -110,12 +114,56 @@ class AdminController extends Controller
     }
 
 
+    public function index_user_pelamar()
+    {
+        $latestEmployment = DB::table('users_data_employment_history as eh')
+            ->select(
+                'eh.user_id',
+                'eh.jabatan',
+                'eh.nama_perusahaan',
+                'eh.tanggal_masuk',
+                'eh.tanggal_keluar',
+                DB::raw('ROW_NUMBER() OVER (PARTITION BY eh.user_id ORDER BY eh.tanggal_masuk DESC) as rn')
+            )
+            ->toSql(); // To use it in the next subquery
+
+        $userPelamars = DB::table('users_data as ud')
+            ->select(
+                'ud.user_id',
+                'ud.nik',
+                'ud.nama_lengkap',
+                'ud.no_hp',
+                'ud.pendidikan_terakhir',
+                'ud.jurusan',
+                'ud.institusi',
+                'le.jabatan',
+                'le.nama_perusahaan',
+                'le.tanggal_masuk',
+                'le.tanggal_keluar'
+
+            )
+            ->leftJoin(DB::raw("($latestEmployment) as le"), function ($join) {
+                $join->on('ud.user_id', '=', 'le.user_id')
+                    ->where('le.rn', '=', 1); // Only get the row where rn = 1 (most recent job)
+            })
+            ->get();
+        // dd($userPelamars);
+        return view('admin.user-pelamar', ['userPelamars' => $userPelamars]);
+    }
+
     public function show_pelamar($pelamar)
     {
         $result = pelamars::with('userData', 'job_vacancy')->find($pelamar);
         $userData = UsersData::where('user_id', $result->user_id)->first();
         // dd($result->userData->upload_file);
         return view('admin.detail', ['pelamar' => $result], ['userData' => $userData]);
+    }
+
+    public function show_user_pelamar($id)
+    {
+        $userData = UsersData::all()->where('user_id', $id)->first();
+        // dd($result->userData->upload_file);
+        return view('admin.user-detail', ['userData' => $userData]);
     }
 
     public function cetak_pelamar($pelamar)
@@ -372,6 +420,63 @@ class AdminController extends Controller
 
         // return $pdf->download('form-interview-'. $user->name . '.pdf');
         return $pdf->stream('form-interview-' . $user->name . '.pdf');
+    }
+
+
+    public function index_job_positions()
+    {
+        $jobPositions = JobPositions::all();
+        return view('admin.job-positions.index', compact('jobPositions'));
+    }
+
+    // Show the form for creating a new job position
+    public function create_job_positions()
+    {
+
+        return view('admin.job-positions.create');
+    }
+
+    // Store a newly created job position in storage
+    public function store_job_positions(Request $request)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        JobPositions::create($validatedData);
+
+        return redirect()->route('admin.index_job_positions')->with('success', 'Job Position created successfully.');
+    }
+
+    // Show the form for editing the specified job position
+    public function edit_job_positions($id)
+    {
+        $jobPosition = JobPositions::findOrFail($id);
+        return view('admin.job-positions.edit', compact('jobPosition'));
+    }
+
+    // Update the specified job position in storage
+    public function update_job_positions(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+        ]);
+
+        $jobPosition = JobPositions::findOrFail($id);
+        $jobPosition->update($validatedData);
+
+        return redirect()->route('admin.index_job_positions')->with('success', 'Job Position updated successfully.');
+    }
+
+    // Remove the specified job position from storage
+    public function destroy_job_positions($id)
+    {
+        $jobPosition = JobPositions::findOrFail($id);
+        $jobPosition->delete();
+
+        return redirect()->route('admin.index_job_positions')->with('success', 'Job Position deleted successfully.');
     }
 
 
