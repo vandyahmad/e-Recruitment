@@ -237,7 +237,7 @@
                             <div class="form-card">
                                 <h2 class="fs-title">Selamat !</h2>
                                 <p>Anda lolos ke tahap selanjutnya. Mohon dapat melengkapi <a href="{{ url('form-interview') }}"><b>Form Interview</b></a> </p>
-                                <p>Selanjutnya anda dapat mengikuti proses <b>{{ $activity->activity }}</b> berdasarkan detail di bawah ini :</p>
+                                <p>Selanjutnya Anda dapat mengikuti proses <b>{{ $activity->activity }}</b> berdasarkan detail di bawah ini :</p>
                                 <div class="my-5">
 
                                     <div class="card">
@@ -245,7 +245,7 @@
                                             <h5 class="card-title text-center"><u><b>{{ $activity->activity }} Details</b></u></h5>
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item">Tahap:&emsp;<strong>{{ $activity->activity }}</strong></li>
-                                                <li class="list-group-item">Jadwal:&emsp; <strong>{{ $activity->jadwal_activity }}</strong></li>
+                                                <li class="list-group-item">Jadwal:&emsp; <strong>{{ \Carbon\Carbon::parse($activity->jadwal_activity)->format('d F Y') }}</strong> | Waktu : <strong>{{ \Carbon\Carbon::parse($activity->jadwal_activity)->format('H:i') }}</strong></li>
                                                 <li class="list-group-item">Lokasi:&emsp; <strong>{!! nl2br($activity->lokasi_activity) !!}</strong></li>
                                                 <li class="list-group-item">Note:&emsp; <strong>{{ $activity->keterangan }}</strong></li>
                                             </ul>
@@ -261,7 +261,7 @@
                             <div class="form-card">
                                 <h2 class="fs-title">Selamat !</h2>
                                 <p>Anda lolos ke tahap selanjutnya.</p>
-                                <p>Selanjutnya anda dapat mengikuti proses <b>{{ $activity->activity }}</b> berdasarkan detail di bawah ini :</p>
+                                <p>Selanjutnya Anda dapat mengikuti proses <b>{{ $activity->activity }}</b> berdasarkan detail di bawah ini :</p>
                                 <div class="my-5">
 
                                     <div class="card">
@@ -269,7 +269,7 @@
                                             <h5 class="card-title text-center"><u><b>{{ $activity->activity }} Details</b></u></h5>
                                             <ul class="list-group list-group-flush">
                                                 <li class="list-group-item">Tahap:&emsp;<strong>{{ $activity->activity }}</strong></li>
-                                                <li class="list-group-item">Jadwal:&emsp; <strong>{{ $activity->jadwal_activity }}</strong></li>
+                                                <li class="list-group-item">Jadwal:&emsp; <strong>{{ \Carbon\Carbon::parse($activity->jadwal_activity)->format('d F Y') }}, Pukul : <strong>{{ \Carbon\Carbon::parse($activity->jadwal_activity)->format('H:i') }}</strong></li>
                                                 <li class="list-group-item">Lokasi:&emsp; <strong>{!! nl2br($activity->lokasi_activity) !!}</strong></li>
                                                 <li class="list-group-item">Note:&emsp; <strong>{{ $activity->keterangan }}</strong></li>
                                             </ul>
@@ -287,7 +287,7 @@
                         <fieldset id="Apply">
                             <div class="form-card">
                                 <h2 class="fs-title">Terimakasih !</h2>
-                                <p>Job application anda sudah kami terima</p>
+                                <p>Job application Anda sudah kami terima</p>
                                 <p>Selanjutnya akan kami lakukan proses screening terlebih dahulu sesuai dengan requirement yang kami butuhkan </p>
                                 <div class="my-5">
                                 </div>
