@@ -421,7 +421,16 @@
                         $('#lokasi_activity{{$pelamar->id}}').prop('disabled', true);
                         $('#alamat_activity_placeholder{{$pelamar->id}}').prop('disabled', true);
                         $('#keterangan{{$pelamar->id}}').prop('disabled', true);
-                      } else {
+                      } 
+                      
+                      else if (selectedActivity === 'Psikotes (with Talenta)') {
+                        // Disable all form fields
+                        $('#lokasi_activity{{$pelamar->id}}').prop('disabled', true);
+                        $('#alamat_activity_placeholder{{$pelamar->id}}').prop('disabled', true);
+                        $('#keterangan{{$pelamar->id}}').prop('disabled', true);
+                      }
+                      
+                      else {
                         // Enable all form fields
                         $('#jadwal_activity{{$pelamar->id}}').prop('disabled', false);
                         $('#lokasi_activity{{$pelamar->id}}').prop('disabled', false);

@@ -215,7 +215,7 @@ class AdminController extends Controller
     {
 
         // Validasi data input sesuai kebutuhan
-        if ($request->input('activity') != 'Declined' && $request->input('activity') != 'Screening' && $request->input('activity') != 'On Hold') {
+        if ($request->input('activity') != 'Declined' && $request->input('activity') != 'Screening' && $request->input('activity') != 'On Hold' && $request->input('activity') != 'Psikotes (with Talenta)') {
             $request->validate([
                 'activity' => 'required',
                 'jadwal_activity' => 'required',

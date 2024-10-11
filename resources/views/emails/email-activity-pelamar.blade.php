@@ -6,7 +6,6 @@
 </head>
 
 @if($this_activity == 'Accepted')
-
 <body>
     <h3>Selamat Datang di ecoCare Group Company</h3>
     <p>Halo {{ $nama }} ! ,</p>
@@ -51,7 +50,6 @@
 </body>
 
 @elseif($this_activity == 'Declined')
-
 <body>
     <h3>Hasil Rekrutmen ecoCare Group Company</h3>
     <p>Kepada {{ $nama }},</p>
@@ -102,9 +100,43 @@
     <h4><b>ecoCare Group Company</b></h4>
 </body> -->
 
+@elseif($this_activity == 'Psikotes (with Talenta)')
+<body>
+    <h3>Kepada {{ $nama }} ,</h3>
+    <p>Salam bersih dan sehat!</p>
+
+    <p>Selamat Anda menuju tahap selanjutnya untuk bergabung dengan <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong> penempatan <b>{{$minat_lokasi}}</b> sebagai <b>{{$minat}}.</b>
+    <p>
+        <!-- <a href=" {{route('job-applied.status',['id' => $id_pelamar])}}">{{ $this_activity }}.</a></b></p> -->
+    <p>Kami mengundang Anda untuk hadir pada<br>
+        <br>
+        &emsp;Tahap&nbsp;: <b><a href=" {{route('job-applied.status',['id' => $id_pelamar])}}">{{ $this_activity }}</a></b><br>
+        &emsp;Hari&Tanggal&nbsp;: <b>{{ \Carbon\Carbon::parse($jadwal)->translatedFormat('l') }}, {{ \Carbon\Carbon::parse($jadwal)->translatedFormat('d-F-Y') }}</b><br>
+    </p>
+
+    <p>Tahap Psikotes akan dilaksanakan oleh pihak <strong>Talenta Indonesia</strong>. Silahkan periksa e-mail Anda secara berkala untuk informasi lebih lanjut terkait undangan Psikotes dari <i>assessment@talentaindonesia.id</i>.</p>
+
+    <p>Mohon kehadiran Anda minimal pada 15 menit sebelumnya.</p>
+    <p>Kunjungi website kami: <span style="color:#6aa84f;"> ecoCare (<a href="https://www.ecocare.id/">ecocare.id</span>), <span style="color:#6fa8dc;"> Tukang Bersih Indonesia (<a href="https://tukangbersih.com/">tukangbersih.com)</span>, dan <span style="color:#cc0000;"> ecoCare Pest Control (<a href="https://pestcare.id/">pestcare.id)</span>.</p>
+    <p>Note : Proses rekrutmen ini tidak membutuhkan biaya apapun. Anda tidak perlu menjawab e-mail ini. Jika ada pertanyaan, silahkan hubungi Vianca (+62 821-1209-8784) atau Michellin (+62 811-2655-355).</p>
+    <br>
+    <p>Persiapkan diri Anda dan semoga berhasil!</p>
+    <br>
+    <p>Best regards,</p>
+    <br>
+    <p><b>Recruitment</b><br>
+        <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong><br>
+        <b>#ECGHiring</b><br>
+        <br>
+        Grand Slipi Tower Lt.37<br>
+        Jl. S. Parman kav. 22-24<br>
+        Palmerah, Slipi, Jakarta Barat<br>
+        <a href="https://www.ecocare.id/"> www.ecocare.co.id</a>
+    </p>
+</body>
+
 
 @elseif($isFirstInterview)
-
 <body>
     <h3>Halo {{ $nama }} ,</h3>
     <p>Salam bersih dan sehat!</p>
@@ -139,8 +171,8 @@
         <a href="https://www.ecocare.id/"> www.ecocare.co.id</a>
     </p>
 </body>
-@else
 
+@else
 <body>
     <h3>Halo {{ $nama }} ,</h3>
     <p>Salam bersih dan sehat!</p>
