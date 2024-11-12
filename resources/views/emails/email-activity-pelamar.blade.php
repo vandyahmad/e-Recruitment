@@ -135,6 +135,40 @@
     </p>
 </body>
 
+@elseif($this_activity == 'Offering (MT)')
+<body>
+    <h3>Kepada {{ $nama }} ,</h3>
+    <p>Salam bersih dan sehat!</p>
+
+    <p>Selamat! Kami dengan senang hati menawarkan Anda posisi sebagai <b>{{$minat}}.</b> di <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company!</strong>
+    <p>
+        <!-- <a href=" {{route('job-applied.status',['id' => $id_pelamar])}}">{{ $this_activity }}.</a></b></p> -->
+    <p>Penjelasan terkait Offering akan dilaksanakan pada<br>
+        <br>
+        &emsp;Tanggal&nbsp;: <b>{{ \Carbon\Carbon::parse($jadwal)->translatedFormat('d-F-Y') }}</b><br>
+        &emsp;Waktu&nbsp;: <b>{{ \Carbon\Carbon::parse($jadwal)->format('H:i') }} WIB</b><br>
+        &emsp;Tempat&nbsp;: <b>{!! ($lokasi) !!}</b>
+    </p>
+
+    <p>Offering Letter akan dikirimkan dari e-mail hr@ecocare.id menjelang waktu penjelasan. Silahkan periksa inbox e-mail Anda secara berkala.</p>
+
+    <p>Note: Jika ada pertanyaan, silahkan hubungi Vianca (+62 821-1209-8784) atau Michellin (+62 811-2655-355).</p>
+    
+    <p>Terima kasih dan kami menantikan kehadiran Anda sebagai bagian dari keluarga <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company!</strong></p>
+    <br>
+    <p>Best regards,</p>
+    <br>
+    <p><b>Recruitment</b><br>
+        <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong><br>
+        <b>#ECGHiring</b><br>
+        <br>
+        Grand Slipi Tower Lt.37<br>
+        Jl. S. Parman kav. 22-24<br>
+        Palmerah, Slipi, Jakarta Barat<br>
+        <a href="https://www.ecocare.id/"> www.ecocare.co.id</a>
+    </p>
+</body>
+
 
 @elseif($isFirstInterview)
 <body>

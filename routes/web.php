@@ -99,9 +99,12 @@ Route::group(['middleware' => 'auth'], function () {
         Route::group(['prefix' => 'admin'], function () {
 
             // admin
-            Route::get('/home', function () {
-                return view('admin.home');
-            })->name('admin.home');
+
+            Route::get('/home', 'AdminController@home')->name('admin.home');
+
+            // Route::get('/home', function () {
+            //     return view('admin.home');
+            // })->name('admin.home');
 
 
             // //Route Pelamars

@@ -24,6 +24,14 @@
     max-width: 100%;
     /* Ensure it doesn't overflow */
   }
+
+  .card-body.bg-light {
+    border-left: 5px solid #007bff;
+  }
+
+  .card-body p {
+    margin-bottom: 0;
+  }
 </style>
 
 <!-- Other HTML content -->
@@ -133,10 +141,71 @@
 
 <!-- <link rel="stylesheet" href="{{ asset('css/style.css') }}"> -->
 
+<div class="container mt-4 mb-3">
+  <div class="row">
+    <div class="col-md-12">
+      <h5 class="mb-3">Application Summary</h5>
+      <div class="row text-center">
+        <div class="col-md-2">
+          <div class="card border-primary shadow-sm">
+            <div class="card-body">
+              <h2 class="text-primary">{{ $totalApplications }}</h2>
+              <p class="mb-0"><strong>Applications</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card border-warning shadow-sm">
+            <div class="card-body">
+              <h2 class="text-warning">{{ $statusCounts['Apply'] ?? 0 }}</h2>
+              <p class="mb-0"><strong>Applied</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card border-info shadow-sm">
+            <div class="card-body">
+              <h2 class="text-info">{{ $onProcessCount }}</h2>
+              <p class="mb-0"><strong>On Process</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card border-success shadow-sm">
+            <div class="card-body">
+              <h2 class="text-success">{{ $statusCounts['Accepted'] ?? 0 }}</h2>
+              <p class="mb-0"><strong>Accepted</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card border-secondary shadow-sm">
+            <div class="card-body">
+              <h2 class="text-secondary">{{ $statusCounts['On Hold'] ?? 0 }}</h2>
+              <p class="mb-0"><strong>On Hold</strong></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-2">
+          <div class="card border-danger shadow-sm">
+            <div class="card-body">
+              <h2 class="text-danger">{{ $statusCounts['Declined'] ?? 0 }}</h2>
+              <p class="mb-0"><strong>Declined</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
 <div class="d-flex justify-content-center">
   <div class="row col-md-12 ">
     <h5>Filter Data</h5>
-    <div class="card card-body" style="width: 100% !important;">
+    <div class="card card-body border-success" style="width: 100% !important;">
       <div class="row mb-3">
         <div class="col-sm-2">
           <label class="filter_label">Jumlah Data</label>
@@ -421,16 +490,12 @@
                         $('#lokasi_activity{{$pelamar->id}}').prop('disabled', true);
                         $('#alamat_activity_placeholder{{$pelamar->id}}').prop('disabled', true);
                         $('#keterangan{{$pelamar->id}}').prop('disabled', true);
-                      } 
-                      
-                      else if (selectedActivity === 'Psikotes (with Talenta)') {
+                      } else if (selectedActivity === 'Psikotes (with Talenta)') {
                         // Disable all form fields
                         $('#lokasi_activity{{$pelamar->id}}').prop('disabled', true);
                         $('#alamat_activity_placeholder{{$pelamar->id}}').prop('disabled', true);
                         $('#keterangan{{$pelamar->id}}').prop('disabled', true);
-                      }
-                      
-                      else {
+                      } else {
                         // Enable all form fields
                         $('#jadwal_activity{{$pelamar->id}}').prop('disabled', false);
                         $('#lokasi_activity{{$pelamar->id}}').prop('disabled', false);

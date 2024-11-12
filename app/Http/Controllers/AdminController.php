@@ -32,6 +32,49 @@ use Yajra\DataTables\DataTables;
 
 class AdminController extends Controller
 {
+
+    public function home()
+    {
+        // Get all applications
+        $applications = pelamars::all();
+
+        // Calculate the total number of applications
+        $totalApplications = $applications->count();
+
+        // dd($totalApplications);
+
+        // Calculate the number of applications for each status
+        $statusCounts = [
+            'Accepted' => $applications->where('status', 'Accepted')->count(),
+            'Declined' => $applications->where('status', 'Declined')->count(),
+            'On Hold' => $applications->where('status', 'On Hold')->count(),
+            'Apply' => $applications->where('status', 'Apply')->count()
+        ];
+
+        // Calculate "On Process" by excluding specific statuses
+        $onProcessCount = $totalApplications - ($statusCounts['Accepted'] ?? 0) - ($statusCounts['Declined'] ?? 0) - ($statusCounts['On Hold'] ?? 0) - ($statusCounts['Apply'] ?? 0);
+
+        // Count occurrences for each `info_lowongan` source
+        $infoSources = [
+            'Referensi',
+            'Website',
+            'LinkedIn',
+            'JobStreet',
+            'Telegram',
+            'Facebook',
+            'Lainnya'
+        ];
+
+        $infoLowonganCounts = [];
+        foreach ($infoSources as $source) {
+            $infoLowonganCounts[$source] = UsersData::where('info_lowongan', $source)->count();
+        }
+
+        // dd($infoLowonganCounts);
+
+        return view('admin.home', compact('totalApplications', 'statusCounts', 'onProcessCount', 'infoLowonganCounts'));
+    }
+
     //Pelamars
     public function index_pelamar(Request $request)
     {
@@ -95,6 +138,23 @@ class AdminController extends Controller
         // Step 4: Limit the number of results based on user input
         $pelamars = $pelamarsQuery->take($limit)->get();
 
+        // Get all applications
+        $applications = pelamars::all();
+
+        // Calculate the total number of applications
+        $totalApplications = $applications->count();
+
+        // Calculate the number of applications for each status
+        $statusCounts = [
+            'Accepted' => $applications->where('status', 'Accepted')->count(),
+            'Declined' => $applications->where('status', 'Declined')->count(),
+            'On Hold' => $applications->where('status', 'On Hold')->count(),
+            'Apply' => $applications->where('status', 'Apply')->count()
+        ];
+
+        // Calculate "On Process" by excluding specific statuses
+        $onProcessCount = $totalApplications - ($statusCounts['Accepted'] ?? 0) - ($statusCounts['Declined'] ?? 0) - ($statusCounts['On Hold'] ?? 0) - ($statusCounts['Apply'] ?? 0);
+
         // Return the view with the filtered data
         return view('admin.pelamar', [
             'pelamars' => $pelamars,
@@ -110,6 +170,9 @@ class AdminController extends Controller
             'statuses' => $statuses,
             'jobs' => $jobs,
             'cities' => $cities,
+            'totalApplications' => $totalApplications,
+            'statusCounts' => $statusCounts,
+            'onProcessCount' => $onProcessCount
         ]);
     }
 

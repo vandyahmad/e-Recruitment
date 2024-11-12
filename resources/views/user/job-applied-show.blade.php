@@ -256,6 +256,29 @@
                             </div>
                         </fieldset>
 
+                        @elseif($activity->activity == 'Psikotes (with Talenta)')
+                        <fieldset id="fieldset{{ $index + 1 }}">
+                            <div class="form-card">
+                                <h2 class="fs-title">Selamat !</h2>
+                                <p>Anda lolos ke tahap selanjutnya.</p>
+                                <p>Selanjutnya Anda dapat mengikuti proses <b>{{ $activity->activity }}</b> berdasarkan detail di bawah ini :</p>
+                                <div class="my-5">
+
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title text-center"><u><b>{{ $activity->activity }} Details</b></u></h5>
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item">Tahap:&emsp;<strong>{{ $activity->activity }}</strong></li>
+                                                <li class="list-group-item">Hari & Tanggal:&emsp; <strong>{{ \Carbon\Carbon::parse($activity->jadwal_activity)->translatedFormat('l, d F Y') }}</strong></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </fieldset>
+
+
                         @else
                         <fieldset id="fieldset{{ $index + 1 }}">
                             <div class="form-card">
