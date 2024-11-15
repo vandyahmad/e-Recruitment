@@ -5,8 +5,10 @@
     <title>Update Job Application Anda ({{ $minat }})</title>
 </head>
 
-@if($this_activity == 'Accepted')
-<body>
+<!-- Untuk General 'Accepted' -->
+<!-- {{-- @if($this_activity == 'Accepted') --}} -->
+
+<!-- <body>
     <h3>Selamat Datang di ecoCare Group Company</h3>
     <p>Halo {{ $nama }} ! ,</p>
     <p>
@@ -47,9 +49,47 @@
         Palmerah, Slipi, Jakarta Barat<br>
         <a href="https://www.ecocare.id/"> www.ecocare.co.id</a>
     </p>
+</body> -->
+
+
+<!-- Awalnya hanya untuk Accepted MT -->
+@if($this_activity == 'Accepted')
+
+<body>
+    <h3>Selamat Datang di ecoCare Group Company</h3>
+    <p>Kepada {{ $nama }} ,</p>
+    <p>
+        Selamat! <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong> dengan senang hati memberikan selamat datang kepada Anda sebagai <b>{{$minat}}</b> penempatan <b>{{$minat_lokasi}}</b>.
+    </p>
+    <p>
+        Latar belakang, keterampilan, dan pengalaman Anda telah membuat kami terkesan sepanjang proses rekrutmen. Kedepannya, mari kita tumbuh dan meraih cita-cita bersama!
+    </p>
+    <p>
+        Mohon dapat segera melengkapi data karyawan baru pada profile Anda di website <a href="https://recruitment.ecocare.co.id/detail-profile">recruitment.ecocare.co.id</a> . <b>Maksimal dilengkapi dalam 2 hari setelah email diterima.</b>
+    </p>
+    <p>
+        Jika Anda memiliki pertanyaan sebelum tanggal mulai Anda, silahkan hubungi Vianca (+62 821-1209-8784) atau Michellin (+62 811-2655-355).
+    </p>
+    <p>
+        Kami akan mempersiapkan diri untuk menyambut Anda. Sekali lagi, selamat datang di keluarga <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong>! You are now officially an <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Fam</span>!
+        <br>
+        Let’s accomplish millions of achievements together!
+    </p>
+    <p>Best regards,</p>
+    <br>
+    <p><b>Recruitment</b><br>
+        <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong><br>
+        <b>#ECGHiring</b><br>
+        <br>
+        Grand Slipi Tower Lt.37<br>
+        Jl. S. Parman kav. 22-24<br>
+        Palmerah, Slipi, Jakarta Barat<br>
+        <a href="https://www.ecocare.id/"> www.ecocare.co.id</a>
+    </p>
 </body>
 
 @elseif($this_activity == 'Declined')
+
 <body>
     <h3>Hasil Rekrutmen ecoCare Group Company</h3>
     <p>Kepada {{ $nama }},</p>
@@ -101,6 +141,7 @@
 </body> -->
 
 @elseif($this_activity == 'Psikotes (with Talenta)')
+
 <body>
     <h3>Kepada {{ $nama }} ,</h3>
     <p>Salam bersih dan sehat!</p>
@@ -136,6 +177,7 @@
 </body>
 
 @elseif($this_activity == 'Offering (MT)')
+
 <body>
     <h3>Kepada {{ $nama }} ,</h3>
     <p>Salam bersih dan sehat!</p>
@@ -153,7 +195,7 @@
     <p>Offering Letter akan dikirimkan dari e-mail hr@ecocare.id menjelang waktu penjelasan. Silahkan periksa inbox e-mail Anda secara berkala.</p>
 
     <p>Note: Jika ada pertanyaan, silahkan hubungi Vianca (+62 821-1209-8784) atau Michellin (+62 811-2655-355).</p>
-    
+
     <p>Terima kasih dan kami menantikan kehadiran Anda sebagai bagian dari keluarga <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company!</strong></p>
     <br>
     <p>Best regards,</p>
@@ -171,14 +213,15 @@
 
 
 @elseif($isFirstInterview)
+
 <body>
     <h3>Halo {{ $nama }} ,</h3>
     <p>Salam bersih dan sehat!</p>
 
     <p>Terimakasih atas keinginan Anda untuk bergabung dengan <span style="color:#6aa84f;">eco</span><span style="color:#6fa8dc;">Care</span> <strong>Group Company</strong> penempatan <b>{{$minat_lokasi}}</b> sebagai <b>{{$minat}}.</b></p>
-    
+
     <p>Silahkan lengkapi profil Anda di website rekrutmen kami sebagai persyaratan rekrutmen, dengan meng-klik link berikut ini: <a href="{{url('form-interview')}}"><b>Formulir Interview</b></a></p>
-    
+
     <p>Selanjutnya Kami mengundang Anda untuk hadir pada<br>
         <br>
         &emsp;Tahap&nbsp;: <b><a href=" {{route('job-applied.status',['id' => $id_pelamar])}}">{{ $this_activity }}</a></b><br>
@@ -207,6 +250,7 @@
 </body>
 
 @else
+
 <body>
     <h3>Halo {{ $nama }} ,</h3>
     <p>Salam bersih dan sehat!</p>
